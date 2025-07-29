@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { events, athletes, media } from '@/lib/data';
-import { ArrowRight, Calendar, Trophy, Clapperboard, GalleryHorizontal } from 'lucide-react';
+import { ArrowRight, Calendar, Trophy, Clapperboard, GalleryHorizontal, Instagram } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 export default function Home() {
@@ -12,10 +12,10 @@ export default function Home() {
     <div className="space-y-12">
       <section className="text-center bg-card p-8 rounded-lg shadow-lg">
         <h1 className="text-5xl font-extrabold tracking-tight font-headline text-primary">
-          ClimbingPulse
+          BBLagos
         </h1>
         <p className="mt-4 text-xl text-muted-foreground">
-          The Heartbeat of Modern Bodyboarding
+          The Heartbeat of Modern Bodyboarding in Lagos
         </p>
         <p className="mt-2 max-w-2xl mx-auto text-foreground/80">
           Explore rankings, follow events, and watch the best athletes in the world push the limits of the sport.
@@ -119,6 +119,29 @@ export default function Home() {
           </Carousel>
         </section>
       </div>
+
+       <section className="space-y-6">
+        <h2 className="text-3xl font-bold font-headline flex items-center gap-2">
+          <Instagram className="text-primary" />
+          Follow us on Instagram
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="aspect-square relative rounded-lg overflow-hidden group">
+              <Image 
+                src={`https://placehold.co/400x400`} 
+                alt={`Instagram post ${index + 1}`} 
+                fill 
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
+                data-ai-hint="bodyboarding surfing"
+              />
+               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                  <Instagram className="h-10 w-10 text-white/80 group-hover:text-white" />
+               </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
     </div>
   );

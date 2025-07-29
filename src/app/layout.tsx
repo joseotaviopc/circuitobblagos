@@ -4,8 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { AppShell } from '@/components/layout/app-shell';
 
 export const metadata: Metadata = {
-  title: 'ClimbingPulse',
-  description: 'The Heartbeat of Modern Bodyboarding',
+  title: 'BBLagos',
+  description: 'The Heartbeat of Modern Bodyboarding in Lagos',
 };
 
 export default function RootLayout({

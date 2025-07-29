@@ -12,11 +12,13 @@ import {
   SidebarFooter,
 } from '@/components/ui/sidebar';
 import {
-  Home,
-  Trophy,
   Calendar,
   Image as ImageIcon,
-  Users,
+  Video,
+  BookOpen,
+  Mail,
+  Waves,
+  Megaphone,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -36,10 +38,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const menuItems = [
-    { href: '/', label: 'Home', icon: Home },
-    { href: '/rankings', label: 'Rankings', icon: Trophy },
-    { href: '/events', label: 'Events', icon: Calendar },
-    { href: '/media', label: 'Media', icon: ImageIcon },
+    { href: '/events', label: 'Calendario', icon: Calendar },
+    { href: '/media', label: 'Fotos', icon: ImageIcon },
+    { href: '/media', label: 'Videos', icon: Video },
+    { href: '/historia', label: 'Historia', icon: BookOpen },
+    { href: '/contato', label: 'Contato', icon: Mail },
+    { href: '/bodyboard', label: 'Bodyboard', icon: Waves },
+    { href: '/marketing', label: 'Marketing', icon: Megaphone },
   ];
 
   return (
@@ -48,7 +53,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <Logo />
-            <h1 className="text-2xl font-headline font-semibold text-primary">ClimbingPulse</h1>
+            <h1 className="text-2xl font-headline font-semibold text-primary">BBLagos</h1>
           </div>
         </SidebarHeader>
         <SidebarContent>
