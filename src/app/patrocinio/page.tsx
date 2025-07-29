@@ -20,7 +20,7 @@ export default function MarketingPage() {
           <CardTitle>Por que patrocinar a BBLagos?</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-            <Image src="https://placehold.co/800x300" alt="Evento de bodyboard lotado" width={800} height={300} className="w-full rounded-lg" data-ai-hint="surfing crowd" />
+            <Image src="https://placehold.co/800x300/png" alt="Evento de bodyboard lotado" width={800} height={300} className="w-full rounded-lg" data-ai-hint="surfing crowd" />
           <p>
             Associar sua marca à BBLagos significa conectar-se com um público jovem, dinâmico e apaixonado por esportes, natureza e estilo de vida praiano. Nossos eventos atraem milhares de espectadores e possuem grande engajamento nas redes sociais.
           </p>

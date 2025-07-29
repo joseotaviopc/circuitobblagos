@@ -15,10 +15,10 @@ import { athletes, Athlete } from '@/lib/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart } from 'lucide-react';
 
-const categories: Athlete['category'][] = ['Professional', 'Open', 'Legend', 'Master', 'Sub-18', 'Sub-15'];
+const categories: Athlete['category'][] = ['Profissional', 'Open', 'Legend', 'Master', 'Sub-18', 'Sub-15'];
 
 export default function RankingsPage() {
-  const [activeTab, setActiveTab] = useState<Athlete['category']>('Professional');
+  const [activeTab, setActiveTab] = useState<Athlete['category']>('Profissional');
 
   const filteredAthletes = athletes.filter(
     (athlete) => athlete.category === activeTab
@@ -28,10 +28,10 @@ export default function RankingsPage() {
     <div className="space-y-8">
       <header>
         <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
-          Athlete Rankings
+          Classificação dos Atletas
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Check out the official world rankings for bodyboarding athletes across all categories.
+          Confira o ranking oficial dos atletas de bodyboard em todas as categorias.
         </p>
       </header>
 
@@ -52,10 +52,10 @@ export default function RankingsPage() {
             <Table>
                 <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[80px] text-center">Rank</TableHead>
-                    <TableHead>Athlete</TableHead>
-                    <TableHead className="hidden md:table-cell">Country</TableHead>
-                    <TableHead className="text-right">Points</TableHead>
+                    <TableHead className="w-[80px] text-center">Posição</TableHead>
+                    <TableHead>Atleta</TableHead>
+                    <TableHead className="hidden md:table-cell">País</TableHead>
+                    <TableHead className="text-right">Pontos</TableHead>
                 </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -89,7 +89,7 @@ export default function RankingsPage() {
                 ) : (
                     <TableRow>
                     <TableCell colSpan={4} className="h-24 text-center">
-                        No athletes found in this category.
+                        Nenhum atleta encontrado nesta categoria.
                     </TableCell>
                     </TableRow>
                 )}

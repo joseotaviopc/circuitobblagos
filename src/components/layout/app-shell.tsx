@@ -46,24 +46,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, isAdmin, logout } = useAuth();
 
   const menuItems = [
-    { href: '/events', label: 'Calendario', icon: Calendar },
-    { href: '/rankings', label: 'Ranking', icon: BarChart },
-    { href: '/media', label: 'Fotos', icon: ImageIcon },
-    { href: '/media', label: 'Videos', icon: Video },
-    { href: '/historia', label: 'Historia', icon: BookOpen },
+    { href: '/eventos', label: 'Calendário', icon: Calendar },
+    { href: '/rankings', label: 'Classificação', icon: BarChart },
+    { href: '/fotos', label: 'Fotos', icon: ImageIcon },
+    { href: '/videos', label: 'Vídeos', icon: Video },
+    { href: '/historia', label: 'História', icon: BookOpen },
     { href: '/contato', label: 'Contato', icon: Mail },
-    { href: '/bodyboard', label: 'Bodyboard', icon: Waves },
-    { href: '/marketing', label: 'Marketing', icon: Megaphone },
+    { href: '/bodyboard', label: 'Sobre o Bodyboard', icon: Waves },
+    { href: '/patrocinio', label: 'Patrocínios', icon: Megaphone },
   ];
 
   return (
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <Logo />
             <h1 className="text-2xl font-headline font-semibold text-primary">BBLagos</h1>
-          </div>
+          </Link>
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
@@ -102,34 +102,34 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="justify-start gap-2 w-full px-2">
                 <Avatar className="h-8 w-8">
-                   <AvatarImage src={user ? 'https://placehold.co/100x100' : undefined} />
+                   <AvatarImage src={user ? 'https://placehold.co/100x100/png' : undefined} />
                   <AvatarFallback>{user ? user.username.charAt(0).toUpperCase() : <User />}</AvatarFallback>
                 </Avatar>
-                <span className="truncate">{user ? user.username : 'Guest User'}</span>
+                <span className="truncate">{user ? user.username : 'Visitante'}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="right" align="start" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {user ? (
                 <>
                   <DropdownMenuItem asChild>
-                     <Link href="/profile">
+                     <Link href="/perfil">
                         <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
+                        <span>Perfil</span>
                       </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={logout}>
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Logout</span>
+                    <span>Sair</span>
                   </DropdownMenuItem>
                 </>
               ) : (
                 <DropdownMenuItem asChild>
                    <Link href="/login">
                     <LogIn className="mr-2 h-4 w-4" />
-                    <span>Login</span>
+                    <span>Entrar</span>
                   </Link>
                 </DropdownMenuItem>
               )}
@@ -138,19 +138,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex items-center justify-between p-4 border-b">
+        <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between p-4 border-b">
           <div className='flex items-center gap-2'>
             <SidebarTrigger />
-             <h2 className='font-headline text-lg font-semibold capitalize'>{pathname.split('/').pop()?.replace('-', ' ') || 'Home'}</h2>
+            <h2 className='font-headline text-lg font-semibold capitalize'>{pathname.split('/').pop()?.replace(/-/g, ' ') || 'Home'}</h2>
           </div>
-           {isAdmin && (
-              <Button variant="outline" size="sm">
-                <Edit className="mr-2 h-4 w-4" />
-                Edit Page
-              </Button>
-            )}
+          {isAdmin && (
+            <Button variant="outline" size="sm">
+              <Edit className="mr-2 h-4 w-4" />
+              Editar Página
+            </Button>
+          )}
         </header>
-        <main className="p-4 md:p-6 lg:p-8">{children}</main>
+        <main className="p-4 md:p-6 lg:p-8 pt-20">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

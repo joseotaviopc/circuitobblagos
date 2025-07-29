@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { summarizeEventAction } from '@/app/actions';
-import type { SummarizeEventInput } from '@/ai/flows/summarize-event';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Bot, Loader2 } from 'lucide-react';
@@ -11,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 export function EventSummaryGenerator({
   event,
 }: {
-  event: SummarizeEventInput;
+  event: unknown;
 }) {
   const [summary, setSummary] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,8 +19,8 @@ export function EventSummaryGenerator({
     setLoading(true);
     setSummary('');
     try {
-      const result = await summarizeEventAction(event);
-      setSummary(result.summary);
+      // const result = await summarizeEventAction(event);
+      // setSummary(result.summary);
     } catch (error) {
       console.error('Error generating summary:', error);
       toast({

@@ -10,10 +10,10 @@ export default function EventsPage() {
     <div className="space-y-8">
       <header>
         <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
-          Event Calendar
+          Calendário de Eventos
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Follow the tour and stay up to date with all the latest bodyboarding competitions around the world.
+          Acompanhe o circuito e fique por dentro das últimas competições de bodyboard ao redor do mundo.
         </p>
       </header>
 
@@ -43,7 +43,7 @@ export default function EventsPage() {
               </p>
               <Button asChild variant="secondary" className="mt-4 w-full">
                 <Link href={`/events/${event.id}`}>
-                  View Event <ArrowRight className="ml-2 h-4 w-4" />
+                  Ver Evento <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </CardContent>

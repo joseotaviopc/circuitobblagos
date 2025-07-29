@@ -18,7 +18,7 @@ export default function HistoriaPage() {
           <CardTitle>As Origens</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-           <Image src="https://placehold.co/800x400" alt="Old photo of bodyboarders" width={800} height={400} className="w-full rounded-lg" data-ai-hint="vintage surfing" />
+           <Image src="https://placehold.co/800x400/png" alt="Old photo of bodyboarders" width={800} height={400} className="w-full rounded-lg" data-ai-hint="vintage surfing" />
           <p>
             A BBLagos nasceu da paixão de um grupo de amigos pelas ondas da Região dos Lagos. O que começou como encontros informais de fim de semana, rapidamente se transformou em um movimento para organizar e promover o esporte localmente.
           </p>

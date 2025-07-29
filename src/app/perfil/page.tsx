@@ -34,13 +34,13 @@ export default function ProfilePage() {
             <AvatarImage src="https://placehold.co/100x100" />
             <AvatarFallback>{user.username.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
-          <CardTitle className="text-2xl font-headline">Welcome, {user.username}!</CardTitle>
-          <CardDescription>{user.role === 'admin' ? 'Administrator' : 'User'}</CardDescription>
+          <CardTitle className="text-2xl font-headline">Bem-vindo, {user.username}!</CardTitle>
+          <CardDescription>{user.role === 'admin' ? 'Administrador' : 'Usuário'}</CardDescription>
         </CardHeader>
         <CardContent className='flex flex-col gap-4'>
-            <p className='text-center text-muted-foreground'>This is your profile page. More content and settings will be available here soon.</p>
+            <p className='text-center text-muted-foreground'>Esta é a sua página de perfil. Mais conteúdo e configurações estarão disponíveis em breve.</p>
           <Button onClick={handleLogout} variant="outline" className="w-full">
-            <LogOut className="mr-2 h-4 w-4" /> Logout
+            <LogOut className="mr-2 h-4 w-4" /> Sair
           </Button>
         </CardContent>
       </Card>

@@ -22,7 +22,7 @@ export default function LoginPage() {
     if (success) {
       router.push('/profile');
     } else {
-      setError('Invalid username or password. Try "admin" and "password".');
+      setError('Usuário ou senha inválidos. Tente "admin" e "password".');
     }
   };
 
@@ -32,13 +32,13 @@ export default function LoginPage() {
         <form onSubmit={handleLogin}>
           <CardHeader>
             <CardTitle className="text-2xl font-headline flex items-center gap-2">
-              <LogIn /> Login
+              <LogIn /> Entrar
             </CardTitle>
-            <CardDescription>Enter your credentials to access the admin area.</CardDescription>
+            <CardDescription>Digite suas credenciais para acessar a área administrativa.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">Usuário</Label>
               <Input
                 id="username"
                 placeholder="admin"
@@ -48,11 +48,11 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="password"
+                placeholder="senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -62,7 +62,7 @@ export default function LoginPage() {
           </CardContent>
           <CardFooter>
             <Button type="submit" className="w-full">
-              Login
+              Entrar
             </Button>
           </CardFooter>
         </form>

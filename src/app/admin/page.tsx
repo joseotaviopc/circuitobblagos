@@ -8,11 +8,11 @@ import { PlusCircle, Edit, Trash2, List } from 'lucide-react';
 import Link from 'next/link';
 
 const contentTypes = [
-  { name: 'Events', slug: 'events' },
-  { name: 'News', slug: 'news' },
-  { name: 'Photos', slug: 'photos' },
-  { name: 'Videos', slug: 'videos' },
-  { name: 'Rankings', slug: 'rankings' },
+  { name: 'Eventos', slug: 'events' },
+  { name: 'Notícias', slug: 'news' },
+  { name: 'Fotos', slug: 'photos' },
+  { name: 'Vídeos', slug: 'videos' },
+  { name: 'Classificações', slug: 'rankings' },
 ];
 
 export default function AdminPage() {
@@ -33,10 +33,10 @@ export default function AdminPage() {
     <div className="space-y-8">
       <header>
         <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
-          Admin Dashboard
+          Painel de Controle
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Manage your website content from here.
+          Gerencie o conteúdo do site a partir daqui.
         </p>
       </header>
 
@@ -48,21 +48,21 @@ export default function AdminPage() {
                 <List /> {type.name}
               </CardTitle>
               <CardDescription>
-                Create, update, or delete {type.name.toLowerCase()}.
+                Crie, atualize ou exclua {type.name.toLowerCase()}.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex justify-end gap-2">
                 <Button variant="outline" size="sm">
                     <Trash2 className="mr-2 h-4 w-4" />
-                    Delete
+                    Excluir
                 </Button>
                  <Button variant="outline" size="sm">
                     <Edit className="mr-2 h-4 w-4" />
-                    Update
+                    Atualizar
                 </Button>
                 <Button size="sm">
                     <PlusCircle className="mr-2 h-4 w-4" />
-                    Create
+                    Criar
                 </Button>
             </CardContent>
           </Card>

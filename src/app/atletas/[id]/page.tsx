@@ -38,8 +38,8 @@ export default function AthleteProfilePage({ params }: { params: { id: string } 
                     </div>
                     <div className="flex items-center gap-2 mt-2 text-lg">
                         <Trophy className="text-primary h-6 w-6" />
-                        <span className="font-bold">Rank: {athlete.rank}</span>
-                        <span className="text-muted-foreground">({athlete.points.toLocaleString()} pts)</span>
+                        <span className="font-bold">Posição:</span> {athlete.rank}º
+                        <span className="text-muted-foreground">({athlete.points.toLocaleString()} pontos)</span>
                     </div>
                 </div>
             </div>
@@ -48,33 +48,33 @@ export default function AthleteProfilePage({ params }: { params: { id: string } 
 
       <Tabs defaultValue="stats" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="stats"><BarChart className="mr-2 h-4 w-4" />Stats</TabsTrigger>
-          <TabsTrigger value="photos"><ImageIcon className="mr-2 h-4 w-4" />Photos</TabsTrigger>
-          <TabsTrigger value="videos"><VideoIcon className="mr-2 h-4 w-4" />Videos</TabsTrigger>
+          <TabsTrigger value="stats"><BarChart className="mr-2 h-4 w-4" />Estatísticas</TabsTrigger>
+          <TabsTrigger value="photos"><ImageIcon className="mr-2 h-4 w-4" />Fotos</TabsTrigger>
+          <TabsTrigger value="videos"><VideoIcon className="mr-2 h-4 w-4" />Vídeos</TabsTrigger>
         </TabsList>
 
         <TabsContent value="stats" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle className="font-headline">Career Statistics</CardTitle>
+              <CardTitle className="font-headline">Estatísticas da Carreira</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 <div className="p-4 bg-secondary rounded-lg">
                   <p className="text-3xl font-bold">{athlete.stats.events}</p>
-                  <p className="text-muted-foreground">Events</p>
+                  <p className="text-muted-foreground">Eventos</p>
                 </div>
                 <div className="p-4 bg-secondary rounded-lg">
                   <p className="text-3xl font-bold text-primary">{athlete.stats.wins}</p>
-                  <p className="text-muted-foreground">Wins</p>
+                  <p className="text-muted-foreground">Vitórias</p>
                 </div>
                 <div className="p-4 bg-secondary rounded-lg">
                   <p className="text-3xl font-bold">{athlete.stats.podiums}</p>
-                  <p className="text-muted-foreground">Podiums</p>
+                  <p className="text-muted-foreground">Pódios</p>
                 </div>
                 <div className="p-4 bg-secondary rounded-lg">
                   <p className="text-3xl font-bold">{athlete.stats.top10s}</p>
-                  <p className="text-muted-foreground">Top 10s</p>
+                  <p className="text-muted-foreground">Top 10</p>
                 </div>
               </div>
             </CardContent>
@@ -84,7 +84,7 @@ export default function AthleteProfilePage({ params }: { params: { id: string } 
         <TabsContent value="photos" className="mt-6">
             <Card>
                 <CardHeader>
-                    <CardTitle className="font-headline">Photo Gallery</CardTitle>
+                    <CardTitle className="font-headline">Galeria de Fotos</CardTitle>
                 </CardHeader>
                 <CardContent>
                     {athlete.photos.length > 0 ? (
@@ -111,7 +111,7 @@ export default function AthleteProfilePage({ params }: { params: { id: string } 
         <TabsContent value="videos" className="mt-6">
              <Card>
                 <CardHeader>
-                    <CardTitle className="font-headline">Video Highlights</CardTitle>
+                    <CardTitle className="font-headline">Destaques em Vídeo</CardTitle>
                 </CardHeader>
                 <CardContent>
                     {athlete.videos.length > 0 ? (

@@ -31,7 +31,7 @@ export default function BodyboardPage() {
                     <CardTitle>Equipamento Essencial</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <Image src="https://placehold.co/600x400" alt="Equipamento de bodyboard" width={600} height={400} className="w-full rounded-lg" data-ai-hint="bodyboard equipment" />
+                    <Image src="https://placehold.co/600x400/png" alt="Equipamento de bodyboard" width={600} height={400} className="w-full rounded-lg" data-ai-hint="bodyboard equipment" />
                     <ul className="list-disc list-inside space-y-2">
                         <li><strong>Prancha (Board):</strong> O principal equipamento.</li>
                         <li><strong>Leash (Corda):</strong> Mantém a prancha presa ao surfista.</li>

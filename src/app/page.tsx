@@ -15,17 +15,17 @@ export default function Home() {
           BBLagos
         </h1>
         <p className="mt-4 text-xl text-muted-foreground">
-          The Heartbeat of Modern Bodyboarding in Lagos
+          O Coração do Bodyboard na Região dos Lagos
         </p>
         <p className="mt-2 max-w-2xl mx-auto text-foreground/80">
-          Explore rankings, follow events, and watch the best athletes in the world push the limits of the sport.
+          Explore os rankings, acompanhe os eventos e assista aos melhores atletas do mundo desafiando os limites do esporte.
         </p>
         <div className="mt-6 flex gap-4 justify-center">
           <Button asChild size="lg">
-            <Link href="/events">Upcoming Events</Link>
+            <Link href="/eventos">Próximos Eventos</Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <Link href="/rankings">View Rankings</Link>
+            <Link href="/rankings">Ver Classificação</Link>
           </Button>
         </div>
       </section>
@@ -33,7 +33,7 @@ export default function Home() {
       <section className="space-y-6">
         <h2 className="text-3xl font-bold font-headline flex items-center gap-2">
           <Calendar className="text-primary" />
-          Upcoming Events
+          Próximos Eventos
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {events.map((event) => (
@@ -55,7 +55,7 @@ export default function Home() {
               </CardContent>
               <CardFooter className="p-4 pt-0">
                  <Button asChild variant="link" className="p-0 h-auto">
-                   <Link href={`/events/${event.id}`}>View Details <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                   <Link href={`/eventos/${event.id}`}>+ Detalhes <ArrowRight className="ml-2 h-4 w-4" /></Link>
                  </Button>
               </CardFooter>
             </Card>
@@ -67,14 +67,14 @@ export default function Home() {
         <section className="space-y-6">
             <h2 className="text-3xl font-bold font-headline flex items-center gap-2">
               <Trophy className="text-primary" />
-              Top Athletes
+              Melhores Atletas
             </h2>
             <Card>
               <CardContent className="p-4">
                 <ul className="space-y-4">
-                  {athletes.filter(a => a.category === 'Professional').slice(0, 3).map((athlete) => (
+                  {athletes.filter(a => a.category === 'Profissional').slice(0, 3).map((athlete) => (
                     <li key={athlete.id}>
-                      <Link href={`/athletes/${athlete.id}`} className="flex items-center gap-4 p-2 rounded-lg hover:bg-secondary">
+                      <Link href={`/atletas/${athlete.id}`} className="flex items-center gap-4 p-2 rounded-lg hover:bg-secondary">
                         <span className="text-2xl font-bold text-primary w-6">#{athlete.rank}</span>
                         <Image src={`https://flagcdn.com/h24/${athlete.countryCode}.png`} alt={`${athlete.country} flag`} width={32} height={24} className="rounded-sm" />
                         <div>
@@ -93,7 +93,7 @@ export default function Home() {
         <section className="space-y-6">
           <h2 className="text-3xl font-bold font-headline flex items-center gap-2">
             <GalleryHorizontal className="text-primary" />
-            Latest Media
+            Últimas Mídias
           </h2>
            <Carousel opts={{ align: "start" }} className="w-full">
             <CarouselContent>
@@ -123,13 +123,13 @@ export default function Home() {
        <section className="space-y-6">
         <h2 className="text-3xl font-bold font-headline flex items-center gap-2">
           <Instagram className="text-primary" />
-          Follow us on Instagram
+          Siga-nos no Instagram
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className="aspect-square relative rounded-lg overflow-hidden group">
               <Image 
-                src={`https://placehold.co/400x400`} 
+                src={`https://placehold.co/400x400/png`} 
                 alt={`Instagram post ${index + 1}`} 
                 fill 
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
