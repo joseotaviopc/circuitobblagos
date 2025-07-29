@@ -62,7 +62,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <SidebarHeader>
           <Link href="/" className="flex items-center gap-2">
             <Logo />
-            <h1 className="text-2xl font-headline font-semibold text-primary">BBLagos</h1>
           </Link>
         </SidebarHeader>
         <SidebarContent>
