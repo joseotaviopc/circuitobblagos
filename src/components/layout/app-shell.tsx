@@ -19,6 +19,7 @@ import {
   Mail,
   Waves,
   Megaphone,
+  BarChart,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -39,6 +40,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const menuItems = [
     { href: '/events', label: 'Calendario', icon: Calendar },
+    { href: '/rankings', label: 'Ranking', icon: BarChart },
     { href: '/media', label: 'Fotos', icon: ImageIcon },
     { href: '/media', label: 'Videos', icon: Video },
     { href: '/historia', label: 'Historia', icon: BookOpen },

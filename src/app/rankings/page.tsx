@@ -13,6 +13,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { athletes, Athlete } from '@/lib/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { BarChart } from 'lucide-react';
 
 const categories: Athlete['category'][] = ['Professional', 'Open', 'Legend', 'Master', 'Sub-18', 'Sub-15'];
 
