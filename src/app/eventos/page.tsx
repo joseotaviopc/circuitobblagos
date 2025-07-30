@@ -13,7 +13,7 @@ export default function EventsPage() {
           Calendário de Eventos
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Acompanhe o circuito e fique por dentro das últimas competições de bodyboard ao redor do mundo.
+          Acompanhe o circuito e fique por dentro das últimas competições de bodyboard na região dos Lagos.
         </p>
       </header>
 
@@ -34,7 +34,7 @@ export default function EventsPage() {
             <CardContent className="p-4 flex flex-col flex-grow">
               <h2 className="font-bold text-lg font-headline">{event.name}</h2>
               <p className="text-sm text-muted-foreground">{event.location}</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="flex-1 text-sm text-muted-foreground">
                 {new Date(event.date).toLocaleDateString('pt-BR', {
                   year: 'numeric',
                   month: 'long',
@@ -42,7 +42,7 @@ export default function EventsPage() {
                 })}
               </p>
               <Button asChild variant="secondary" className="mt-4 w-full">
-                <Link href={`/events/${event.id}`}>
+                <Link href={`/eventos/${event.slug}`}>
                   Ver Evento <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
