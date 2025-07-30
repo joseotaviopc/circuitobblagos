@@ -18,7 +18,7 @@ export type Athlete = {
 };
 
 export const athletes: Athlete[] = [
-  { id: '1', name: 'Pierre-Louis Costes', rank: 1, category: 'Profissional', points: 8000, country: 'France', countryCode: 'fr', photo: 'https://placehold.co/400x400/png', stats: { events: 12, wins: 4, podiums: 8, top10s: 11 }, photos: ['https://placehold.co/600x400/png?text=Action+Shot+1', 'https://placehold.co/600x400/png?text=Action+Shot+2'], videos: ['https://placehold.co/600x400/png?text=Highlight+Reel+1'] },
+  { id: '1', name: 'Pierre-Louis Costes', rank: 1, category: 'Profissional', points: 8000, country: 'France', countryCode: 'fr', photo: '/bb-lagos.png', stats: { events: 12, wins: 4, podiums: 8, top10s: 11 }, photos: ['https://placehold.co/600x400/png?text=Action+Shot+1', 'https://placehold.co/600x400/png?text=Action+Shot+2'], videos: ['https://placehold.co/600x400/png?text=Highlight+Reel+1'] },
   { id: '2', name: 'Isabela Sousa', rank: 2, category: 'Profissional', points: 7500, country: 'Brazil', countryCode: 'br', photo: 'https://placehold.co/400x400/png', stats: { events: 10, wins: 3, podiums: 7, top10s: 10 }, photos: [], videos: [] },
   { id: '3', name: 'Tristan Roberts', rank: 3, category: 'Profissional', points: 7200, country: 'South Africa', countryCode: 'za', photo: 'https://placehold.co/400x400/png', stats: { events: 11, wins: 2, podiums: 6, top10s: 10 }, photos: [], videos: [] },
   { id: '4', name: 'Sari Ohhara', rank: 4, category: 'Profissional', points: 6900, country: 'Japan', countryCode: 'jp', photo: 'https://placehold.co/400x400/png', stats: { events: 13, wins: 2, podiums: 5, top10s: 9 }, photos: [], videos: [] },
@@ -39,10 +39,13 @@ export type Event = {
 };
 
 export const events: Event[] = [
-  { id: '1', name: 'Fronton King', date: '2024-10-12', location: 'Gáldar, Gran Canaria', poster: 'https://placehold.co/400x600/png', 'data-ai-hint': 'surfing competition', highlights: 'Massive waves and incredible barrel rides from the world\'s best.', results: '1st: Pierre-Louis Costes, 2nd: Tristan Roberts, 3rd: Tanner McDaniel' },
-  { id: '2', name: 'Arica Cultura Bodyboard', date: '2024-07-20', location: 'Arica, Chile', poster: 'https://placehold.co/400x600/png', 'data-ai-hint': 'ocean waves', highlights: 'High-performance surfing in challenging conditions.', results: '1st: Alan Muñoz, 2nd: Amaury Lavernhe, 3rd: Iain Campbell' },
-  { id: '3', name: 'Itacoatiara Pro', date: '2024-06-15', location: 'Niterói, Brazil', poster: 'https://placehold.co/400x600/png', 'data-ai-hint': 'beach sunset', highlights: 'Explosive aerial maneuvers and deep tube rides.', results: '1st: Dudu Pedra, 2nd: Uri Valadão, 3rd: Socrates Santana' },
-  { id: '4', name: 'Walker Bay Pro', date: '2024-08-25', location: 'Western Cape, South Africa', poster: 'https://placehold.co/400x600/png', 'data-ai-hint': 'surfer action', highlights: 'A showcase of power surfing in a beautiful location.', results: '1st: Tristan Roberts, 2nd: Jared Houston, 3rd: Mark McCarthy' },
+  { id: '1', name: 'Saquarema', date: '2025-02-08', location: 'Praia da Vila - Saquarema', poster: '/etapa-01-2025.jpg', highlights: 'Massive waves and incredible barrel rides from the world\'s best.', results: '1st: Pierre-Louis Costes, 2nd: Tristan Roberts, 3rd: Tanner McDaniel' },
+  { id: '2', name: 'Arraial do Cabo', date: '2025-03-30', location: 'Praia Brava - Arraial do Cabo', poster: '/etapa-02-2025.jpg', highlights: 'High-performance surfing in challenging conditions.', results: '1st: Alan Muñoz, 2nd: Amaury Lavernhe, 3rd: Iain Campbell' },
+  { id: '3', name: 'Rio das Ostras', date: '2025-05-24', location: 'Praia de Costa Azul - Rio das Ostras', poster: '/etapa-03-2025.jpg', highlights: 'Explosive aerial maneuvers and deep tube rides.', results: '1st: Dudu Pedra, 2nd: Uri Valadão, 3rd: Socrates Santana' },
+  { id: '4', name: 'Araruama', date: '2025-06-15', location: 'Praia Seca - Araruama', poster: '/etapa-04-2025.jpg', highlights: 'A showcase of power surfing in a beautiful location.', results: '1st: Tristan Roberts, 2nd: Jared Houston, 3rd: Mark McCarthy' },
+  { id: '5', name: 'Cabo Frio', date: '2025-07-09', location: 'Peró - Cabo Frio', poster: 'https://placehold.co/400x600/png', highlights: 'A showcase of power surfing in a beautiful location.', results: '1st: Tristan Roberts, 2nd: Jared Houston, 3rd: Mark McCarthy' },
+  { id: '6', name: 'Macaé', date: '2025-08-28', location: 'Macaé', poster: 'https://placehold.co/400x600/png', highlights: 'A showcase of power surfing in a beautiful location.', results: '1st: Tristan Roberts, 2nd: Jared Houston, 3rd: Mark McCarthy' },
+  { id: '7', name: 'Búzios', date: '2025-10-18', location: 'Tucuns - Búzios', poster: 'https://placehold.co/400x600/png', highlights: 'A showcase of power surfing in a beautiful location.', results: '1st: Tristan Roberts, 2nd: Jared Houston, 3rd: Mark McCarthy' },
 ];
 
 

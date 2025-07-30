@@ -38,20 +38,19 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {events.map((event) => (
             <Card key={event.id} className="overflow-hidden hover:shadow-primary/20 hover:shadow-lg transition-shadow duration-300">
-              <CardHeader className="p-0">
+              <CardHeader className="p-0 aspect-square relative">
                 <Image
                   src={event.poster}
                   alt={event.name}
-                  width={400}
-                  height={600}
-                  className="w-full h-48 object-cover"
+                  fill
+                  className="object-cover"
                   data-ai-hint={event['data-ai-hint'] || 'surfing competition'}
                 />
               </CardHeader>
               <CardContent className="p-4">
                 <h3 className="font-bold font-headline">{event.name}</h3>
                 <p className="text-sm text-muted-foreground">{event.location}</p>
-                <p className="text-sm text-muted-foreground">{new Date(event.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p className="text-sm text-muted-foreground">{new Date(event.date).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
               </CardContent>
               <CardFooter className="p-4 pt-0">
                  <Button asChild variant="link" className="p-0 h-auto">

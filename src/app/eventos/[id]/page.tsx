@@ -48,7 +48,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
                 <CardContent className="space-y-4 text-lg">
                     <div className="flex items-center gap-3">
                         <Calendar className="h-5 w-5 text-primary" />
-                        <span>{new Date(event.date).toLocaleDateString('en-US', {
+                        <span>{new Date(event.date).toLocaleDateString('pt-BR', {
                             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
                         })}</span>
                     </div>

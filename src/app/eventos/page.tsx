@@ -21,7 +21,7 @@ export default function EventsPage() {
         {events.map((event) => (
           <Card key={event.id} className="group overflow-hidden flex flex-col">
             <CardHeader className="p-0">
-              <div className="aspect-[2/3] relative">
+              <div className="aspect-square relative">
                 <Image
                   src={event.poster}
                   alt={event.name}
@@ -35,7 +35,7 @@ export default function EventsPage() {
               <h2 className="font-bold text-lg font-headline">{event.name}</h2>
               <p className="text-sm text-muted-foreground">{event.location}</p>
               <p className="text-sm text-muted-foreground">
-                {new Date(event.date).toLocaleDateString('en-US', {
+                {new Date(event.date).toLocaleDateString('pt-BR', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',

@@ -19,7 +19,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import Image from "next/image"
-import BBLagosLogo from "@/public/bb-lagos-logo-nobg.png"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -271,7 +270,7 @@ const SidebarTrigger = React.forwardRef<
     <>
       {state === "collapsed" && (
         <div className="flex items-center justify-center relative w-7 h-7">
-          <Image src={BBLagosLogo} alt="BBLagos" className="w-7 h-7" />
+          <Image src={'/bb-lagos-logo-nobg.png'} width={175} height={175} alt="BBLagos" className="w-7 h-7" />
       </div>
       )}
       <Button
