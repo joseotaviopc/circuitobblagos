@@ -1,12 +1,20 @@
+'use client';
+import Link from 'next/link';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
-import { getEvent } from '@/lib/data';
+import { notFound, useParams } from 'next/navigation';
+import { events, getEvent } from '@/lib/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, MapPin } from 'lucide-react';
 import { EventSummaryGenerator } from '@/components/event-summary-generator';
 
-export default function EventDetailPage({ params }: { params: { id: string } }) {
-  const event = getEvent(params.id);
+export default function EventDetailPage() {
+  const { slug } = useParams();
+
+  if (!slug) {
+    notFound();
+  }
+
+  const event = events.find(event => event.slug === slug);
 
   if (!event) {
     notFound();
