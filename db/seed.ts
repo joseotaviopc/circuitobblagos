@@ -1,0 +1,664 @@
+
+import { eq } from "drizzle-orm";
+import { db } from "./";
+import { eventos } from "./schema";
+import { randomUUID } from 'node:crypto';
+
+const resultadosProEtapa01 = [
+  { atleta: "Israel Eduardo", categoria: "Pro-Masc", posicao: 1, pontos: 1000 },
+  { atleta: "Igor Aboin", categoria: "Pro-Masc", posicao: 12, pontos: 462 },
+  { atleta: "Thiago Barros", categoria: "Pro-Masc", posicao: 7, pontos: 555 },
+  { atleta: "Sergio Machado", categoria: "Pro-Masc", posicao: 4, pontos: 670 },
+  { atleta: "Maycon Cartaxo", categoria: "Pro-Masc", posicao: 16, pontos: 413 },
+  { atleta: "Edson Junior", categoria: "Pro-Masc", posicao: 8, pontos: 528 },
+  { atleta: "Blademy Carpeloni", categoria: "Pro-Masc", posicao: 15, pontos: 425 },
+  { atleta: "Felipe Lima", categoria: "Pro-Masc", posicao: 2, pontos: 860 },
+  { atleta: "Jose Otavio", categoria: "Pro-Masc", posicao: 3, pontos: 730 },
+  { atleta: "Matheus Guimaraes", categoria: "Pro-Masc", posicao: 16, pontos: 413 },
+  { atleta: "Pedro Henrique", categoria: "SP", posicao: 7, pontos: 555 },
+  { atleta: "Diogo Taboada", categoria: "Pro-Masc", posicao: 16, pontos: 413 },
+  { atleta: "Diego Rodrigues", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Bruno Leitao", categoria: "Pro-Masc", posicao: 16, pontos: 413 },
+  { atleta: "Erisberto Abrantes", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Erick Poseidon", categoria: "Pro-Masc", posicao: 11, pontos: 475 },
+  { atleta: "Alexandre Silva", categoria: "Pro-Masc", posicao: 15, pontos: 425 },
+  { atleta: "Andre Lopes", categoria: "Pro-Masc", posicao: 16, pontos: 413 },
+  { atleta: "Gabriel Flores", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Franklin Carlos", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Rafael Paes", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Gabriel Rufino", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Andre Sancho", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Wardeley Junior", categoria: "Pro-Masc", posicao: 8, pontos: 528 },
+  { atleta: "Gabriel Ramalho", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Flavio Stanek", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Renan Farias", categoria: "Pro-Masc", posicao: 11, pontos: 475 },
+  { atleta: "Carlos Bastos", categoria: "Pro-Masc", posicao: 11, pontos: 475 },
+  { atleta: "Andre Luiz", categoria: "SC", posicao: 11, pontos: 475 },
+  { atleta: "Shelton Icaro", categoria: "Pro-Masc", posicao: 12, pontos: 462 },
+  { atleta: "Joao Victor", categoria: "Pro-Masc", posicao: 12, pontos: 462 },
+  { atleta: "Gabriel Elizeu", categoria: "Pro-Masc", posicao: 12, pontos: 462 },
+  { atleta: "Lucas Franco", categoria: "Pro-Masc", posicao: 15, pontos: 425 },
+  { atleta: "Leonardo Moreira", categoria: "Pro-Masc", posicao: 15, pontos: 425 },
+  { atleta: "Gustavo Barreto", categoria: "Pro-Masc", posicao: 15, pontos: 425 },
+  { atleta: "Daniel Silva", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Christopher Reis", categoria: "Pro-Masc", posicao: 15, pontos: 425 },
+  { atleta: "Caique Thomas", categoria: "Pro-Masc", posicao: 15, pontos: 425 },
+  { atleta: "Agatao Junior", categoria: "Pro-Masc", posicao: 15, pontos: 425 },
+  { atleta: "Ricardo Andrade", categoria: "Pro-Masc", posicao: 16, pontos: 413 },
+  { atleta: "Felipe Pereira", categoria: "Pro-Masc", posicao: 16, pontos: 413 },
+  { atleta: "Arthur Patrick", categoria: "Pro-Masc", posicao: 16, pontos: 413 },
+  { atleta: "Kaua Costa", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Dionatam Barroso", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Bruno Valente", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Saul Felipe", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Paulo Victor Barros", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Nicolas Araujo", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Ricardo Junior", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Matheus Fontes", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Bruno Araujo", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Ariel Souza", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+];
+
+const resultadosProEtapa02 = [
+  { atleta: "Israel Eduardo", categoria: "Pro-Masc", posicao: 3, pontos: 730 },
+  { atleta: "Igor Aboin", categoria: "Pro-Masc", posicao: 5, pontos: 610 },
+  { atleta: "Thiago Barros", categoria: "Pro-Masc", posicao: 2, pontos: 860 },
+  { atleta: "Sergio Machado", categoria: "Pro-Masc", posicao: 1, pontos: 1000 },
+  { atleta: "Maycon Cartaxo", categoria: "Pro-Masc", posicao: 7, pontos: 555 },
+  { atleta: "Edson Junior", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Blademy Carpeloni", categoria: "Pro-Masc", posicao: 9, pontos: 500 },
+  { atleta: "Felipe Lima", categoria: "Pro-Masc", posicao: 9, pontos: 500 },
+  { atleta: "Jose Otavio", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Matheus Guimaraes", categoria: "Pro-Masc", posicao: 17, pontos: 400 },
+  { atleta: "Pedro Henrique", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Diogo Taboada", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Diego Rodrigues", categoria: "Pro-Masc", posicao: 7, pontos: 555 },
+  { atleta: "Bruno Leitao", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Erisberto Abrantes", categoria: "Pro-Masc", posicao: 17, pontos: 400 },
+  { atleta: "Erick Poseidon", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Alexandre Silva", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Andre Lopes", categoria: "Pro-Masc", posicao: 17, pontos: 400 },
+  { atleta: "Gabriel Flores", categoria: "Pro-Masc", posicao: 23, pontos: 370 },
+  { atleta: "Franklin Carlos", categoria: "Pro-Masc", posicao: 23, pontos: 370 },
+  { atleta: "Rafael Paes", categoria: "Pro-Masc", posicao: 4, pontos: 670 },
+  { atleta: "Gabriel Rufino", categoria: "Pro-Masc", posicao: 5, pontos: 610 },
+  { atleta: "Andre Sancho", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Wardeley Junior", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Gabriel Ramalho", categoria: "Pro-Masc", posicao: 9, pontos: 500 },
+  { atleta: "Flavio Stanek", categoria: "Pro-Masc", posicao: 9, pontos: 500 },
+  { atleta: "Renan Farias", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Carlos Bastos", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Andre Luiz", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Shelton Icaro", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Joao Victor", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Gabriel Elizeu", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Lucas Franco", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Leonardo Moreira", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Gustavo Barreto", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Daniel Silva", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Christopher Reis", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Caique Thomas", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Agatao Junior", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Ricardo Andrade", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Felipe Pereira", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Arthur Patrick", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Kaua Costa", categoria: "Pro-Masc", posicao: 17, pontos: 400 },
+  { atleta: "Dionatam Barroso", categoria: "Pro-Masc", posicao: 17, pontos: 400 },
+  { atleta: "Bruno Valente", categoria: "Pro-Masc", posicao: 17, pontos: 400 },
+  { atleta: "Saul Felipe", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Paulo Victor Barros", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Nicolas Araujo", categoria: "Pro-Masc", posicao: 0, pontos: 0 },
+  { atleta: "Ricardo Junior", categoria: "Pro-Masc", posicao: 23, pontos: 370 },
+  { atleta: "Matheus Fontes", categoria: "Pro-Masc", posicao: 23, pontos: 370 },
+  { atleta: "Bruno Araujo", categoria: "Pro-Masc", posicao: 23, pontos: 370 },
+  { atleta: "Ariel Souza", categoria: "Pro-Masc", posicao: 23, pontos: 370 },
+];
+
+const resultadosProEtapa03 = [
+{ atleta: "Israel Eduardo" , categoria: "Pro-Masc", posicao:	3,	pontos: 730 },
+{ atleta: "Igor Aboin" , categoria: "Pro-Masc", posicao:	2,	pontos: 860 },
+{ atleta: "Thiago Barros" , categoria: "Pro-Masc", posicao:	9,	pontos: 500 },
+{ atleta: "Sergio Machado" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Maycon Cartaxo" , categoria: "Pro-Masc", posicao:	4,	pontos: 670 },
+{ atleta: "Edson Junior" , categoria: "Pro-Masc", posicao:	1,	pontos: 1000 },
+{ atleta: "Blademy Carpeloni" , categoria: "Pro-Masc", posicao:	9,	pontos: 500 },
+{ atleta: "Felipe Lima" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Jose Otavio" , categoria: "Pro-Masc", posicao:	7,	pontos: 555 },
+{ atleta: "Matheus Guimaraes" , categoria: "Pro-Masc", posicao:	15,	pontos: 425 },
+{ atleta: "Pedro Henrique" , categoria: "Pro-Masc", posicao:	7,	pontos: 555 },
+{ atleta: "Diogo Taboada" , categoria: "Pro-Masc", posicao:	5,	pontos: 610 },
+{ atleta: "Diego Rodrigues" , categoria: "Pro-Masc", posicao:	21,	pontos: 380 },
+{ atleta: "Bruno Leitao" , categoria: "Pro-Masc", posicao:	9,	pontos: 500 },
+{ atleta: "Erisberto Abrantes" , categoria: "Pro-Masc", posicao:	9,	pontos: 500 },
+{ atleta: "Erick Poseidon" , categoria: "Pro-Masc", posicao:	15,	pontos: 425 },
+{ atleta: "Alexandre Silva" , categoria: "Pro-Masc", posicao:	15,	pontos: 425 },
+{ atleta: "Andre Lopes" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Gabriel Flores" , categoria: "Pro-Masc", posicao:	15,	pontos: 425 },
+{ atleta: "Franklin Carlos" , categoria: "Pro-Masc", posicao:	15,	pontos: 425 },
+{ atleta: "Rafael Paes" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Gabriel Rufino" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Andre Sancho" , categoria: "Pro-Masc", posicao:	5,	pontos: 610 },
+{ atleta: "Wardeley Junior" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Gabriel Ramalho" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Flavio Stanek" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Renan Farias" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Carlos Bastos" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Andre Luiz" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Shelton Icaro" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Joao Victor" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Gabriel Elizeu" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Lucas Franco" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Leonardo Moreira" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Gustavo Barreto" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Daniel Silva" , categoria: "Pro-Masc", posicao:	15,	pontos: 425 },
+{ atleta: "Christopher Reis" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Caique Thomas" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Agatao Junior" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Ricardo Andrade" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Felipe Pereira" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Arthur Patrick" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Kaua Costa" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Dionatam Barroso" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Bruno Valente" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Saul Felipe" , categoria: "Pro-Masc", posicao:	21,	pontos: 380 },
+{ atleta: "Paulo Victor Barros" , categoria: "Pro-Masc", posicao:	21,	pontos: 380 },
+{ atleta: "Nicolas Araujo" , categoria: "Pro-Masc", posicao:	21,	pontos: 380 },
+{ atleta: "Ricardo Junior" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Matheus Fontes" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Bruno Araujo" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+{ atleta: "Ariel Souza" , categoria: "Pro-Masc", posicao:	0,	pontos: 0 },
+];
+
+const resultadoFemEtapa01 = [
+    { atleta: "Bia Vieira" , categoria: "Pro-Fem", posicao:	3,	pontos: 730 },
+    { atleta: "Paola Simao" , categoria: "Pro-Fem", posicao:	1,	pontos: 1000 },
+    { atleta: "Melissa Souza" , categoria: "Pro-Fem", posicao:	2,	pontos: 860 },
+    { atleta: "Victoria Moraes" , categoria: "Pro-Fem", posicao:	0,	pontos: 0 },
+    { atleta: "Isa Vidal" , categoria: "Pro-Fem", posicao:	0,	pontos: 0 },
+    { atleta: "Kamilla Video" , categoria: "Pro-Fem", posicao:	0,	pontos: 0 },
+    { atleta: "Bia Martins" , categoria: "Pro-Fem", posicao:	0,	pontos: 0 },
+    { atleta: "Sophia Vargas" , categoria: "Pro-Fem", posicao:	0,	pontos: 0 },
+    { atleta: "Manoela Giacomassi" , categoria: "Pro-Fem", posicao:	0,	pontos: 0 },
+]
+
+const resultadoFemEtapa02 = [
+    { atleta: "Bia Vieira" , categoria: "Pro-Fem", posicao:	1, pontos: 1000 },
+    { atleta: "Paola Simao" , categoria: "Pro-Fem", posicao:	9, pontos: 500 },
+    { atleta: "Melissa Souza" , categoria: "Pro-Fem", posicao:	5, pontos: 610 },
+    { atleta: "Victoria Moraes" , categoria: "Pro-Fem", posicao:	2, pontos: 860 },
+    { atleta: "Isa Vidal" , categoria: "Pro-Fem", posicao:	3, pontos: 730 },
+    { atleta: "Kamilla Video" , categoria: "Pro-Fem", posicao:	4, pontos: 670 },
+    { atleta: "Bia Martins" , categoria: "Pro-Fem", posicao:	5, pontos: 610 },
+    { atleta: "Sophia Vargas" , categoria: "Pro-Fem", posicao:	9, pontos: 500 },
+    { atleta: "Manoela Giacomassi" , categoria: "Pro-Fem", posicao:	9, pontos: 500 },
+]
+
+const resultadoFemEtapa03 = [
+    { atleta: "Bia Vieira" , categoria: "Pro-Fem", posicao:	4, pontos: 670 },
+    { atleta: "Paola Simao" , categoria: "Pro-Fem", posicao:	2, pontos: 860 },
+    { atleta: "Melissa Souza" , categoria: "Pro-Fem", posicao:	3, pontos: 730 },
+    { atleta: "Victoria Moraes" , categoria: "Pro-Fem", posicao:	1, pontos: 1000 },
+    { atleta: "Isa Vidal" , categoria: "Pro-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Kamilla Video" , categoria: "Pro-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Bia Martins" , categoria: "Pro-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Sophia Vargas" , categoria: "Pro-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Manoela Giacomassi" , categoria: "Pro-Fem", posicao:	0, pontos: 0 },
+]
+
+const resultadoMasterEtapa01 = [
+    { atleta: "Joaquim Carvalho" , categoria: "Master", posicao:	2, pontos: 860 },
+    { atleta: "Andre Paiva" , categoria: "Master", posicao:	11, pontos: 475 },
+    { atleta: "Paulo Victor Barros" , categoria: "Master", posicao:	8, pontos: 528 },
+    { atleta: "Diogo Taboada" , categoria: "Master", posicao:	3, pontos: 730 },
+    { atleta: "Dennys Rosa" , categoria: "Master", posicao:	11, pontos: 475 },
+    { atleta: "Felipe Colombo" , categoria: "Master", posicao:	1, pontos: 1000 },
+    { atleta: "Cristiano Freitas" , categoria: "Master", posicao:	12, pontos: 462 },
+    { atleta: "Erisberto Abrantes" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Antonio Japa" , categoria: "Master", posicao:	12, pontos: 462 },
+    { atleta: "Gugu Barcellos" , categoria: "Master", posicao:	4, pontos: 670 },
+    { atleta: "Erick Poseidon" , categoria: "Master", posicao:	11, pontos: 475 },
+    { atleta: "Franklin Carlos" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Dudu Almeida" , categoria: "Master", posicao:	7, pontos: 555 },
+    { atleta: "Milton Agatao" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Gil Alexandre" , categoria: "Master", posicao:	12, pontos: 462 },
+    { atleta: "Sandro Justo" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Adriano Minguta" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Leandro Moreira" , categoria: "Master", posicao:	7, pontos: 555 },
+    { atleta: "Hugo Aurelio" , categoria: "Master", posicao:	8, pontos: 528 },
+    { atleta: "Fernando Almeida" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Felipe Santiago" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Gabriel Zacaro" , categoria: "Master", posicao:	11, pontos: 475 },
+    { atleta: "Sandro Melo" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Bruno Augusto" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Alexandre Ramos" , categoria: "Master", posicao:	0, pontos: 0 },
+]
+
+const resultadoMasterEtapa02 = [
+    { atleta: "Joaquim Carvalho" , categoria: "Master", posicao:	3, pontos: 730 },
+    { atleta: "Andre Paiva" , categoria: "Master", posicao:	7, pontos: 555 },
+    { atleta: "Paulo Victor Barros" , categoria: "Master", posicao:	2, pontos: 860 },
+    { atleta: "Diogo Taboada" , categoria: "Master", posicao:	5, pontos: 610 },
+    { atleta: "Dennys Rosa" , categoria: "Master", posicao:	4, pontos: 670 },
+    { atleta: "Felipe Colombo" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Cristiano Freitas" , categoria: "Master", posicao:	13, pontos: 450 },
+    { atleta: "Erisberto Abrantes" , categoria: "Master", posicao:	1, pontos: 1000 },
+    { atleta: "Antonio Japa" , categoria: "Master", posicao:	7, pontos: 555 },
+    { atleta: "Gugu Barcellos" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Erick Poseidon" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Franklin Carlos" , categoria: "Master", posicao:	9, pontos: 500 },
+    { atleta: "Dudu Almeida" , categoria: "Master", posicao:	9, pontos: 500 },
+    { atleta: "Milton Agatao" , categoria: "Master", posicao:	9, pontos: 500 },
+    { atleta: "Gil Alexandre" , categoria: "Master", posicao:	13, pontos: 450 },
+    { atleta: "Sandro Justo" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Adriano Minguta" , categoria: "Master", posicao:	5, pontos: 610 },
+    { atleta: "Leandro Moreira" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Hugo Aurelio" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Fernando Almeida" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Felipe Santiago" , categoria: "Master", posicao:	9, pontos: 500 },
+    { atleta: "Gabriel Zacaro" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Sandro Melo" , categoria: "Master", posicao:	13, pontos: 450 },
+    { atleta: "Bruno Augusto" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Alexandre Ramos" , categoria: "Master", posicao:	13, pontos: 450 },
+]
+
+const resultadoMasterEtapa03 = [
+    { atleta: "Joaquim Carvalho" , categoria: "Master", posicao:	4, pontos: 670 },
+    { atleta: "Paulo Victor Barros" , categoria: "Master", posicao:	2, pontos: 860 },
+    { atleta: "Andre Paiva" , categoria: "Master", posicao:	1, pontos: 1000 },
+    { atleta: "Diogo Taboada" , categoria: "Master", posicao:	9, pontos: 500 },
+    { atleta: "Dennys Rosa" , categoria: "Master", posicao:	13, pontos: 450 },
+    { atleta: "Felipe Colombo" , categoria: "Master", posicao:	7, pontos: 555 },
+    { atleta: "Cristiano Freitas" , categoria: "Master", posicao:	5, pontos: 610 },
+    { atleta: "Erisberto Abrantes" , categoria: "Master", posicao:	9, pontos: 500 },
+    { atleta: "Antonio Japa" , categoria: "Master", posicao:	13, pontos: 450 },
+    { atleta: "Gugu Barcellos" , categoria: "Master", posicao:	3, pontos: 730 },
+    { atleta: "Erick Poseidon" , categoria: "Master", posicao:	2, pontos: 860 },
+    { atleta: "Franklin Carlos" , categoria: "Master", posicao:	7, pontos: 555 },
+    { atleta: "Dudu Almeida" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Milton Agatao" , categoria: "Master", posicao:	13, pontos: 450 },
+    { atleta: "Gil Alexandre" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Sandro Justo" , categoria: "Master", posicao:	5, pontos: 610 },
+    { atleta: "Adriano Minguta" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Leandro Moreira" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Hugo Aurelio" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Fernando Almeida" , categoria: "Master", posicao:	9, pontos: 500 },
+    { atleta: "Felipe Santiago" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Gabriel Zacaro" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Sandro Melo" , categoria: "Master", posicao:	0, pontos: 0 },
+    { atleta: "Bruno Augusto" , categoria: "Master", posicao:	13, pontos: 450 },
+    { atleta: "Alexandre Ramos" , categoria: "Master", posicao:	0, pontos: 0 },
+]
+
+const resultadoLegendEtapa01 = [
+    { atleta: "Ivan Brandao" , categoria: "Legend", posicao:	2, pontos: 860 },
+    { atleta: "Andre Paiva" , categoria: "Legend", posicao:	7, pontos: 555 },
+    { atleta: "Gugu Barcellos" , categoria: "Legend", posicao:	1, pontos: 1000 },
+    { atleta: "Fabio Henrique" , categoria: "Legend", posicao:	12, pontos: 462 },
+    { atleta: "Dennys Rosa" , categoria: "Legend", posicao:	11, pontos: 475 },
+    { atleta: "Marcelo Muniz" , categoria: "Legend", posicao:	3, pontos: 730 },
+    { atleta: "Rafael Dorileo" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Wagner Gouveia" , categoria: "Legend", posicao:	11, pontos: 475 },
+    { atleta: "Jose Otavio" , categoria: "Legend", posicao:	4, pontos: 670 },
+    { atleta: "Sergio Castanheira" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Gabriel Zacaro" , categoria: "Legend", posicao:	7, pontos: 555 },
+    { atleta: "Alexandre Ramos" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Rodrigo Correia" , categoria: "Legend", posicao:	11, pontos: 475 },
+    { atleta: "Milton Agatao" , categoria: "Legend", posicao:	12, pontos: 462 },
+    { atleta: "Forlan Custodio" , categoria: "Legend", posicao:	12, pontos: 462 },
+]
+
+const resultadoLegendEtapa02 = [
+    { atleta: "Ivan Brandao" , categoria: "Legend", posicao:	2, pontos: 860 },
+    { atleta: "Andre Paiva" , categoria: "Legend", posicao:	3, pontos: 730 },
+    { atleta: "Gugu Barcellos" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Fabio Henrique" , categoria: "Legend", posicao:	5, pontos: 610 },
+    { atleta: "Dennys Rosa" , categoria: "Legend", posicao:	1, pontos: 1000 },
+    { atleta: "Marcelo Muniz" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Rafael Dorileo" , categoria: "Legend", posicao:	4, pontos: 670 },
+    { atleta: "Wagner Gouveia" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Jose Otavio" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Sergio Castanheira" , categoria: "Legend", posicao:	5, pontos: 610 },
+    { atleta: "Gabriel Zacaro" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Alexandre Ramos" , categoria: "Legend", posicao:	7, pontos: 555 },
+    { atleta: "Rodrigo Correia" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Milton Agatao" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Forlan Custodio" , categoria: "Legend", posicao:	0, pontos: 0 },
+]
+
+const resultadoLegendEtapa03 = [
+    { atleta: "Ivan Brandao" , categoria: "Legend", posicao:	7, pontos: 555 },
+    { atleta: "Andre Paiva" , categoria: "Legend", posicao:	2, pontos: 860 },
+    { atleta: "Gugu Barcellos" , categoria: "Legend", posicao:	1, pontos: 1000 },
+    { atleta: "Fabio Henrique" , categoria: "Legend", posicao:	5, pontos: 610 },
+    { atleta: "Dennys Rosa" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Marcelo Muniz" , categoria: "Legend", posicao:	3, pontos: 730 },
+    { atleta: "Rafael Dorileo" , categoria: "Legend", posicao:	5, pontos: 610 },
+    { atleta: "Wagner Gouveia" , categoria: "Legend", posicao:	4, pontos: 670 },
+    { atleta: "Jose Otavio" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Sergio Castanheira" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Gabriel Zacaro" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Alexandre Ramos" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Rodrigo Correia" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Milton Agatao" , categoria: "Legend", posicao:	0, pontos: 0 },
+    { atleta: "Forlan Custodio" , categoria: "Legend", posicao:	0, pontos: 0 },
+]
+
+const resultadoSub12MascEtapa01 = [
+    { atleta: "Henrique Gaglionelli" , categoria: "Sub-12-Masc", posicao:	1, pontos: 1000 },
+    { atleta: "Nyas Chalfun" , categoria: "Sub-12-Masc", posicao:	3, pontos: 730 },
+    { atleta: "David Martins" , categoria: "Sub-12-Masc", posicao:	4, pontos: 670 },
+    { atleta: "Rafael Silva" , categoria: "Sub-12-Masc", posicao:	2, pontos: 860 },
+    { atleta: "Vitinho" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Lucas Coelho" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Guilherme Perre" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Enzo Cabreira" , categoria: "Sub-12-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Brayan Martins" , categoria: "Sub-12-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Ravi Falcon" , categoria: "Sub-12-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Pedro Da Silva" , categoria: "Sub-12-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Joao Victor Novak" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Tomze Muller" , categoria: "Sub-12-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Nicolas Chalfun" , categoria: "Sub-12-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Joao Marins" , categoria: "Sub-12-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Augusto Sigle" , categoria: "Sub-12-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Lucca Garcia" , categoria: "Sub-12-Masc", posicao:	13, pontos: 450 },
+    { atleta: "Davi Carvalho Barbosa" , categoria: "Sub-12-Masc", posicao:	13, pontos: 450 },
+]
+
+const resultadoSub12MascEtapa02 = [
+    { atleta: "Henrique Gaglionelli" , categoria: "Sub-12-Masc", posicao:	2, pontos: 860 },
+    { atleta: "Nyas Chalfun" , categoria: "Sub-12-Masc", posicao:	1, pontos: 1000 },
+    { atleta: "David Martins" , categoria: "Sub-12-Masc", posicao:	3, pontos: 730 },
+    { atleta: "Rafael Silva" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Vitinho" , categoria: "Sub-12-Masc", posicao:	4, pontos: 670 },
+    { atleta: "Lucas Coelho" , categoria: "Sub-12-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Guilherme Perre" , categoria: "Sub-12-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Enzo Cabreira" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Brayan Martins" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Ravi Falcon" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Pedro Da Silva" , categoria: "Sub-12-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Joao Victor Novak" , categoria: "Sub-12-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Tomze Muller" , categoria: "Sub-12-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Nicolas Chalfun" , categoria: "Sub-12-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Joao Marins" , categoria: "Sub-12-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Augusto Sigle" , categoria: "Sub-12-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Lucca Garcia" , categoria: "Sub-12-Masc", posicao:	13, pontos: 450 },
+    { atleta: "Davi Carvalho Barbosa" , categoria: "Sub-12-Masc", posicao:	13, pontos: 450 },
+]
+
+const resultadoSub12FemEtapa01 = [
+    { atleta: "Sophia Vargas" , categoria: "Sub-12-Fem", posicao:	1, pontos: 1000 },
+    { atleta: "Larissa Brandao" , categoria: "Sub-12-Fem", posicao:	2, pontos: 860 },
+    { atleta: "Alyne Moreira" , categoria: "Sub-12-Fem", posicao:	3, pontos: 730 },
+    { atleta: "Gabriela Oliveira" , categoria: "Sub-12-Fem", posicao:	4, pontos: 670 },
+    { atleta: "Ana Laura" , categoria: "Sub-12-Fem", posicao:	5, pontos: 610 },
+    { atleta: "Alice Fonseca" , categoria: "Sub-12-Fem", posicao:	5, pontos: 610 },
+    { atleta: "Isabela Oliveira" , categoria: "Sub-12-Fem", posicao:	7, pontos: 555 },
+]
+
+const resultadoSub15MascEtapa01 = [
+    { atleta: "Arthur Silva" , categoria: "Sub-15-Masc", posicao:	1, pontos: 1000 },
+    { atleta: "Matheus Figueiredo" , categoria: "Sub-15-Masc", posicao:	3, pontos: 730 },
+    { atleta: "Noah Ribeiro" , categoria: "Sub-15-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Davi Carvalho" , categoria: "Sub-15-Masc", posicao:	2, pontos: 860 },
+    { atleta: "Guilherme Almeida" , categoria: "Sub-15-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Caio Henrique" , categoria: "Sub-15-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Arthur Carvalho" , categoria: "Sub-15-Masc", posicao:	12, pontos: 462 },
+    { atleta: "Ryan Suricato" , categoria: "Sub-15-Masc", posicao:	12, pontos: 462 },
+    { atleta: "Caua Guedes" , categoria: "Sub-15-Masc", posicao:	12, pontos: 462 },
+    { atleta: "Lucas Avellar" , categoria: "Sub-15-Masc", posicao:	15, pontos: 425 },
+    { atleta: "Rafael Lorenzo" , categoria: "Sub-15-Masc", posicao:	15, pontos: 425 },
+    { atleta: "Leyr Neto" , categoria: "Sub-15-Masc", posicao:	15, pontos: 425 },
+    { atleta: "Yuri Franco" , categoria: "Sub-15-Masc", posicao:	4, pontos: 670 },
+    { atleta: "Gael Chaves" , categoria: "Sub-15-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Nyas Chalfun" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Henrique Gaglionelli" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Luiz Guilherme" , categoria: "Sub-15-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Nathan Silva" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Miguel Soares" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Matheus Ulrick" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Julio Cesar" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Guilherme Henrique" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Leo Victor" , categoria: "Sub-15-Masc", posicao:	15, pontos: 425 },
+    { atleta: "Joao Victor Lisboa" , categoria: "Sub-15-Masc", posicao:	15, pontos: 425 },
+    { atleta: "Gabriel Ferreira" , categoria: "Sub-15-Masc", posicao:	15, pontos: 425 },
+    { atleta: "Marco Antonio" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Nelvan Ferreira" , categoria: "Sub-15-Masc", posicao:	21, pontos: 380 },
+    { atleta: "Irineu Correa" , categoria: "Sub-15-Masc", posicao:	21, pontos: 380 },
+    { atleta: "Gabriel Aquino" , categoria: "Sub-15-Masc", posicao:	21, pontos: 380 },
+    { atleta: "Arthur Leal" , categoria: "Sub-15-Masc", posicao:	21, pontos: 380 },
+    { atleta: "Adailton Vieira" , categoria: "Sub-15-Masc", posicao:	21, pontos: 380 },
+]
+
+const resultadoSub15MascEtapa02 = [
+    { atleta: "Arthur Silva" , categoria: "Sub-15-Masc", posicao:	3, pontos: 730 },
+    { atleta: "Matheus Figueiredo" , categoria: "Sub-15-Masc", posicao:	2, pontos: 860 },
+    { atleta: "Noah Ribeiro" , categoria: "Sub-15-Masc", posicao:	1, pontos: 1000 },
+    { atleta: "Davi Carvalho" , categoria: "Sub-15-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Guilherme Almeida" , categoria: "Sub-15-Masc", posicao:	4, pontos: 670 },
+    { atleta: "Caio Henrique" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Arthur Carvalho" , categoria: "Sub-15-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Ryan Suricato" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Caua Guedes" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Lucas Avellar" , categoria: "Sub-15-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Rafael Lorenzo" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Leyr Neto" , categoria: "Sub-15-Masc", posicao:	18, pontos: 395 },
+    { atleta: "Yuri Franco" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Gael Chaves" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Nyas Chalfun" , categoria: "Sub-15-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Henrique Gaglionelli" , categoria: "Sub-15-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Luiz Guilherme" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Nathan Silva" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Miguel Soares" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Matheus Ulrick" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Julio Cesar" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Guilherme Henrique" , categoria: "Sub-15-Masc", posicao:	10, pontos: 488 },
+    { atleta: "Leo Victor" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Joao Victor Lisboa" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Gabriel Ferreira" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Marco Antonio" , categoria: "Sub-15-Masc", posicao:	18, pontos: 395 },
+    { atleta: "Nelvan Ferreira" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Irineu Correa" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Gabriel Aquino" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Arthur Leal" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Adailton Vieira" , categoria: "Sub-15-Masc", posicao:	0, pontos: 0 },
+]
+
+const resultadoSub15FemEtapa01 = [
+    { atleta: "Yone Fernandes" , categoria: "Sub-15-Fem", posicao:	1, pontos: 1000 },
+    { atleta: "Sophia Vargas" , categoria: "Sub-15-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Sofia Goncalves" , categoria: "Sub-15-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Micaelly Oliveira" , categoria: "Sub-15-Fem", posicao:	2, pontos: 860 },
+    { atleta: "Alyne Moreira" , categoria: "Sub-15-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Emily Alves" , categoria: "Sub-15-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Larissa Brandao" , categoria: "Sub-15-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Alice Fonseca" , categoria: "Sub-15-Fem", posicao:	0, pontos: 0 },
+]
+
+const resultadoSub15FemEtapa02 = [
+    { atleta: "Yone Fernandes" , categoria: "Sub-15-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Sophia Vargas" , categoria: "Sub-15-Fem", posicao:	1, pontos: 1000 },
+    { atleta: "Sofia Goncalves" , categoria: "Sub-15-Fem", posicao:	2, pontos: 860 },
+    { atleta: "Micaelly Oliveira" , categoria: "Sub-15-Fem", posicao:	0, pontos: 0 },
+    { atleta: "Alyne Moreira" , categoria: "Sub-15-Fem", posicao:	3, pontos: 730 },
+    { atleta: "Emily Alves" , categoria: "Sub-15-Fem", posicao:	4, pontos: 670 },
+    { atleta: "Larissa Brandao" , categoria: "Sub-15-Fem", posicao:	5, pontos: 610 },
+    { atleta: "Alice Fonseca" , categoria: "Sub-15-Fem", posicao:	5, pontos: 610 },
+]
+
+const resultadoSub18MascEtapa01 = [
+    { atleta: "Leonardo Da Silva" , categoria: "Sub-18-Masc", posicao:	3, pontos: 730 },
+    { atleta: "Lucas Figueiredo" , categoria: "Sub-18-Masc", posicao:	1, pontos: 1000 },
+    { atleta: "Joao Gabriel Carvalho" , categoria: "Sub-18-Masc", posicao:	4, pontos: 670 },
+    { atleta: "Luiz Breno" , categoria: "Sub-18-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Alisson Silva" , categoria: "Sub-18-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Matheus Figueiredo" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Abel Ribeiro" , categoria: "Sub-18-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Alberto Jasmin" , categoria: "Sub-18-Masc", posicao:	2, pontos: 860 },
+    { atleta: "Guilherme Araujo" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Luan Azeredo" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Daniel Silva" , categoria: "Sub-18-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Adenilson Santos" , categoria: "Sub-18-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Guilherme Almeida" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Davi Araujo" , categoria: "Sub-18-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Thiago Ladeira" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Miguel Botelho" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Joao Nunes" , categoria: "Sub-18-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Joao Gabriel Rodrigues" , categoria: "Sub-18-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Matheus Machado Santos" , categoria: "Sub-18-Masc", posicao:	13, pontos: 450 },
+    { atleta: "Luiz Guilherme" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Kauan Pereira" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Arthur Steel" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+]
+
+const resultadoSub18MascEtapa02 = [
+    { atleta: "Leonardo Da Silva" , categoria: "Sub-18-Masc", posicao:	2, pontos: 860 },
+    { atleta: "Lucas Figueiredo" , categoria: "Sub-18-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Joao Gabriel Carvalho" , categoria: "Sub-18-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Luiz Breno" , categoria: "Sub-18-Masc", posicao:	5, pontos: 610 },
+    { atleta: "Alisson Silva" , categoria: "Sub-18-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Matheus Figueiredo" , categoria: "Sub-18-Masc", posicao:	1, pontos: 1000 },
+    { atleta: "Abel Ribeiro" , categoria: "Sub-18-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Alberto Jasmin" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Guilherme Araujo" , categoria: "Sub-18-Masc", posicao:	3, pontos: 730 },
+    { atleta: "Luan Azeredo" , categoria: "Sub-18-Masc", posicao:	4, pontos: 670 },
+    { atleta: "Daniel Silva" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Adenilson Santos" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Guilherme Almeida" , categoria: "Sub-18-Masc", posicao:	7, pontos: 555 },
+    { atleta: "Davi Araujo" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Thiago Ladeira" , categoria: "Sub-18-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Miguel Botelho" , categoria: "Sub-18-Masc", posicao:	9, pontos: 500 },
+    { atleta: "Joao Nunes" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Joao Gabriel Rodrigues" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Matheus Machado Santos" , categoria: "Sub-18-Masc", posicao:	0, pontos: 0 },
+    { atleta: "Luiz Guilherme" , categoria: "Sub-18-Masc", posicao:	13, pontos: 450 },
+    { atleta: "Kauan Pereira" , categoria: "Sub-18-Masc", posicao:	13, pontos: 450 },
+    { atleta: "Arthur Steel" , categoria: "Sub-18-Masc", posicao:	13, pontos: 450 },
+]
+
+const resultadoSub18FemEtapa01 = [
+    { atleta: "Mayara Goncalves" , categoria: "Sub-18-Fem", posicao: 1, pontos: 1000 },
+    { atleta: "Melissa Souza" , categoria: "Sub-18-Fem", posicao: 2, pontos: 860 },
+    { atleta: "Bia Martins" , categoria: "Sub-18-Fem", posicao: 3, pontos: 730 },
+    { atleta: "Manoela Giacomassi" , categoria: "Sub-18-Fem", posicao: 4, pontos: 670 },
+    { atleta: "Yasmin Martins" , categoria: "Sub-18-Fem", posicao: 5, pontos: 610 },
+    { atleta: "Isa Vidal" , categoria: "Sub-18-Fem", posicao: 5, pontos: 610 },
+]
+
+async function insertEvent01WithResults() {
+  try {
+    const newEvent = await db.insert(eventos).values({
+      id: randomUUID(),
+      nome: "Festival de Verão Saquarema Bodyboard Kids",
+      local: "Praia da Vila - Saquarema",
+      data: "2025-08-02",
+      cartazUrl: "https://example.com/cartaz.jpg",
+      fotos: [],
+      videos: [],
+      resultados: resultadoSub12MascEtapa01,
+    }).returning();
+
+    console.log("Evento inserido com sucesso:", newEvent);
+  } catch (error) {
+    console.error("Erro ao inserir o evento:", error);
+  }
+}
+
+async function insertEvent02WithResults() {
+  try {
+    const newEvent = await db.insert(eventos).values({
+      id: randomUUID(),
+      nome: "Rio das Ostras Bodyboard Pro 2025",
+      local: "Praia de Costa Azul - Rio das Ostras",
+      data: "2025-23-05",
+      cartazUrl: "https://example.com/cartaz.jpg",
+      fotos: [],
+      videos: [],
+      resultados: resultadosEtapa02,
+    }).returning();
+
+    console.log("Evento inserido com sucesso:", newEvent);
+  } catch (error) {
+    console.error("Erro ao inserir o evento:", error);
+  }
+}
+
+async function insertEvent03WithResults() {
+  try {
+    const newEvent = await db.insert(eventos).values({
+      id: randomUUID(),
+      nome: "Pipeseca Bodyboard Pro 2025",
+      local: "Praia Seca - Araruama",
+      data: "2025-14-06",
+      cartazUrl: "https://example.com/cartaz.jpg",
+      fotos: [],
+      videos: [],
+      resultados: resultadosEtapa03,
+    }).returning();
+
+    console.log("Evento inserido com sucesso:", newEvent);
+  } catch (error) {
+    console.error("Erro ao inserir o evento:", error);
+  }
+}
+
+const idBravanesia = "0585de00-da36-46dc-8d34-7a423aefa0e6";
+const idPipeseca = "50f5f51f-97ab-402c-9e3f-1a55d5b0695a";
+const idRioDasOstras = "fccc1cc6-5128-42ca-aefc-2b2ed4f749a7";
+const idSaquaremaKids = "974e8b9e-41cf-409f-838d-feef0a59b456";
+
+async function updateEvent01() {
+    try {
+        const currentEvent = await db.select().from(eventos).where(eq(eventos.id, idSaquaremaKids)).all();
+
+      const newEvent = await db.update(eventos).set({
+        resultados: [...currentEvent[0].resultados || [], ...resultadoSub18FemEtapa01],
+      }).where(eq(eventos.id, idSaquaremaKids)).returning();
+  
+      // group the event result by category, return only category name and number of atletas
+      const groupedResults = newEvent[0].resultados ? newEvent[0].resultados.reduce((acc, res) => {
+        if (!acc[res.categoria]) {
+          acc[res.categoria] = 0;
+        }
+        acc[res.categoria]++;
+        return acc;
+      }, {} as Record<string, number>) : [];
+      console.log(`Evento ${newEvent[0].nome} atualizado com sucesso:`, groupedResults);
+    } catch (error) {
+      console.error("Erro ao atualizar o evento:", error);
+    }
+  }
+
+async function updateEvent02() {
+    try {
+        const currentEvent = await db.select().from(eventos).where(eq(eventos.id, idEvento02)).all();
+
+      const newEvent = await db.update(eventos).set({
+        resultados: [...currentEvent[0].resultados || [], ...resultadoLegendEtapa02],
+      }).where(eq(eventos.id, idEvento02)).returning();
+  
+      console.log("Evento atualizado com sucesso:", newEvent);
+    } catch (error) {
+      console.error("Erro ao atualizar o evento:", error);
+    }
+  }
+
+async function updateEvent03() {
+    try {
+        const currentEvent = await db.select().from(eventos).where(eq(eventos.id, idEvento03)).all();
+
+      const newEvent = await db.update(eventos).set({
+        resultados: [...currentEvent[0].resultados || [], ...resultadoLegendEtapa03],
+      }).where(eq(eventos.id, idEvento03)).returning();
+  
+      console.log("Evento atualizado com sucesso:", newEvent);
+    } catch (error) {
+      console.error("Erro ao atualizar o evento:", error);
+    }
+  }
+
+// insertEvent01WithResults();
+// insertEvent02WithResults();
+// insertEvent03WithResults();
+updateEvent01();
+// updateEvent02();
+// updateEvent03();

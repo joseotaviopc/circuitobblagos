@@ -1,3 +1,5 @@
+import './src/utils/env.ts'
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
