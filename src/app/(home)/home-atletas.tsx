@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { AtletaResult, useData } from "@/context/data-context";
-import { ArrowRight, ChevronRight, Trophy } from "lucide-react";
+import { ArrowRight, ChevronRight, Trophy,  } from "lucide-react";
 import Link from "next/link";
 
 interface HomeAtletasProps {
@@ -63,7 +63,7 @@ export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
                                 <li key={category}>
                                     <div className="flex items-center gap-4 rounded-lg border p-1">
                                         <p className="flex-1 font-semibold text-xs whitespace-nowrap uppercase tracking-wider text-muted-foreground ">
-                                            {category}
+                                            {category} {category.toLowerCase().includes('fem') ? '🚺' : '🚹'}
                                         </p>
                                         <Link href={`/rankings?category=${category}`} className="flex items-center gap-4">
                                             <div className="flex items-center gap-2">

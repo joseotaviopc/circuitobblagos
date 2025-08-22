@@ -16,7 +16,7 @@ export function EventsList() {
             <CardHeader className="p-0">
               <div className="aspect-square relative">
                 <Image
-                  src={event.cartazUrl || ''}
+                  src={event.cartazUrl || "https://placehold.co/400x400/png"}
                   alt={event.nome}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"

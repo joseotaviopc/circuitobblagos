@@ -4,6 +4,7 @@ import { ArrowRight, Calendar } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Event } from "../../../db/schema";
+import { slugify } from "@/lib/utils";
 
 interface HomeEventsProps {
   events: Event[] | null
@@ -20,7 +21,7 @@ export function HomeEvents({ events }: HomeEventsProps) {
           <Card key={event.id} className="flex flex-col overflow-hidden hover:shadow-primary/20 hover:shadow-lg transition-shadow duration-300">
             <CardHeader className="p-0 aspect-square relative">
               <Image
-                src={event.cartazUrl || ''}
+                src={event.cartazUrl || "https://placehold.co/400x400/png"}
                 alt={event.nome}
                 fill
                 className="object-cover"
@@ -34,7 +35,7 @@ export function HomeEvents({ events }: HomeEventsProps) {
             </CardContent>
             <CardFooter className="p-4 pt-0">
               <Button asChild variant="link" className="p-0 h-auto">
-                <Link href={`/eventos/${event.id}`}>+ Detalhes <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                <Link href={`/eventos/${slugify(event.nome)}`}>+ Detalhes <ArrowRight className="ml-2 h-4 w-4" /></Link>
               </Button>
             </CardFooter>
           </Card>

@@ -175,7 +175,7 @@ export default function AthleteProfilePage() {
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-1/3 relative">
                   <Image
-                    src={atleta.profileUrl || ''}
+                    src={atleta.profileUrl || "https://placehold.co/400x400/png"}
                     alt={atleta.nome}
                     width={400}
                     height={400}
