@@ -22,8 +22,9 @@ export const eventos = sqliteTable("eventos", {
   cartazUrl: text("cartaz_url"),
   fotos: text("fotos", { mode: 'json' }).$type<string[]>(),
   videos: text("videos", { mode: 'json' }).$type<string[]>(),
-  resultados: text("resultados", { mode: 'json' }).$type<{ categoria: string, atleta: string, posicao: number, pontos: number }[]>(),
+  resultados: text("resultados", { mode: 'json' }).$type<{ categoria: string, atletaId: string, atleta: string, posicao: number, pontos: number }[]>(),
 });
 
 export type Event = typeof eventos.$inferSelect;
+export type Result = typeof eventos.$inferSelect.resultados;
 export type Atleta = typeof atletas.$inferSelect;

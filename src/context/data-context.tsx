@@ -3,16 +3,30 @@
 import React, { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { atletas, type Event, eventos } from '../../db/schema';
 import { db } from '../../db';
-import { getEvents } from '@/app/actions';
+import { getAtletas, getEvents } from '@/app/actions';
 
-interface AtletaResult {
-  name: string;
-  results: {
-      evento: string;
-      categoria: string;
-      posicao: number;
-      pontos: number;
-  }[];
+export interface AtletaResult {
+    id: string;
+    nome: string;
+    fotos: string[] | null;
+    videos: string[] | null;
+    resultados: {
+        results: {
+            evento: string;
+            categoria: string;
+            posicao: number;
+            pontos: number;
+        }[];
+    } | null;
+    nascimento: string | null;
+    estado: string | null;
+    profileUrl: string | null;
+    socialLinks: string[] | null;
+    estatisticas: {
+        eventos: number;
+        vitorias: number;
+        podios: number;
+    } | null;
 }
 
 interface DataContextType {
@@ -29,6 +43,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   async function fetchDb() {
     const eventsData = await getEvents();
+    const atletasData = await getAtletas();
+
+    console.log('atletasData', atletasData);
     setEvents(eventsData);
 
     const groupedByAthlete = eventsData.reduce((acc, evento) => {
@@ -39,13 +56,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
           evento: evento.nome,
           categoria: res.categoria,
           posicao: res.posicao,
-          pontos: res.pontos
+          pontos: res.pontos,
         };
 
-        if (acc[res.atleta]) {
-          acc[res.atleta].push(eventResult);
+        const key = `${res.atleta}_${res.atletaId}`;
+        if (acc[key]) {
+          acc[key].push(eventResult);
         } else {
-          acc[res.atleta] = [eventResult];
+          acc[key] = [eventResult];
         }
       });
 
@@ -57,16 +75,29 @@ export function DataProvider({ children }: { children: ReactNode }) {
       pontos: number;
     }[]>);
 
+    // console.log('groupedByAthlete', groupedByAthlete);
+
 
     const formattedResults = Object.entries(groupedByAthlete).map(([athleteName, resultsArray]) => {
       return {
-        name: athleteName,
+        id: athleteName.split('_')[1],
+        name: athleteName.split('_')[0],
         results: resultsArray.filter(res => res.posicao !== 0)
       };
     });
 
-    // console.log('groupedResultsArray', formattedResults);
-    setAtletas(formattedResults);
+    console.log('groupedResultsArray', formattedResults);
+    setAtletas(atletasData.map(atleta => ({
+      ...atleta,
+      estatisticas: {
+        eventos: formattedResults.find(result => result.id === atleta.id)?.results.length || 0,
+        vitorias: formattedResults.find(result => result.id === atleta.id)?.results.filter(res => res.posicao === 1).length || 0,
+        podios: formattedResults.find(result => result.id === atleta.id)?.results.filter(res => res.posicao <= 3).length || 0,
+      },
+      resultados: {
+        results: formattedResults.find(result => result.id === atleta.id)?.results || []
+      }
+    })));
   }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

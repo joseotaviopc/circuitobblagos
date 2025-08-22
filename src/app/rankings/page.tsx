@@ -11,12 +11,12 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { athletes, Athlete, rankings } from '@/lib/data';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSearchParams } from 'next/navigation';
+import { useData, AtletaResult } from '@/context/data-context';
 
-const categories: Athlete['category'][] = ['Pro-Masc', 'Pro-Fem', 'Legends', 'Master', 'Sub-18-Masc', 'Sub-15-Masc', 'Sub-15-Fem', 'Sub-12-Masc'];
+// const categories: AtletaResult['category'][] = ['Pro-Masc', 'Pro-Fem', 'Legends', 'Master', 'Sub-18-Masc', 'Sub-15-Masc', 'Sub-15-Fem', 'Sub-12-Masc'];
 
 // Skeleton component for loading state
 function RankingsSkeleton() {
@@ -71,11 +71,24 @@ function RankingsSkeleton() {
 function RankingsContent() {
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
-  const [activeTab, setActiveTab] = useState<Athlete['category']>(category as Athlete['category'] || categories[0]);
+  const { atletas } = useData();
+  const allCategories = Array.from(new Set(atletas.flatMap(atleta => atleta.resultados?.results.map(res => res.categoria) || [])));
+  const [activeTab, setActiveTab] = useState<string>(category as string || allCategories[0]);
   
-  const filteredAthletes = athletes.filter(
-    (athlete) => athlete.category === activeTab
-  ).sort((a, b) => a.rank - b.rank);
+  const filteredAthletes = atletas.map(athlete => {
+    const resultsInActiveCategory = athlete.resultados?.results.filter(res => res.categoria === activeTab && res.posicao !== 0);
+    if (resultsInActiveCategory && resultsInActiveCategory.length > 0) {
+      // Assuming the athlete's total points for a category is the sum of points from all events in that category
+      const totalPoints = resultsInActiveCategory.reduce((sum, res) => sum + res.pontos, 0);
+      // Find the best position (lowest number) for the athlete in the active category
+      const bestPosition = Math.min(...resultsInActiveCategory.map(res => res.posicao));
+      return { ...athlete, totalPoints, bestPosition };
+    }
+    return null;
+  })
+  .filter(Boolean)
+  .sort((a, b) => (a as any).totalPoints > (b as any).totalPoints ? -1 : 1)
+  // .sort((a, b) => (a as any).bestPosition - (b as any).bestPosition);
 
   return (
     <div className="space-y-8">
@@ -89,9 +102,9 @@ function RankingsContent() {
       </header>
       <Card>
         <CardHeader>
-          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as Athlete['category'])}>
+          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)}>
             <TabsList className="flex flex-wrap justify-start h-auto w-full">
-              {categories.map((category) => (
+              {allCategories.map((category) => (
                 <TabsTrigger key={category} value={category}>
                   {category}
                 </TabsTrigger>
@@ -110,25 +123,25 @@ function RankingsContent() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {rankings[activeTab].length > 0 ? (
-                  rankings[activeTab].sort((a, b) => b.points - a.points).map((athlete, index) => (
-                    <TableRow key={athlete.id}>
+                {filteredAthletes.length > 0 ? (
+                  filteredAthletes.map((athlete, index) => (
+                    <TableRow key={athlete!.id}>
                       <TableCell className="font-bold text-lg text-center p-1">{index + 1}</TableCell>
                       <TableCell className="p-1">
-                        <Link href={`/atletas/${athlete.slug}`} className="flex items-center gap-4 group">
+                        <Link href={`/atletas/${athlete!.nome.toLowerCase().replace(/ /g, '-')}`} className="flex items-center gap-4 group">
                           <div className="relative h-12 w-12 rounded-full overflow-hidden">
                             <Image
                               src={"https://placehold.co/400x400/png"}
-                              alt={athlete.name}
+                              alt={athlete!.nome}
                               fill
                               className="object-cover group-hover:scale-110 transition-transform duration-300"
                               data-ai-hint="portrait athlete"
                             />
                           </div>
-                          <span className="font-medium group-hover:text-primary transition-colors">{athlete.name}</span>
+                          <span className="font-medium group-hover:text-primary transition-colors">{athlete!.nome}</span>
                         </Link>
                       </TableCell>
-                      <TableCell className="text-right font-semibold text-primary p-1 pr-4">{athlete.points.toLocaleString()}</TableCell>
+                      <TableCell className="text-right font-semibold text-primary p-1 pr-4">{athlete!.totalPoints.toLocaleString()}</TableCell>
                     </TableRow>
                   ))
                 ) : (

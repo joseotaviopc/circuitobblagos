@@ -16,7 +16,7 @@ import { useData } from "@/context/data-context";
 export default function Atletas() {
     const { atletas } = useData();
 
-    const atletasOrdenados = atletas.sort((a, b) => a.name.localeCompare(b.name));
+    const atletasOrdenados = atletas.sort((a, b) => a.nome.localeCompare(b.nome));
     console.log('atletas', atletas);
 
     return (

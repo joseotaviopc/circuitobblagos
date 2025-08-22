@@ -544,121 +544,57 @@ const resultadoSub18FemEtapa01 = [
     { atleta: "Isa Vidal" , categoria: "Sub-18-Fem", posicao: 5, pontos: 610 },
 ]
 
-async function insertEvent01WithResults() {
-  try {
-    const newEvent = await db.insert(eventos).values({
-      id: randomUUID(),
-      nome: "Festival de Verão Saquarema Bodyboard Kids",
-      local: "Praia da Vila - Saquarema",
-      data: "2025-08-02",
-      cartazUrl: "https://example.com/cartaz.jpg",
-      fotos: [],
-      videos: [],
-      resultados: resultadoSub12MascEtapa01,
-    }).returning();
+// async function insertEvent01WithResults() {
+//   try {
+//     const newEvent = await db.insert(eventos).values({
+//       id: randomUUID(),
+//       nome: "Festival de Verão Saquarema Bodyboard Kids",
+//       local: "Praia da Vila - Saquarema",
+//       data: "2025-08-02",
+//       cartazUrl: "https://example.com/cartaz.jpg",
+//       fotos: [],
+//       videos: [],
+//       resultados: resultadoSub12MascEtapa01,
+//     }).returning();
 
-    console.log("Evento inserido com sucesso:", newEvent);
-  } catch (error) {
-    console.error("Erro ao inserir o evento:", error);
-  }
-}
+//     console.log("Evento inserido com sucesso:", newEvent);
+//   } catch (error) {
+//     console.error("Erro ao inserir o evento:", error);
+//   }
+// }
 
-async function insertEvent02WithResults() {
-  try {
-    const newEvent = await db.insert(eventos).values({
-      id: randomUUID(),
-      nome: "Rio das Ostras Bodyboard Pro 2025",
-      local: "Praia de Costa Azul - Rio das Ostras",
-      data: "2025-23-05",
-      cartazUrl: "https://example.com/cartaz.jpg",
-      fotos: [],
-      videos: [],
-      resultados: resultadosEtapa02,
-    }).returning();
-
-    console.log("Evento inserido com sucesso:", newEvent);
-  } catch (error) {
-    console.error("Erro ao inserir o evento:", error);
-  }
-}
-
-async function insertEvent03WithResults() {
-  try {
-    const newEvent = await db.insert(eventos).values({
-      id: randomUUID(),
-      nome: "Pipeseca Bodyboard Pro 2025",
-      local: "Praia Seca - Araruama",
-      data: "2025-14-06",
-      cartazUrl: "https://example.com/cartaz.jpg",
-      fotos: [],
-      videos: [],
-      resultados: resultadosEtapa03,
-    }).returning();
-
-    console.log("Evento inserido com sucesso:", newEvent);
-  } catch (error) {
-    console.error("Erro ao inserir o evento:", error);
-  }
-}
 
 const idBravanesia = "0585de00-da36-46dc-8d34-7a423aefa0e6";
 const idPipeseca = "50f5f51f-97ab-402c-9e3f-1a55d5b0695a";
 const idRioDasOstras = "fccc1cc6-5128-42ca-aefc-2b2ed4f749a7";
 const idSaquaremaKids = "974e8b9e-41cf-409f-838d-feef0a59b456";
 
-async function updateEvent01() {
-    try {
-        const currentEvent = await db.select().from(eventos).where(eq(eventos.id, idSaquaremaKids)).all();
+// async function updateEvent01() {
+//     try {
+//         const currentEvent = await db.select().from(eventos).where(eq(eventos.id, idSaquaremaKids)).all();
 
-      const newEvent = await db.update(eventos).set({
-        resultados: [...currentEvent[0].resultados || [], ...resultadoSub18FemEtapa01],
-      }).where(eq(eventos.id, idSaquaremaKids)).returning();
+//       const newEvent = await db.update(eventos).set({
+//         resultados: [...currentEvent[0].resultados || [], ...resultadoSub18FemEtapa01],
+//       }).where(eq(eventos.id, idSaquaremaKids)).returning();
   
-      // group the event result by category, return only category name and number of atletas
-      const groupedResults = newEvent[0].resultados ? newEvent[0].resultados.reduce((acc, res) => {
-        if (!acc[res.categoria]) {
-          acc[res.categoria] = 0;
-        }
-        acc[res.categoria]++;
-        return acc;
-      }, {} as Record<string, number>) : [];
-      console.log(`Evento ${newEvent[0].nome} atualizado com sucesso:`, groupedResults);
-    } catch (error) {
-      console.error("Erro ao atualizar o evento:", error);
-    }
-  }
+//       // group the event result by category, return only category name and number of atletas
+//       const groupedResults = newEvent[0].resultados ? newEvent[0].resultados.reduce((acc, res) => {
+//         if (!acc[res.categoria]) {
+//           acc[res.categoria] = 0;
+//         }
+//         acc[res.categoria]++;
+//         return acc;
+//       }, {} as Record<string, number>) : [];
+//       console.log(`Evento ${newEvent[0].nome} atualizado com sucesso:`, groupedResults);
+//     } catch (error) {
+//       console.error("Erro ao atualizar o evento:", error);
+//     }
+//   }
 
-async function updateEvent02() {
-    try {
-        const currentEvent = await db.select().from(eventos).where(eq(eventos.id, idEvento02)).all();
-
-      const newEvent = await db.update(eventos).set({
-        resultados: [...currentEvent[0].resultados || [], ...resultadoLegendEtapa02],
-      }).where(eq(eventos.id, idEvento02)).returning();
-  
-      console.log("Evento atualizado com sucesso:", newEvent);
-    } catch (error) {
-      console.error("Erro ao atualizar o evento:", error);
-    }
-  }
-
-async function updateEvent03() {
-    try {
-        const currentEvent = await db.select().from(eventos).where(eq(eventos.id, idEvento03)).all();
-
-      const newEvent = await db.update(eventos).set({
-        resultados: [...currentEvent[0].resultados || [], ...resultadoLegendEtapa03],
-      }).where(eq(eventos.id, idEvento03)).returning();
-  
-      console.log("Evento atualizado com sucesso:", newEvent);
-    } catch (error) {
-      console.error("Erro ao atualizar o evento:", error);
-    }
-  }
 
 // insertEvent01WithResults();
 // insertEvent02WithResults();
 // insertEvent03WithResults();
-updateEvent01();
+// updateEvent01();
 // updateEvent02();
 // updateEvent03();

@@ -35,7 +35,7 @@ export default function ResponsiveInsta() {
         className="h-full w-full border-0"
         style={{ width: '100%', border: '0', overflow: 'hidden' }}
       />
-      <div className='w-full h-10 absolute bottom-0 left-0 bg-background z-10' />
+      <div className='w-full h-10 absolute bottom-0 left-0 bg-[#fff9f5] z-10' />
     </div>
   );
 }

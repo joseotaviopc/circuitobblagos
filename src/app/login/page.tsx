@@ -20,7 +20,7 @@ export default function LoginPage() {
     setError('');
     const success = login(username, password);
     if (success) {
-      router.push('/profile');
+      router.push('/perfil');
     } else {
       setError('Usuário ou senha inválidos. Tente "admin" e "password".');
     }

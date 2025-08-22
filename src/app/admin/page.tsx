@@ -51,7 +51,7 @@ export default function AdminPage() {
                 Crie, atualize ou exclua {type.name.toLowerCase()}.
               </CardDescription>
             </CardHeader>
-            <CardContent className="flex justify-end gap-2">
+            <CardContent className="flex justify-end gap-2 flex-wrap">
                 <Button variant="outline" size="sm">
                     <Trash2 className="mr-2 h-4 w-4" />
                     Excluir
