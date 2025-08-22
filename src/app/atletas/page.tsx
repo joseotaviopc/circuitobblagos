@@ -2,6 +2,7 @@
 
 import { columns } from "@/components/columns";
 import { DataTable } from "@/components/data-table";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import {
     Table,
     TableBody,
@@ -14,10 +15,14 @@ import {
 import { useData } from "@/context/data-context";
 
 export default function Atletas() {
-    const { atletas } = useData();
+    const { atletas, loadingData } = useData();
 
     const atletasOrdenados = atletas.sort((a, b) => a.nome.localeCompare(b.nome));
     console.log('atletas', atletas);
+
+    if (loadingData) {
+        return <LoadingSpinner />
+    }
 
     return (
         <div>

@@ -41,10 +41,11 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { useAuth } from '@/context/auth-context';
+import { LoadingSpinner } from '../ui/loading-spinner';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { user, isAdmin, logout } = useAuth();
+  const { user, isAdmin, logout, loadingAuth } = useAuth();
 
   const menuItems = [
     { href: '/eventos', label: 'Calendário', icon: Calendar },
@@ -58,6 +59,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     { href: '/patrocinio', label: 'Patrocínios', icon: Megaphone },
     { href: '/perfil', label: 'Perfil', icon: User },
   ];
+
+  if (loadingAuth) {
+    return <LoadingSpinner />
+  }
 
   return (
     <div className="min-h-screen w-auto bg-[#fff9f5] relative">
@@ -156,12 +161,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <SidebarTrigger />
               <h2 className='font-headline text-lg font-semibold capitalize'>{pathname.split('/').pop()?.replace(/-/g, ' ') || 'Home'}</h2>
             </div>
-            {isAdmin && (
+            {/* {isAdmin && (
               <Button variant="outline" size="sm">
                 <Edit className="mr-2 h-4 w-4" />
                 Editar Página
               </Button>
-            )}
+            )} */}
           </header>
           <main className="p-4 md:p-6 lg:p-8 pt-20">{children}</main>
         </SidebarInset>

@@ -5,6 +5,7 @@ import { DataTableColumnHeader } from "./data-table-column-header"
 import { AtletaResult } from "@/context/data-context"
 import Link from "next/link"
 import { slugify } from "@/lib/utils"
+import Image from "next/image"
 
 type Athlete = {
   name: string
@@ -21,7 +22,13 @@ export const columns: ColumnDef<AtletaResult>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Nome" />
     ),
-    cell: ({ row }) => <Link href={`/atletas/${slugify(row.getValue("nome"))}`} className="text-left cursor-pointer">{row.getValue("nome")}</Link>,
+    cell: ({ row }) => <Link href={`/atletas/${slugify(row.getValue("nome"))}`} className="text-left cursor-pointer">
+      <div className="flex items-center gap-2">
+        <Image src={row.original.profileUrl || 'https://placehold.co/400x400/png'} alt={row.original.nome} className="w-7 h-7 rounded-full" width={28} height={28} />
+        {row.getValue("nome")} {row.original.estado && ` (${row.original.estado})`} 
+        <span className="text-xs text-muted-foreground">{[...new Set(row.original.resultados?.results.map(result => result.categoria))].join(', ')}</span>
+      </div>
+      </Link>,
     enableSorting: true,
     enableHiding: false,
   },

@@ -7,10 +7,14 @@ import { Calendar, MapPin } from 'lucide-react';
 import { EventSummaryGenerator } from '@/components/event-summary-generator';
 import { useData } from '@/context/data-context';
 import { slugify, groupByCategory } from '@/lib/utils';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 export default function EventDetailPage() {
   const { slug } = useParams();
   const { events } = useData();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
 
   if (!slug) {
     notFound();
@@ -32,10 +36,16 @@ export default function EventDetailPage() {
 
   return (
     <div className="space-y-8">
-      <div className="relative h-64 md:h-96 w-full rounded-lg overflow-hidden shadow-lg">
+      <div
+        className="relative h-64 md:h-96 w-full rounded-lg overflow-hidden shadow-lg cursor-pointer"
+        onClick={() => {
+          setIsModalOpen(true);
+          setSelectedImage(event!.cartazUrl || '');
+        }}
+      >
         <Image
-          src={event.cartazUrl || ''}
-          alt={event.nome}
+          src={event!.cartazUrl || ''}
+          alt={event!.nome}
           fill
           className="object-cover object-center"
           priority
@@ -99,6 +109,21 @@ export default function EventDetailPage() {
           <EventSummaryGenerator event={eventForAISummary} />
         </div>
       </div>
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-4xl p-0">
+          {selectedImage && (
+            <div className="relative h-[80vh] w-full">
+              <DialogTitle className="sr-only">Event Poster</DialogTitle>
+              <Image
+                src={selectedImage}
+                alt="Event Poster"
+                fill
+                className="object-contain"
+              />
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

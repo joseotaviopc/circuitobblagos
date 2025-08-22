@@ -13,7 +13,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useData, AtletaResult } from '@/context/data-context';
 
 // const categories: AtletaResult['category'][] = ['Pro-Masc', 'Pro-Fem', 'Legends', 'Master', 'Sub-18-Masc', 'Sub-15-Masc', 'Sub-15-Fem', 'Sub-12-Masc'];
@@ -74,6 +74,7 @@ function RankingsContent() {
   const { atletas } = useData();
   const allCategories = Array.from(new Set(atletas.flatMap(atleta => atleta.resultados?.results.map(res => res.categoria) || [])));
   const [activeTab, setActiveTab] = useState<string>(category as string || allCategories[0]);
+  const router = useRouter();
   
   const filteredAthletes = atletas.map(athlete => {
     const resultsInActiveCategory = athlete.resultados?.results.filter(res => res.categoria === activeTab && res.posicao !== 0);
@@ -102,7 +103,13 @@ function RankingsContent() {
       </header>
       <Card>
         <CardHeader>
-          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)}>
+          <Tabs
+            value={activeTab}
+            onValueChange={(value) => {
+              setActiveTab(value);
+              router.push(`?category=${value}`);
+            }}
+          >
             <TabsList className="flex flex-wrap justify-start h-auto w-full">
               {allCategories.map((category) => (
                 <TabsTrigger key={category} value={category}>
@@ -131,14 +138,14 @@ function RankingsContent() {
                         <Link href={`/atletas/${athlete!.nome.toLowerCase().replace(/ /g, '-')}`} className="flex items-center gap-4 group">
                           <div className="relative h-12 w-12 rounded-full overflow-hidden">
                             <Image
-                              src={"https://placehold.co/400x400/png"}
+                              src={athlete!.profileUrl || "https://placehold.co/400x400/png"}
                               alt={athlete!.nome}
                               fill
                               className="object-cover group-hover:scale-110 transition-transform duration-300"
                               data-ai-hint="portrait athlete"
                             />
                           </div>
-                          <span className="font-medium group-hover:text-primary transition-colors">{athlete!.nome}</span>
+                          <span className="font-medium group-hover:text-primary transition-colors">{athlete!.nome} {athlete?.estado && ` (${athlete?.estado})`}</span>
                         </Link>
                       </TableCell>
                       <TableCell className="text-right font-semibold text-primary p-1 pr-4">{athlete!.totalPoints.toLocaleString()}</TableCell>

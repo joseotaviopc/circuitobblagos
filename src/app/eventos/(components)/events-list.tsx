@@ -11,7 +11,7 @@ export function EventsList() {
     const { events } = useData();
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {events?.map((event) => (
+        {events?.sort((a, b) => new Date(a.data || '').getTime() - new Date(b.data || '').getTime()).map((event) => (
           <Card key={event.id} className="group overflow-hidden flex flex-col">
             <CardHeader className="p-0">
               <div className="aspect-square relative">
