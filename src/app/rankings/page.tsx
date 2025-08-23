@@ -133,10 +133,10 @@ function RankingsContent() {
                 {filteredAthletes.length > 0 ? (
                   filteredAthletes.map((athlete, index) => (
                     <TableRow key={athlete!.id}>
-                      <TableCell className="font-bold text-lg text-center p-1">{index + 1}</TableCell>
-                      <TableCell className="p-1">
-                        <Link href={`/atletas/${athlete!.nome.toLowerCase().replace(/ /g, '-')}`} className="flex items-center gap-4 group">
-                          <div className="relative h-12 w-12 rounded-full overflow-hidden">
+                      <TableCell className="font-bold text-lg text-center p-1 md:p-4">{index + 1}</TableCell>
+                      <TableCell className="p-1 md:p-4">
+                        <Link href={`/atletas/${athlete!.nome.toLowerCase().replace(/ /g, '-')}`} className="flex items-center gap-2 md:gap-4 group">
+                          <div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full overflow-hidden flex-shrink-0">
                             <Image
                               src={athlete!.profileUrl || "https://placehold.co/400x400/png"}
                               alt={athlete!.nome}
@@ -145,10 +145,10 @@ function RankingsContent() {
                               data-ai-hint="portrait athlete"
                             />
                           </div>
-                          <span className="font-medium group-hover:text-primary transition-colors">{athlete!.nome} {athlete?.estado && ` (${athlete?.estado})`}</span>
+                          <span className="font-medium group-hover:text-primary transition-colors text-sm md:text-base">{athlete!.nome} {athlete?.estado && ` (${athlete?.estado})`}</span>
                         </Link>
                       </TableCell>
-                      <TableCell className="text-right font-semibold text-primary p-1 pr-4">{athlete!.totalPoints.toLocaleString()}</TableCell>
+                      <TableCell className="text-right font-semibold text-primary p-1 pr-2 md:p-4 md:pr-4">{athlete!.totalPoints.toLocaleString()}</TableCell>
                     </TableRow>
                   ))
                 ) : (

@@ -10,10 +10,10 @@ export default function FotosPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-headline tracking-tight leading-tight">
           Fotos
         </h1>
-        <p className="mt-2 text-lg text-muted-foreground">
+        <p className="mt-2 text-base md:text-lg text-muted-foreground">
           Acompanhe toda a ação com galerias de fotos dos eventos recentes.
         </p>
       </header>
@@ -34,7 +34,7 @@ export default function FotosPage() {
             </CardHeader>
             <CardContent className="p-4">
               <h2 className="font-bold font-headline truncate">{item.title}</h2>
-              <p className="text-sm text-muted-foreground">{item.event}</p>
+              <p className="text-sm text-muted-foreground truncate">{item.event}</p>
             </CardContent>
           </Card>
         ))}

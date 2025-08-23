@@ -7,24 +7,24 @@ export default function MarketingPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-headline tracking-tight leading-tight">
           Marketing e Parcerias
         </h1>
-        <p className="mt-2 text-lg text-muted-foreground">
+        <p className="mt-2 text-base md:text-lg text-muted-foreground">
           Fortaleça sua marca associando-se ao esporte que mais cresce na Região dos Lagos.
         </p>
       </header>
 
       <Card>
         <CardHeader>
-          <CardTitle>Por que patrocinar a BBLagos?</CardTitle>
+          <CardTitle className="text-xl md:text-2xl font-headline">Por que patrocinar a BBLagos?</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-            <Image src="https://placehold.co/800x300/png" alt="Evento de bodyboard lotado" width={800} height={300} className="w-full rounded-lg" data-ai-hint="surfing crowd" />
-          <p>
+            <Image src="https://placehold.co/800x300/png" alt="Evento de bodyboard lotado" width={800} height={300} className="w-full rounded-lg aspect-video object-cover" data-ai-hint="surfing crowd" />
+          <p className="text-sm md:text-base">
             Associar sua marca à BBLagos significa conectar-se com um público jovem, dinâmico e apaixonado por esportes, natureza e estilo de vida praiano. Nossos eventos atraem milhares de espectadores e possuem grande engajamento nas redes sociais.
           </p>
-          <Button>
+          <Button className="w-full sm:w-auto">
             <Download className="mr-2 h-4 w-4" />
             Baixar Mídia Kit
           </Button>

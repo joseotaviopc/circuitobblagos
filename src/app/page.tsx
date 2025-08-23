@@ -12,7 +12,7 @@ export default function Home() {
   const { events, atletas } = useData();
 
   return (
-    <div className="space-y-12 max-w-5xl mx-auto">
+    <div className="space-y-12 w-full px-4 mx-auto">
       <FirstHero />
       <HomeEvents events={events} />
       <HomeAtletas />

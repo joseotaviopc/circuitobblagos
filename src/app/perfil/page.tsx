@@ -13,7 +13,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!user) {
-      router.push('/login');
+      router.push('/sign-in');
     }
   }, [user, router]);
 
@@ -27,18 +27,18 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex justify-center items-center py-12">
-      <Card className="w-full max-w-md">
+    <div className="flex justify-center items-center py-8 md:py-12">
+      <Card className="w-full max-w-sm md:max-w-md">
         <CardHeader className="items-center text-center">
-          <Avatar className="h-24 w-24 mb-4">
+          <Avatar className="h-20 w-20 md:h-24 md:w-24 mb-4">
             <AvatarImage src="https://placehold.co/100x100" />
             <AvatarFallback>{user.username.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
-          <CardTitle className="text-2xl font-headline">Bem-vindo, {user.username}!</CardTitle>
-          <CardDescription>{user.role === 'admin' ? 'Administrador' : 'Usuário'}</CardDescription>
+          <CardTitle className="text-xl md:text-2xl font-headline">Bem-vindo, {user.username}!</CardTitle>
+          <CardDescription className="text-sm md:text-base">{user.role === 'admin' ? 'Administrador' : 'Usuário'}</CardDescription>
         </CardHeader>
         <CardContent className='flex flex-col gap-4'>
-            <p className='text-center text-muted-foreground'>Esta é a sua página de perfil. Mais conteúdo e configurações estarão disponíveis em breve.</p>
+            <p className='text-center text-sm md:text-base text-muted-foreground'>Esta é a sua página de perfil. Mais conteúdo e configurações estarão disponíveis em breve.</p>
           <Button onClick={handleLogout} variant="outline" className="w-full">
             <LogOut className="mr-2 h-4 w-4" /> Sair
           </Button>

@@ -40,32 +40,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { useAuth } from '@/context/auth-context';
+// import { useAuth } from '@/context/auth-context';
 import { LoadingSpinner } from '../ui/loading-spinner';
+import { useSidebar } from '../ui/sidebar';
+import { SignInButton, useAuth, UserButton, useUser } from '@clerk/nextjs';
 
-export function AppShell({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const { user, isAdmin, logout, loadingAuth } = useAuth();
-
-  const menuItems = [
-    { href: '/eventos', label: 'Calendário', icon: Calendar },
-    { href: '/rankings', label: 'Classificação', icon: BarChart },
-    { href: '/atletas', label: 'Atletas', icon: Users },
-    { href: '/fotos', label: 'Fotos', icon: ImageIcon },
-    { href: '/videos', label: 'Vídeos', icon: Video },
-    { href: '/historia', label: 'História', icon: BookOpen },
-    { href: '/contato', label: 'Contato', icon: Mail },
-    { href: '/bodyboard', label: 'Sobre o Bodyboard', icon: Waves },
-    { href: '/patrocinio', label: 'Patrocínios', icon: Megaphone },
-    { href: '/perfil', label: 'Perfil', icon: User },
-  ];
-
-  if (loadingAuth) {
-    return <LoadingSpinner />
-  }
-
+export function AppLayoutWithSidebarProvider({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen w-auto bg-[#fff9f5] relative">
+    <div className="min-h-screen w-full bg-[#fff9f5] relative">
       <div
         className="absolute inset-0 -z-10"
         style={{
@@ -77,100 +59,140 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         }}
       />
       <SidebarProvider>
-        <Sidebar>
-          <SidebarHeader>
-            <Link href="/" className="flex items-center gap-2">
-              <Logo />
-            </Link>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === item.href}
-                    tooltip={item.label}
-                  >
-                    <Link href={item.href}>
-                      <item.icon />
-                      <span>{item.label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-              {isAdmin && (
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === '/admin'}
-                    tooltip="Admin"
-                  >
-                    <Link href="/admin">
-                      <Shield />
-                      <span>Admin</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )}
-            </SidebarMenu>
-          </SidebarContent>
-          <SidebarFooter>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="justify-start gap-2 w-full px-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user ? 'https://placehold.co/100x100/png' : undefined} />
-                    <AvatarFallback>{user ? user.username.charAt(0).toUpperCase() : <User />}</AvatarFallback>
-                  </Avatar>
-                  <span className="truncate">{user ? user.username : 'Visitante'}</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent side="right" align="start" className="w-56">
-                <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {user ? (
-                  <>
-                    <DropdownMenuItem asChild>
-                      <Link href="/perfil">
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Perfil</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={logout}>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      <span>Sair</span>
-                    </DropdownMenuItem>
-                  </>
-                ) : (
+        <AppLayout>
+          {children}
+        </AppLayout>
+      </SidebarProvider>
+    </div>
+  );
+}
+
+
+function AppLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const { isSignedIn, isLoaded, } = useAuth();
+  const { user } = useUser();
+  const { setOpenMobile } = useSidebar();
+
+  const menuItems = [
+    { href: '/eventos', label: 'Calendário', icon: Calendar },
+    { href: '/rankings', label: 'Classificação', icon: BarChart },
+    { href: '/atletas', label: 'Atletas', icon: Users },
+    { href: '/fotos', label: 'Fotos', icon: ImageIcon },
+    { href: '/videos', label: 'Vídeos', icon: Video },
+    { href: '/historia', label: 'História', icon: BookOpen },
+    { href: '/contato', label: 'Contato', icon: Mail },
+    { href: '/bodyboard', label: 'Sobre o Bodyboard', icon: Waves },
+    { href: '/patrocinio', label: 'Patrocínios', icon: Megaphone },
+    // { href: '/perfil', label: 'Perfil', icon: User },
+  ];
+
+  if (!isLoaded) {
+    return <LoadingSpinner />
+  }
+
+  return (
+    <>
+      <Sidebar>
+        <SidebarHeader>
+          <Link href="/" className="flex items-center gap-2" onClick={() => setOpenMobile(false)}>
+            <Logo />
+          </Link>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            {menuItems.map((item) => (
+              <SidebarMenuItem key={item.label}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === item.href}
+                  tooltip={item.label}
+                  onClick={() => setOpenMobile(false)}
+                >
+                  <Link href={item.href}>
+                    <item.icon />
+                    <span>{item.label}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+            {/* {isAdmin && (
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === '/admin'}
+                  tooltip="Admin"
+                  onClick={() => setOpenMobile(false)}
+                >
+                  <Link href="/admin">
+                    <Shield />
+                    <span>Admin</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )} */}
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter>
+          <DropdownMenu>
+            <UserButton />
+            {/* <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="justify-start gap-2 w-full px-2">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={user ? 'https://placehold.co/100x100/png' : undefined} />
+                  <AvatarFallback>{user?.firstName ? user.firstName.charAt(0).toUpperCase() : <User />}</AvatarFallback>
+                </Avatar>
+                <span className="truncate">{user ? user.username : 'Visitante'}</span>
+              </Button>
+            </DropdownMenuTrigger> */}
+            {/* <DropdownMenuContent side="right" align="start" className="w-56">
+              <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {user ? (
+                <>
                   <DropdownMenuItem asChild>
-                    <Link href="/login">
-                      <LogIn className="mr-2 h-4 w-4" />
-                      <span>Entrar</span>
+                    
+                    <Link href="/perfil">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Perfil</span>
                     </Link>
                   </DropdownMenuItem>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarFooter>
-        </Sidebar>
-        <SidebarInset>
-          <header className="sticky top-0 z-10 backdrop-blur  flex items-center justify-between p-4 border-b">
-            <div className='flex items-center gap-2'>
-              <SidebarTrigger />
-              <h2 className='font-headline text-lg font-semibold capitalize'>{pathname.split('/').pop()?.replace(/-/g, ' ') || 'Home'}</h2>
-            </div>
-            {/* {isAdmin && (
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sair</span>
+                   
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <DropdownMenuItem asChild>
+                  <SignInButton />
+                  <Link href="/sign-in">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    <span>Entrar</span>
+                  </Link>
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent> */}
+          </DropdownMenu>
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset>
+        <header className="sticky top-0 z-10 backdrop-blur w-full flex items-center justify-between p-4 border-b">
+          <div className='flex items-center gap-2'>
+            <SidebarTrigger />
+            <h2 className='font-headline text-base md:text-lg font-semibold capitalize'>{pathname.split('/').pop()?.replace(/-/g, ' ') || 'Home'}</h2>
+          </div>
+          {isSignedIn && <UserButton />}
+          {/* {isAdmin && (
               <Button variant="outline" size="sm">
                 <Edit className="mr-2 h-4 w-4" />
                 Editar Página
               </Button>
             )} */}
-          </header>
-          <main className="p-4 md:p-6 lg:p-8 pt-20">{children}</main>
-        </SidebarInset>
-      </SidebarProvider>
-    </div>
+        </header>
+        <main className="p-4 md:p-6 lg:p-8 pt-20">{children}</main>
+      </SidebarInset>
+    </>
   );
 }

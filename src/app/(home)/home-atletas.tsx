@@ -51,7 +51,7 @@ export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
     }).filter(item => item.leader);
 
     return (
-        <section className="space-y-6 max-w-3xl mx-auto">
+        <section className="space-y-6 mx-auto">
             <h2 className="text-3xl font-bold font-headline flex items-center gap-2">
                 <Trophy className="text-primary" />
                 Melhores Atletas
@@ -61,14 +61,14 @@ export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
                     <ul className="space-y-4">
                         {topAthletesByCategory.map(({ category, leader }) => (
                                 <li key={category}>
-                                    <div className="flex items-center gap-4 rounded-lg border p-1">
-                                        <p className="flex-1 font-semibold text-xs whitespace-nowrap uppercase tracking-wider text-muted-foreground ">
+                                    <div className="flex flex-wrap items-center gap-4 rounded-lg border p-2 justify-between">
+                                        <p className="flex-1 font-semibold text-xs text-nowrap uppercase tracking-wider text-muted-foreground">
                                             {category} {category.toLowerCase().includes('fem') ? '🚺' : '🚹'}
                                         </p>
                                         <Link href={`/rankings?category=${category}`} className="flex items-center gap-4">
                                             <div className="flex items-center gap-2">
-                                                <p className="font-semibold text-base whitespace-nowrap">{leader.nome}</p>
-                                                <p className="text-sm text-muted-foreground">{leader.totalPoints.toLocaleString()} pts</p>
+                                                <p className="font-semibold text-base text-nowrap">{leader.nome}</p>
+                                                <p className="text-sm text-muted-foreground text-nowrap">{leader.totalPoints.toLocaleString()} pts</p>
                                             </div>
                                             <ChevronRight className="h-5 w-5 text-muted-foreground" />
                                         </Link>
@@ -78,7 +78,7 @@ export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
                     </ul>
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
-                    <Button asChild variant="link" className="p-0 h-auto">
+                    <Button asChild variant="link" className="p-0 h-auto w-full justify-start md:w-auto">
                         <Link href="/atletas">Ver todos<ArrowRight className="ml-2 h-4 w-4" /></Link>
                     </Button>
                 </CardFooter>

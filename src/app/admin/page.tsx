@@ -21,7 +21,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!isAdmin) {
-      router.push('/login');
+      router.push('/sign-in');
     }
   }, [isAdmin, router]);
 
@@ -32,10 +32,10 @@ export default function AdminPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-headline tracking-tight leading-tight">
           Painel de Controle
         </h1>
-        <p className="mt-2 text-lg text-muted-foreground">
+        <p className="mt-2 text-base md:text-lg text-muted-foreground">
           Gerencie o conteúdo do site a partir daqui.
         </p>
       </header>
@@ -44,23 +44,23 @@ export default function AdminPage() {
         {contentTypes.map((type) => (
           <Card key={type.slug}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <List /> {type.name}
+              <CardTitle className="flex items-center gap-2 md:gap-3">
+                <List className="h-5 w-5 md:h-6 md:w-6" /> {type.name}
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm md:text-base">
                 Crie, atualize ou exclua {type.name.toLowerCase()}.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex justify-end gap-2 flex-wrap">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="flex-grow md:flex-grow-0">
                     <Trash2 className="mr-2 h-4 w-4" />
                     Excluir
                 </Button>
-                 <Button variant="outline" size="sm">
+                 <Button variant="outline" size="sm" className="flex-grow md:flex-grow-0">
                     <Edit className="mr-2 h-4 w-4" />
                     Atualizar
                 </Button>
-                <Button size="sm">
+                <Button size="sm" className="flex-grow md:flex-grow-0">
                     <PlusCircle className="mr-2 h-4 w-4" />
                     Criar
                 </Button>

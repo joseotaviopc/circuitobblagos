@@ -8,7 +8,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { useData } from '@/context/data-context';
 import { slugify } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/context/auth-context';
 import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,6 +24,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { updateAtleta } from '@/app/actions';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { useAuth } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
+import { is } from 'drizzle-orm';
 
 const formSchema = z.object({
   nome: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -37,7 +39,8 @@ const formSchema = z.object({
 export default function AthleteProfilePage() {
   const { slug } = useParams();
   const { atletas, loadingData, refreshAtletas } = useData()
-  const { isAdmin, loadingAuth } = useAuth();
+  const { isLoaded, isSignedIn, userId, sessionId } = useAuth()
+  const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   if (!slug) {
     notFound();
@@ -49,7 +52,7 @@ export default function AthleteProfilePage() {
     return null; // Explicitly return null after notFound to satisfy TypeScript
   }
 
-  console.log('atleta', JSON.stringify(atleta, null, 2));
+  console.log('useAuth ', isLoaded, isSignedIn, userId, sessionId);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -78,19 +81,25 @@ export default function AthleteProfilePage() {
     }
   }
 
-  if (loadingData || loadingAuth) {
+  if (loadingData || !isLoaded) {
     return <LoadingSpinner />
   }
 
   return (
     <div className="space-y-8">
-      {isAdmin && (
-        <Button variant="outline" size="sm" className="absolute top-4 right-4 z-20" onClick={() => setIsEditing(!isEditing)}>
+      {true && (
+        <Button size="sm" className="absolute top-3 right-16 z-20" onClick={() => {
+          if (isSignedIn) {
+            setIsEditing(!isEditing);
+          } else {
+            router.push('/sign-in');
+          }
+        }}>
           <Edit className="mr-2 h-4 w-4" />
           {isEditing ? 'Cancelar Edição' : 'Editar Página'}
         </Button>
       )}
-      {isEditing ? (
+      {isEditing && isSignedIn ? (
         <div className="container mx-auto py-10">
           <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl mb-8">Edit Athlete Profile</h1>
           <Form {...form}>
@@ -173,7 +182,7 @@ export default function AthleteProfilePage() {
           <header className="relative">
             <Card className="overflow-hidden">
               <div className="flex flex-col md:flex-row">
-                <div className="md:w-1/3 relative">
+                <div className="md:w-1/3 relative w-full aspect-square md:aspect-auto">
                   <Image
                     src={atleta.profileUrl || "https://placehold.co/400x400/png"}
                     alt={atleta.nome}
@@ -216,7 +225,7 @@ export default function AthleteProfilePage() {
                   <CardTitle className="font-headline">Estatísticas da Carreira</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                     <div className="p-4 bg-secondary rounded-lg">
                       <p className="text-3xl font-bold">{atleta.estatisticas?.eventos}</p>
                       <p className="text-muted-foreground">Eventos</p>

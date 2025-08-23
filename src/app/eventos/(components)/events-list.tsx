@@ -13,7 +13,7 @@ export function EventsList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {events?.sort((a, b) => new Date(a.data || '').getTime() - new Date(b.data || '').getTime()).map((event) => (
           <Card key={event.id} className="group overflow-hidden flex flex-col">
-            <CardHeader className="p-0">
+            <CardHeader className="p-0 w-full">
               <div className="aspect-square relative">
                 <Image
                   src={event.cartazUrl || "https://placehold.co/400x400/png"}
@@ -34,7 +34,7 @@ export function EventsList() {
                   day: 'numeric',
                 })}
               </p>
-              <Button asChild variant="secondary" className="mt-4 w-full">
+              <Button asChild variant="secondary" className="mt-4 w-full justify-center">
                 <Link href={`/eventos/${slugify(event.nome)}`}>
                   Ver Evento <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>

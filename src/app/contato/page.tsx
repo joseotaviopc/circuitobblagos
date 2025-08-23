@@ -9,10 +9,10 @@ export default function ContatoPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-headline tracking-tight leading-tight">
           Contato
         </h1>
-        <p className="mt-2 text-lg text-muted-foreground">
+        <p className="mt-2 text-base md:text-lg text-muted-foreground">
           Fale conosco, tire suas dúvidas ou envie suas sugestões.
         </p>
       </header>
@@ -42,23 +42,23 @@ export default function ContatoPage() {
           <CardHeader>
             <CardTitle>Nossas Informações</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 text-lg">
-             <div className="flex items-start gap-4">
-                <MapPin className="h-8 w-8 text-primary mt-1"/>
+          <CardContent className="space-y-6 text-base md:text-lg">
+             <div className="flex items-start gap-3 md:gap-4">
+                <MapPin className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1"/>
                 <div>
                     <h3 className="font-semibold">Endereço</h3>
                     <p className="text-muted-foreground">Av. Litorânea, 1234 - Praia do Forte, Cabo Frio - RJ, 28900-000</p>
                 </div>
             </div>
-            <div className="flex items-start gap-4">
-                <Mail className="text-primary mt-1"/>
+            <div className="flex items-start gap-3 md:gap-4">
+                <Mail className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1"/>
                 <div>
                     <h3 className="font-semibold">Email</h3>
                     <p className="text-muted-foreground">contato@bblagos.com.br</p>
                 </div>
             </div>
-             <div className="flex items-start gap-4">
-                <Phone className="text-primary mt-1"/>
+             <div className="flex items-start gap-3 md:gap-4">
+                <Phone className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1"/>
                 <div>
                     <h3 className="font-semibold">Telefone</h3>
                     <p className="text-muted-foreground">(22) 99999-8888</p>

@@ -10,10 +10,10 @@ export default function VideosPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-headline tracking-tight leading-tight">
           Vídeos
         </h1>
-        <p className="mt-2 text-lg text-muted-foreground">
+        <p className="mt-2 text-base md:text-lg text-muted-foreground">
           Assista aos melhores momentos em vídeo dos eventos recentes.
         </p>
       </header>
@@ -31,13 +31,13 @@ export default function VideosPage() {
                   data-ai-hint="surfing video"
                 />
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                  <PlayCircle className="h-16 w-16 text-white/70 group-hover:text-white transition-colors" />
+                  <PlayCircle className="h-12 w-12 md:h-16 md:w-16 text-white/70 group-hover:text-white transition-colors" />
                 </div>
               </div>
             </CardHeader>
             <CardContent className="p-4">
               <h2 className="font-bold font-headline truncate">{item.title}</h2>
-              <p className="text-sm text-muted-foreground">{item.event}</p>
+              <p className="text-sm text-muted-foreground truncate">{item.event}</p>
             </CardContent>
           </Card>
         ))}

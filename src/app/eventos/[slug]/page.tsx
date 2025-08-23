@@ -52,8 +52,8 @@ export default function EventDetailPage() {
         //   data-ai-hint={event['data-ai-hint'] || 'surfing action'}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-        <div className="absolute bottom-0 left-0 p-8">
-          <h1 className="text-4xl md:text-6xl font-extrabold font-headline text-white drop-shadow-lg">
+        <div className="absolute bottom-0 left-0 p-4 md:p-8">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold font-headline text-white drop-shadow-lg leading-tight">
             {event.nome}
           </h1>
         </div>
@@ -65,15 +65,15 @@ export default function EventDetailPage() {
                 <CardHeader>
                     <CardTitle className="font-headline">Detalhes do Evento</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4 text-lg">
-                    <div className="flex items-center gap-3">
-                        <Calendar className="h-5 w-5 text-primary" />
+                <CardContent className="space-y-4 text-base md:text-lg">
+                    <div className="flex items-center gap-2 md:gap-3">
+                        <Calendar className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                         <span>{new Date(event.data || '').toLocaleDateString('pt-BR', {
                             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
                         })}</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <MapPin className="h-5 w-5 text-primary" />
+                    <div className="flex items-center gap-2 md:gap-3">
+                        <MapPin className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                         <span>{event.local}</span>
                     </div>
                 </CardContent>

@@ -19,7 +19,7 @@ export function HomeEvents({ events }: HomeEventsProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {events?.map((event) => (
           <Card key={event.id} className="flex flex-col overflow-hidden hover:shadow-primary/20 hover:shadow-lg transition-shadow duration-300">
-            <CardHeader className="p-0 aspect-square relative">
+            <CardHeader className="p-0 aspect-video relative w-full">
               <Image
                 src={event.cartazUrl || "https://placehold.co/400x400/png"}
                 alt={event.nome}
@@ -29,12 +29,12 @@ export function HomeEvents({ events }: HomeEventsProps) {
               />
             </CardHeader>
             <CardContent className="p-4 flex-1">
-              <h3 className="font-bold font-headline">{event.nome}</h3>
-              <p className="text-sm text-muted-foreground">{event.local}</p>
-              <p className="text-sm text-muted-foreground">{event.data ? new Date(event.data).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' }) : '-'}</p>
+              <h3 className="font-bold font-headline text-wrap">{event.nome}</h3>
+              <p className="text-sm text-muted-foreground text-wrap">{event.local}</p>
+              <p className="text-sm text-muted-foreground text-wrap">{event.data ? new Date(event.data).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' }) : '-'}</p>
             </CardContent>
             <CardFooter className="p-4 pt-0">
-              <Button asChild variant="link" className="p-0 h-auto">
+              <Button asChild variant="link" className="p-0 h-auto w-full justify-start md:w-auto">
                 <Link href={`/eventos/${slugify(event.nome)}`}>+ Detalhes <ArrowRight className="ml-2 h-4 w-4" /></Link>
               </Button>
             </CardFooter>
