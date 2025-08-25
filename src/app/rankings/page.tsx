@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useData, AtletaResult } from '@/context/data-context';
+import { CheckCircle } from 'lucide-react';
 
 // const categories: AtletaResult['category'][] = ['Pro-Masc', 'Pro-Fem', 'Legends', 'Master', 'Sub-18-Masc', 'Sub-15-Masc', 'Sub-15-Fem', 'Sub-12-Masc'];
 
@@ -145,7 +146,10 @@ function RankingsContent() {
                               data-ai-hint="portrait athlete"
                             />
                           </div>
-                          <span className="font-medium group-hover:text-primary transition-colors text-sm md:text-base">{athlete!.nome} {athlete?.estado && ` (${athlete?.estado})`}</span>
+                          
+                          <span className="font-medium group-hover:text-primary transition-colors text-sm md:text-base">{athlete!.nome} {athlete?.estado && ` (${athlete?.estado})`}
+                            {athlete!.isAffiliated && <CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />}
+                          </span>
                         </Link>
                       </TableCell>
                       <TableCell className="text-right font-semibold text-primary p-1 pr-2 md:p-4 md:pr-4">{athlete!.totalPoints.toLocaleString()}</TableCell>

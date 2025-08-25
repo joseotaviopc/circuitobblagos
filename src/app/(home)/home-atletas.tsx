@@ -1,17 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { AtletaResult, useData } from "@/context/data-context";
-import { ArrowRight, ChevronRight, Trophy,  } from "lucide-react";
+import { ArrowRight, CheckCircle, ChevronRight, Trophy,  } from "lucide-react";
 import Link from "next/link";
+import { Atleta } from "../../../db/schema";
 
 interface HomeAtletasProps {
-    atletas?: AtletaResult[]
+    atletas?: Atleta[]
 }
 export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
     const { atletas: contextAthletes } = useData();
     const athletesToUse = propAthletes || contextAthletes;
 
-    const categoriesMap = new Map<string, (AtletaResult & { totalPoints: number; bestPosition: number })[]>();
+    const categoriesMap = new Map<string, (Atleta & { totalPoints: number; bestPosition: number })[]>();
 
     athletesToUse.forEach(athlete => {
         athlete.resultados?.results.forEach(res => {
@@ -46,7 +47,8 @@ export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
         });
         return {
             category,
-            leader: sortedAthletes[0]
+            leader: sortedAthletes[0],
+            isAffiliated: sortedAthletes[0].isAffiliated,
         };
     }).filter(item => item.leader);
 
@@ -67,7 +69,10 @@ export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
                                         </p>
                                         <Link href={`/rankings?category=${category}`} className="flex items-center gap-4">
                                             <div className="flex items-center gap-2">
-                                                <p className="font-semibold text-base text-nowrap">{leader.nome}</p>
+                                                <p className="font-semibold text-base text-nowrap">
+                                                    {leader.nome}
+                                                    {leader!.isAffiliated && <CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />}
+                                                </p>
                                                 <p className="text-sm text-muted-foreground text-nowrap">{leader.totalPoints.toLocaleString()} pts</p>
                                             </div>
                                             <ChevronRight className="h-5 w-5 text-muted-foreground" />

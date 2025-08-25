@@ -3,14 +3,20 @@ import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 export const atletas = sqliteTable("atletas", {
   id: text("id").notNull().primaryKey(),
   nome: text("nome").notNull(),
+  email: text("email"),
+  telefone: text("telefone"),
+  cpf: text("cpf"),
   nascimento: text("nascimento"),
   estado: text("estado"),
   profileUrl: text("profile_url"),
+  actionUrl: text("action_url"),
+  bio: text("bio"),
+  isAffiliated: text("is_affiliated"),
   // For arrays and objects, we store them as a JSON string
   socialLinks: text("social_links", { mode: 'json' }).$type<string[]>(),
   fotos: text("fotos", { mode: 'json' }).$type<string[]>(),
   videos: text("videos", { mode: 'json' }).$type<string[]>(),
-  resultados: text("resultados", { mode: 'json' }).$type<{ name: string, results: { evento: string, categoria: string, posicao: number, pontos: number }[] }>(),
+  resultados: text("resultados", { mode: 'json' }).$type<{ results: { evento: string, categoria: string, posicao: number, pontos: number }[] }>(),
   estatisticas: text("estatisticas", { mode: 'json' }).$type<{ eventos: number, vitorias: number, podios: number }>(),
 });
 

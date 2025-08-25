@@ -35,7 +35,7 @@ export default function ContatoPage() {
               <Label htmlFor="message">Mensagem</Label>
               <Textarea id="message" placeholder="Escreva sua mensagem aqui..." />
             </div>
-            <Button className="w-full">Enviar Mensagem</Button>
+            <Button className="w-full" disabled>Enviar Mensagem</Button>
           </CardContent>
         </Card>
         <Card>

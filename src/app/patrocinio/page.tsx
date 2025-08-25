@@ -41,8 +41,8 @@ export default function MarketingPage() {
           <p className="text-sm md:text-base">
             Associe sua marca ao melhor circuito de bodyboard do estado e faça parte dessa história!
           </p>
-          <Button className="w-full sm:w-auto">
-            <Download className="mr-2 h-4 w-4" />
+          <Button className="w-full sm:w-auto" disabled>
+            <Download className="mr-2 h-4 w-4"/>
             Baixar Mídia Kit
           </Button>
         </CardContent>

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { notFound, useParams, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Trophy, BarChart, ImageIcon, VideoIcon, Edit } from 'lucide-react';
+import { Trophy, BarChart, ImageIcon, VideoIcon, Edit, CheckCircle } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { useData } from '@/context/data-context';
 import { slugify } from '@/lib/utils';
@@ -87,14 +87,8 @@ export default function AthleteProfilePage() {
 
   return (
     <div className="space-y-8">
-      {true && (
-        <Button size="sm" className="absolute top-3 right-16 z-20" onClick={() => {
-          if (isSignedIn) {
-            setIsEditing(!isEditing);
-          } else {
-            router.push('/sign-in');
-          }
-        }}>
+      {isSignedIn && !atleta.isAffiliated && (
+        <Button size="sm" className="absolute top-3 right-16 z-20" onClick={() => setIsEditing(!isEditing)}>
           <Edit className="mr-2 h-4 w-4" />
           {isEditing ? 'Cancelar Edição' : 'Editar Página'}
         </Button>
@@ -194,7 +188,9 @@ export default function AthleteProfilePage() {
                   />
                 </div>
                 <div className="md:w-2/3 p-6 md:p-8 flex flex-col justify-center">
-                  <h1 className="text-4xl lg:text-5xl font-extrabold font-headline mt-1">{atleta.nome}</h1>
+                  <h1 className="text-4xl lg:text-5xl font-extrabold font-headline mt-1">
+                    {atleta.nome}{!atleta!.isAffiliated && <CheckCircle className="ml-1 h-8 w-8 text-green-500 inline-block" />}
+                  </h1>
                   {/* <div className="flex items-center gap-4 mt-4 text-lg text-muted-foreground">
                     <Image src={`https://flagcdn.com/h24/${atleta.countryCode}.png`} alt={`${atleta.country} flag`} width={32} height={24} className="rounded-sm" />
                     <span>{atleta.country}</span>
@@ -231,7 +227,7 @@ export default function AthleteProfilePage() {
                       <p className="text-muted-foreground">Eventos</p>
                       <hr className='my-1' />
                       {atleta.resultados?.results.map(result => (
-                        <div key={result.evento+result.categoria}>
+                        <div key={result.evento + result.categoria}>
                           <p className='text-xs text-left'>{result.evento} - {result.categoria}</p>
                         </div>
                       ))}
@@ -241,7 +237,7 @@ export default function AthleteProfilePage() {
                       <p className="text-muted-foreground">Vitórias</p>
                       <hr className='my-1' />
                       {atleta.resultados?.results.map(result => (
-                        <div key={result.evento+result.categoria}>
+                        <div key={result.evento + result.categoria}>
                           <p className='text-xs text-left'>{result.posicao === 1 && `🏆 ${result.evento} - ${result.categoria}`}</p>
                         </div>
                       ))}
@@ -251,7 +247,7 @@ export default function AthleteProfilePage() {
                       <p className="text-muted-foreground">Pódios</p>
                       <hr className='my-1' />
                       {atleta.resultados?.results.map(result => (
-                        <div key={result.evento+result.categoria}>
+                        <div key={result.evento + result.categoria}>
                           <p className='text-xs text-left'>{result.posicao <= 4 && `${result.posicao}º - ${result.evento} - ${result.categoria}`}</p>
                         </div>
                       ))}

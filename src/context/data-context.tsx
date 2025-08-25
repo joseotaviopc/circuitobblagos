@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { atletas, type Event, eventos } from '../../db/schema';
+import { Atleta, atletas, type Event, eventos } from '../../db/schema';
 import { db } from '../../db';
 import { getAtletas, getEvents } from '@/app/actions';
 
@@ -31,7 +31,7 @@ export interface AtletaResult {
 
 interface DataContextType {
   events: Event[] | null;
-  atletas: AtletaResult[];
+  atletas: Atleta[];
   loadingData: boolean;
   refreshAtletas: () => Promise<void>;
 }
@@ -41,7 +41,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const [events, setEvents] = useState<Event[] | null>(null);
-  const [atletas, setAtletas] = useState<AtletaResult[]>([]);
+  const [atletas, setAtletas] = useState<Atleta[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
   async function fetchDb() {
