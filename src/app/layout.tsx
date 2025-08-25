@@ -37,14 +37,6 @@ export const metadata: Metadata = {
     description: "O Circuito BB Lagos é o maior e mais tradicional campeonato de bodyboard da Região dos Lagos, no estado do Rio de Janeiro.",
     url: "https://www.circuitobblagos.com.br",
     siteName: "Circuito BB Lagos",
-    images: [
-      {
-        url: "/bb-lagos-link-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Circuito BB Lagos",
-      },
-    ],
     locale: "pt_BR",
     type: "website",
   }
