@@ -24,6 +24,7 @@ export function HomeEvents({ events }: HomeEventsProps) {
                 src={event.cartazUrl || "https://placehold.co/400x400/png"}
                 alt={event.nome}
                 fill
+                priority
                 className="object-cover"
               // data-ai-hint={event['data-ai-hint'] || 'surfing competition'}
               />

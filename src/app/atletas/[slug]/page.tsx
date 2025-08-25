@@ -52,7 +52,7 @@ export default function AthleteProfilePage() {
     return null; // Explicitly return null after notFound to satisfy TypeScript
   }
 
-  console.log('useAuth ', isLoaded, isSignedIn, userId, sessionId);
+  // console.log('useAuth ', isLoaded, isSignedIn, userId, sessionId);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

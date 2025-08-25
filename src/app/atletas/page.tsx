@@ -18,7 +18,7 @@ export default function Atletas() {
     const { atletas, loadingData } = useData();
 
     const atletasOrdenados = atletas.sort((a, b) => a.nome.localeCompare(b.nome));
-    console.log('atletas', atletas);
+    // console.log('atletas', atletas);
 
     if (loadingData) {
         return <LoadingSpinner />

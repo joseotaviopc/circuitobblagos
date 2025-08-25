@@ -49,7 +49,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       const eventsData = await getEvents();
       const atletasData = await getAtletas();
 
-      console.log('atletasData', atletasData);
+      // console.log('atletasData', atletasData);
       setEvents(eventsData);
 
       const groupedByAthlete = eventsData.reduce((acc, evento) => {
@@ -90,7 +90,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         };
       });
 
-      console.log('groupedResultsArray', formattedResults);
+      // console.log('groupedResultsArray', formattedResults);
       setAtletas(atletasData.map(atleta => ({
         ...atleta,
         estatisticas: {
