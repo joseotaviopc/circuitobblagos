@@ -18,12 +18,46 @@ export default function HistoriaPage() {
           <CardTitle className="text-xl md:text-2xl font-headline">As Origens</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-sm md:text-base">
-           <Image src="https://placehold.co/800x400/png" alt="Old photo of bodyboarders" width={800} height={400} className="w-full rounded-lg aspect-video object-cover" data-ai-hint="vintage surfing" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center py-4">
+            <div className="relative w-full sm:w-1/2 md:w-1/3 aspect-video rounded-lg overflow-hidden shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
+              <Image src="/historia-bb-lagos-2005.jpg" alt="Bodyboarder in action" fill className="object-cover" data-ai-hint="bodyboarder in action" />
+            </div>
+            <div className="relative w-full sm:w-1/2 md:w-1/3 aspect-video rounded-lg overflow-hidden shadow-lg transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+              <Image src="/historia-bb-lagos-atletas.jpg" alt="Bodyboarders on the beach" fill className="object-cover" data-ai-hint="bodyboarders on the beach" />
+            </div>
+          </div>
           <p>
-            A BBLagos nasceu da paixão de um grupo de amigos pelas ondas da Região dos Lagos. O que começou como encontros informais de fim de semana, rapidamente se transformou em um movimento para organizar e promover o esporte localmente.
+            O Circuito BB Lagos nasceu em 2005, criado e organizado por Gabriel, em sua primeira gestão. Durante 5 anos, o campeonato se firmou como referência, escolhendo sempre as melhores praias da Região dos Lagos para sediar as etapas, proporcionando condições de ondas desafiadoras e de alta performance para os atletas.
           </p>
           <p>
-            Enfrentamos muitos desafios, desde a falta de recursos até a necessidade de provar o valor do bodyboard como um esporte sério. Mas com determinação e o apoio da comunidade, conseguimos realizar os primeiros campeonatos e atrair a atenção para o talento local.
+            Em 2023, o circuito foi retomado por Ramon Valuche, mantendo a essência original e trazendo ainda mais estrutura e visibilidade para o bodyboard. Já no segundo ano dessa nova fase, o circuito passou a contar com 5 etapas anuais, incluindo a famosa Praia Brava de Arraial do Cabo, reconhecida como a mais desafiadora da região.
+          </p>
+          <p>
+            Em 2025, o Circuito BB Lagos deu um salto ainda maior, com 6 etapas no calendário. Já realizamos etapas em Arraial do Cabo, Saquarema, Rio das Ostras, Praia Seca e Cabo Frio. As próximas serão em Búzios e Macaé. E para 2026, já está prevista a estreia de Ponta Negra entre as sedes.
+          </p>
+
+          <h4 className="text-lg font-semibold font-headline mt-4">Categorias oficiais</h4>
+          <p>
+            O Circuito BB Lagos é inclusivo e abrange todas as gerações do bodyboard, com disputas para todas as idades e níveis:
+          </p>
+          <ul className="list-disc list-inside space-y-1">
+            <li>Sub-12</li>
+            <li>Sub-15</li>
+            <li>Sub-18</li>
+            <li>Sub-15 Feminino</li>
+            <li>Pro Open Masculino</li>
+            <li>Pro Open Feminino</li>
+            <li>Master</li>
+            <li>Legend</li>
+          </ul>
+          <h4 className="text-lg font-semibold font-headline mt-4">Transparência e emoção</h4>
+          <p>
+            Todos os campeonatos do Circuito BB Lagos são realizados com um sistema de notas em tempo real, que garante transparência para atletas e público.
+            O competidor sabe, na hora, a nota que recebeu em cada onda, quanto precisa para avançar e se está liderando a bateria. Essa dinâmica traz ainda mais emoção para quem assiste e credibilidade para o campeonato.
+          </p>
+          <h4 className="text-lg font-semibold font-headline mt-4">Excelência técnica</h4>
+          <p>
+            Hoje, o Circuito BB Lagos conta com o melhor quadro de juízes do Brasil, entregando avaliações justas e de alto nível. Essa busca pela excelência faz parte do DNA do circuito desde sua criação, elevando o padrão do bodyboard no estado e no país.
           </p>
         </CardContent>
       </Card>
