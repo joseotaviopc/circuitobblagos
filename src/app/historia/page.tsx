@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HistoriaPage() {
   return (
@@ -35,6 +36,8 @@ export default function HistoriaPage() {
           <p>
             Em 2025, o Circuito BB Lagos deu um salto ainda maior, com 6 etapas no calendário. Já realizamos etapas em Arraial do Cabo, Saquarema, Rio das Ostras, Praia Seca e Cabo Frio. As próximas serão em Búzios e Macaé. E para 2026, já está prevista a estreia de Ponta Negra entre as sedes.
           </p>
+
+          <p className='text-right text-sm'>Fonte: <Link className='text-primary' href={"https://www.waves.com.br/arquivo/fred-vercosa-vence-bblagos/"}>Waves</Link></p>
 
           <h4 className="text-lg font-semibold font-headline mt-4">Categorias oficiais</h4>
           <p>

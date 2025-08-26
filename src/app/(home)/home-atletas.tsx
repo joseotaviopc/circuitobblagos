@@ -71,7 +71,7 @@ export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
                                             <div className="flex items-center gap-2">
                                                 <p className="font-semibold text-base text-nowrap">
                                                     {leader.nome}
-                                                    {leader!.isAffiliated && <CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />}
+                                                    {leader.isAffiliated === "true" && <CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />}
                                                 </p>
                                                 <p className="text-sm text-muted-foreground text-nowrap">{leader.totalPoints.toLocaleString()} pts</p>
                                             </div>

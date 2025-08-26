@@ -12,7 +12,7 @@ const contentTypes = [
   { name: 'Notícias', slug: 'news' },
   { name: 'Fotos', slug: 'photos' },
   { name: 'Vídeos', slug: 'videos' },
-  { name: 'Classificações', slug: 'rankings' },
+  { name: 'Rankings', slug: 'rankings' },
 ];
 
 export default function AdminPage() {

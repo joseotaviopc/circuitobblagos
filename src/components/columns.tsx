@@ -28,7 +28,7 @@ export const columns: ColumnDef<Atleta>[] = [
       <div className="flex items-center gap-2">
         <Image src={row.original.profileUrl || 'https://placehold.co/400x400/png'} alt={row.original.nome} className="w-7 h-7 rounded-full" width={28} height={28} />
         {row.getValue("nome")} {row.original.estado && ` (${row.original.estado})`} 
-        {row.original.isAffiliated && <CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />}
+        {row.original.isAffiliated === "true" && <CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />}
         <span className="text-xs text-muted-foreground">{[...new Set(row.original.resultados?.results.map(result => result.categoria))].join(', ')}</span>
       </div>
       </Link>,

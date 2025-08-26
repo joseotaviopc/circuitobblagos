@@ -24,7 +24,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { updateAtleta } from '@/app/actions';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { useAuth } from '@clerk/nextjs';
+import { useAuth, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { is } from 'drizzle-orm';
 
@@ -40,6 +40,8 @@ export default function AthleteProfilePage() {
   const { slug } = useParams();
   const { atletas, loadingData, refreshAtletas } = useData()
   const { isLoaded, isSignedIn, userId, sessionId } = useAuth()
+  const { user } = useUser();
+  console.log(JSON.stringify(user,null,4))
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   if (!slug) {
@@ -51,6 +53,8 @@ export default function AthleteProfilePage() {
     notFound();
     return null; // Explicitly return null after notFound to satisfy TypeScript
   }
+
+  console.log(atleta.id)
 
   // console.log('useAuth ', isLoaded, isSignedIn, userId, sessionId);
 
@@ -87,7 +91,7 @@ export default function AthleteProfilePage() {
 
   return (
     <div className="space-y-8">
-      {isSignedIn && !atleta.isAffiliated && (
+      {isSignedIn && atleta.isAffiliated === "true" && (
         <Button size="sm" className="absolute top-3 right-16 z-20" onClick={() => setIsEditing(!isEditing)}>
           <Edit className="mr-2 h-4 w-4" />
           {isEditing ? 'Cancelar Edição' : 'Editar Página'}
@@ -189,7 +193,7 @@ export default function AthleteProfilePage() {
                 </div>
                 <div className="md:w-2/3 p-6 md:p-8 flex flex-col justify-center">
                   <h1 className="text-4xl lg:text-5xl font-extrabold font-headline mt-1">
-                    {atleta.nome}{!atleta!.isAffiliated && <CheckCircle className="ml-1 h-8 w-8 text-green-500 inline-block" />}
+                    {atleta.nome}{atleta.isAffiliated === "true" && <CheckCircle className="ml-1 h-8 w-8 text-green-500 inline-block" />}
                   </h1>
                   {/* <div className="flex items-center gap-4 mt-4 text-lg text-muted-foreground">
                     <Image src={`https://flagcdn.com/h24/${atleta.countryCode}.png`} alt={`${atleta.country} flag`} width={32} height={24} className="rounded-sm" />

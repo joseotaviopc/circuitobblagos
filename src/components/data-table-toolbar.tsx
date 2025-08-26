@@ -49,15 +49,14 @@ export function DataTableToolbar<TData>({
             size="sm"
             onClick={() => table.resetColumnFilters()}
           >
-            Reset
+            Limpar
             <X />
           </Button>
         )}
       </div>
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <DataTableViewOptions table={table} />
-        {/* <Button size="sm">Add Task</Button> */}
-      </div>
+      </div> */}
     </div>
   )
 }

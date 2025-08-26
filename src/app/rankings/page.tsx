@@ -96,7 +96,7 @@ function RankingsContent() {
     <div className="space-y-8">
       <header>
         <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl">
-          Classificação dos Atletas
+          Rankings dos Atletas
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
           Confira o ranking oficial dos atletas de bodyboard em todas as categorias.
@@ -148,7 +148,7 @@ function RankingsContent() {
                           </div>
                           
                           <span className="font-medium group-hover:text-primary transition-colors text-sm md:text-base">{athlete!.nome} {athlete?.estado && ` (${athlete?.estado})`}
-                            {athlete!.isAffiliated && <CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />}
+                            {athlete && athlete.isAffiliated === "true" && <CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />}
                           </span>
                         </Link>
                       </TableCell>

@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function MarketingPage() {
   return (
@@ -29,10 +30,10 @@ export default function MarketingPage() {
             </div>
           </div>
           <p className="text-sm md:text-base">
-            Nestes três anos de retomada, o circuito já consolidou importantes parcerias. Entre os patrocinadores oficiais, destacam-se a Fênix Board e a Econan Óculos, que acreditam no projeto e no crescimento do bodyboard na Região dos Lagos.
+            Nestes três anos de retomada, o circuito já consolidou importantes parcerias. Entre os patrocinadores oficiais, destacam-se a Fênix Board e a Econ Óculos, que acreditam no projeto e no crescimento do bodyboard na Região dos Lagos.
           </p>
           <p className="text-sm md:text-base">
-            Hoje, o Circuito BB Lagos é reconhecido como o melhor circuito do estado do Rio de Janeiro e um dos mais promissores do Brasil. A Confederação Brasileira de Bodyboard (CBB) já vê o circuito com grande potencial e concedeu autorização para que seja chancelado pela Sebrasme, passo importante para integrar o calendário oficial nacional.
+            Hoje, o Circuito BB Lagos é reconhecido como o melhor circuito do estado do Rio de Janeiro e um dos mais promissores do Brasil. A <Link href={"https://www.cbrasb.com.br/"} className='text-primary'>Confederação Brasileira de Bodyboard</Link> (CBRASB) já vê o circuito com grande potencial e concedeu autorização para que seja chancelado pela Sebrasme, passo importante para integrar o calendário oficial nacional.
           </p>
           <p className="text-sm md:text-base">
             👉 O Circuito BB Lagos é um sonho coletivo: feito por quem vive o bodyboard, para fortalecer atletas da base até os Legends.

@@ -1,0 +1,6 @@
+- [x] inserir no banco os atletas filiados
+- verificar onde incluir o novo texto
+- analisar as mudanças do audio
+- [x] alterar marca Eco e Cbrasb
+- adicionar vídeos do youtube
+- checar a integração com o instagram

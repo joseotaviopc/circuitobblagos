@@ -42,27 +42,33 @@ export default function ContatoPage() {
           <CardHeader>
             <CardTitle>Nossas Informações</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6 text-base md:text-lg">
-             <div className="flex items-start gap-3 md:gap-4">
-                <MapPin className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1"/>
-                <div>
-                    <h3 className="font-semibold">Endereço</h3>
-                    <p className="text-muted-foreground">Av. Litorânea, 1234 - Praia do Forte, Cabo Frio - RJ, 28900-000</p>
-                </div>
+          <CardContent className="space-y-6 text-base">
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="h-5 w-5 md:h-8 md:w-8">
+                <MapPin className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Endereço</h3>
+                <p className="text-muted-foreground">Av. Litorânea, 1234 - Praia do Forte, Cabo Frio - RJ, 28900-000</p>
+              </div>
             </div>
             <div className="flex items-start gap-3 md:gap-4">
-                <Mail className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1"/>
-                <div>
-                    <h3 className="font-semibold">Email</h3>
-                    <p className="text-muted-foreground">contato@bblagos.com.br</p>
-                </div>
+              <div className="h-5 w-5 md:h-8 md:w-8">
+                <Mail className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Email</h3>
+                <p className="text-muted-foreground">contato@bblagos.com.br</p>
+              </div>
             </div>
-             <div className="flex items-start gap-3 md:gap-4">
-                <Phone className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1"/>
-                <div>
-                    <h3 className="font-semibold">Telefone</h3>
-                    <p className="text-muted-foreground">(22) 99999-8888</p>
-                </div>
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="h-5 w-5 md:h-8 md:w-8">
+                <Phone className="h-5 w-5 md:h-8 md:w-8 text-primary mt-1" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Telefone</h3>
+                <p className="text-muted-foreground">(22) 99999-8888</p>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -21,7 +21,7 @@ export function FirstHero() {
                     <Link href="/eventos">Eventos</Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
-                    <Link href="/rankings">Classificação</Link>
+                    <Link href="/rankings">Rankings</Link>
                 </Button>
             </div>
         </section>

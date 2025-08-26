@@ -76,7 +76,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 
   const menuItems = [
     { href: '/eventos', label: 'Calendário', icon: Calendar },
-    { href: '/rankings', label: 'Classificação', icon: BarChart },
+    { href: '/rankings', label: 'Rankings', icon: BarChart },
     { href: '/atletas', label: 'Atletas', icon: Users },
     { href: '/fotos', label: 'Fotos', icon: ImageIcon },
     { href: '/videos', label: 'Vídeos', icon: Video },

@@ -4,14 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { AppLayoutWithSidebarProvider } from '@/components/layout/app-shell';
 import { AuthProvider } from '@/context/auth-context';
 import { DataProvider } from '@/context/data-context';
-import { SidebarProvider } from '@/components/ui/sidebar';
 import {
   ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
 } from '@clerk/nextjs'
 
 import { Inter, Space_Grotesk } from "next/font/google";
