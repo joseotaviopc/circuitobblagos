@@ -20,30 +20,17 @@ import {
   Waves,
   Megaphone,
   BarChart,
-  Users,
-  User,
-  LogOut,
-  LogIn,
-  Shield,
-  Edit
-} from 'lucide-react';
+  Users} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from '../icons/logo';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Button } from '../ui/button';
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 // import { useAuth } from '@/context/auth-context';
 import { LoadingSpinner } from '../ui/loading-spinner';
 import { useSidebar } from '../ui/sidebar';
-import { SignInButton, useAuth, UserButton, useUser } from '@clerk/nextjs';
+import { useAuth, UserButton, useUser, SignInButton } from '@clerk/nextjs';
 
 export function AppLayoutWithSidebarProvider({ children }: { children: React.ReactNode }) {
   return (
@@ -183,7 +170,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
             <SidebarTrigger />
             <h2 className='font-headline text-base md:text-lg font-semibold capitalize'>{pathname.split('/').pop()?.replace(/-/g, ' ') || 'Home'}</h2>
           </div>
-          {isSignedIn && <UserButton />}
+          {isSignedIn ? <UserButton /> : <SignInButton>Entrar</SignInButton>}
           {/* {isAdmin && (
               <Button variant="outline" size="sm">
                 <Edit className="mr-2 h-4 w-4" />
