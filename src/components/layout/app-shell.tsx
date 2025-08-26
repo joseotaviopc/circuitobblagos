@@ -20,17 +20,19 @@ import {
   Waves,
   Megaphone,
   BarChart,
-  Users} from 'lucide-react';
+  Users,
+  UserCircle} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from '../icons/logo';
 import {
   DropdownMenu,
 } from '../ui/dropdown-menu';
-// import { useAuth } from '@/context/auth-context';
 import { LoadingSpinner } from '../ui/loading-spinner';
 import { useSidebar } from '../ui/sidebar';
 import { useAuth, UserButton, useUser, SignInButton } from '@clerk/nextjs';
+import { slugify } from '@/lib/utils';
+import { useData } from '@/context/data-context';
 
 export function AppLayoutWithSidebarProvider({ children }: { children: React.ReactNode }) {
   return (
@@ -57,9 +59,10 @@ export function AppLayoutWithSidebarProvider({ children }: { children: React.Rea
 
 function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { isSignedIn, isLoaded, } = useAuth();
+  const { isSignedIn, isLoaded, has } = useAuth();
   const { user } = useUser();
-  const { setOpenMobile } = useSidebar();
+  const { setOpenMobile, state, isMobile } = useSidebar();
+  const { loadingData, atletas } = useData()
 
   const menuItems = [
     { href: '/eventos', label: 'Calendário', icon: Calendar },
@@ -71,12 +74,16 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/contato', label: 'Contato', icon: Mail },
     { href: '/bodyboard', label: 'Sobre o Bodyboard', icon: Waves },
     { href: '/patrocinio', label: 'Patrocínios', icon: Megaphone },
-    // { href: '/perfil', label: 'Perfil', icon: User },
   ];
 
-  if (!isLoaded) {
+  if (!isLoaded || loadingData) {
     return <LoadingSpinner />
   }
+
+  const userEmail = user?.primaryEmailAddress?.emailAddress;
+  const atleta = atletas.find((atleta) => atleta.email === userEmail);
+
+  const canEdit = isSignedIn && userEmail && atleta?.email === userEmail;
 
   return (
     <>
@@ -103,80 +110,43 @@ function AppLayout({ children }: { children: React.ReactNode }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
-            {/* {isAdmin && (
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname === '/admin'}
-                  tooltip="Admin"
-                  onClick={() => setOpenMobile(false)}
-                >
-                  <Link href="/admin">
-                    <Shield />
-                    <span>Admin</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )} */}
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
           <DropdownMenu>
-            <UserButton />
-            {/* <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="justify-start gap-2 w-full px-2">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={user ? 'https://placehold.co/100x100/png' : undefined} />
-                  <AvatarFallback>{user?.firstName ? user.firstName.charAt(0).toUpperCase() : <User />}</AvatarFallback>
-                </Avatar>
-                <span className="truncate">{user ? user.username : 'Visitante'}</span>
-              </Button>
-            </DropdownMenuTrigger> */}
-            {/* <DropdownMenuContent side="right" align="start" className="w-56">
-              <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {user ? (
-                <>
-                  <DropdownMenuItem asChild>
-                    
-                    <Link href="/perfil">
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Perfil</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Sair</span>
-                   
-                  </DropdownMenuItem>
-                </>
-              ) : (
-                <DropdownMenuItem asChild>
-                  <SignInButton />
-                  <Link href="/sign-in">
-                    <LogIn className="mr-2 h-4 w-4" />
-                    <span>Entrar</span>
-                  </Link>
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent> */}
+            <UserButton>
+              <UserButton.MenuItems>
+                {canEdit &&
+                  <UserButton.Link
+                    label="Minha página"
+                    labelIcon={<UserCircle className='w-4 h-4' />}
+                    href={`/atletas/${slugify(atleta.nome)}`}
+                  />
+                }
+              </UserButton.MenuItems>
+            </UserButton>
           </DropdownMenu>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset>
+      <SidebarInset className={`${isMobile ? 'w-full' : state === 'expanded' ? 'w-[min(calc(100%-14.5rem),72rem)] max-w-[calc(100%-16rem)]' : 'w-full'}`}>
         <header className="sticky top-0 z-10 backdrop-blur w-full flex items-center justify-between p-4 border-b">
           <div className='flex items-center gap-2'>
             <SidebarTrigger />
             <h2 className='font-headline text-base md:text-lg font-semibold capitalize'>{pathname.split('/').pop()?.replace(/-/g, ' ') || 'Home'}</h2>
           </div>
-          {isSignedIn ? <UserButton /> : <SignInButton>Entrar</SignInButton>}
-          {/* {isAdmin && (
-              <Button variant="outline" size="sm">
-                <Edit className="mr-2 h-4 w-4" />
-                Editar Página
-              </Button>
-            )} */}
+          {isSignedIn ? (
+            <UserButton>
+              <UserButton.MenuItems>
+                {canEdit &&
+                  <UserButton.Link
+                    label="Minha página"
+                    labelIcon={<UserCircle className='w-4 h-4' />}
+                    href={`/atletas/${slugify(atleta.nome)}`}
+                  />
+                }
+              </UserButton.MenuItems>
+            </UserButton>
+          ) : <SignInButton>Entrar</SignInButton>}
         </header>
         <main className="p-4 md:p-6 lg:p-8 pt-20">{children}</main>
       </SidebarInset>

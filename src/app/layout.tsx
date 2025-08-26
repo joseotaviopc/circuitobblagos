@@ -42,15 +42,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" className="dark">
+    <ClerkProvider
+      localization={{
+        locale: 'pt-BR',
+        signIn: {
+          start: {
+            title: 'Bemvindo de novo!',
+            subtitle: 'Iniciar para continuar',
+            titleCombined: 'Continue no Circuito BB Lagos'
+          },
+        },
+        userButton: {
+          action__signOut: 'Sair',
+          action__manageAccount: 'Gerenciar conta'
+        },
+        socialButtonsBlockButton: 'Entrar com Google',
+        formFieldLabel__emailAddress: 'Email',
+        formButtonPrimary: 'Continuar'
+      }}
+    >
+      <html lang="pt-BR" className="dark">
         <head>
-          {/* <link rel="preconnect" href="https://fonts.googleapis.com" /> */}
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          {/* <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-          <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" /> */}
         </head>
-        <body className={`font-body antialiased ${inter.className} ${spaceGrotesk.className}`}>
+        <body className={`antialiased ${inter.className} ${spaceGrotesk.className}`}>
           <DataProvider>
             <AuthProvider>
               <AppLayoutWithSidebarProvider>
