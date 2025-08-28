@@ -4,31 +4,31 @@ import { columns } from "@/components/columns";
 import { DataTable } from "@/components/data-table";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { useData } from "@/context/data-context";
 
 export default function Atletas() {
-    const { atletas, loadingData } = useData();
+	const { atletas, loadingData } = useData();
 
-    const atletasOrdenados = atletas.sort((a, b) => a.nome.localeCompare(b.nome));
-    // console.log('atletas', atletas);
+	const atletasOrdenados = atletas.sort((a, b) => a.nome.localeCompare(b.nome));
+	// console.log('atletas', atletas);
 
-    if (loadingData) {
-        return <LoadingSpinner />
-    }
+	if (loadingData) {
+		return <LoadingSpinner />;
+	}
 
-    return (
-        <div>
-            <h1>Atletas</h1>
-            <DataTable data={atletasOrdenados} columns={columns} />
-            {/* <Table>
+	return (
+		<div>
+			<h1>Atletas</h1>
+			<DataTable data={atletasOrdenados} columns={columns} />
+			{/* <Table>
                 <TableHeader>
                     <TableRow>
                         <TableHead>Nome</TableHead>
@@ -50,6 +50,6 @@ export default function Atletas() {
                     ))}
                 </TableBody>
             </Table> */}
-        </div>
-    )
+		</div>
+	);
 }

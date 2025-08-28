@@ -38,7 +38,7 @@ const formSchema = z.object({
 	podios: z.string().optional().or(z.literal("")),
 });
 
-export type UseAtletaForm = z.infer<typeof formSchema>
+export type UseAtletaForm = z.infer<typeof formSchema>;
 
 export function useAtletaPage({ atleta }: { atleta?: Atleta }) {
 	const { refreshAtletas } = useData();
