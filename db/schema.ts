@@ -12,7 +12,6 @@ export const atletas = sqliteTable("atletas", {
   actionUrl: text("action_url"),
   bio: text("bio"),
   isAffiliated: text("is_affiliated"),
-  // For arrays and objects, we store them as a JSON string
   socialLinks: text("social_links", { mode: 'json' }).$type<string[]>(),
   fotos: text("fotos", { mode: 'json' }).$type<string[]>(),
   videos: text("videos", { mode: 'json' }).$type<string[]>(),
