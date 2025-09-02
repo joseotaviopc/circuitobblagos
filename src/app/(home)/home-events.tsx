@@ -21,7 +21,7 @@ export function HomeEvents({ events }: HomeEventsProps) {
 				<Calendar className="text-primary" />
 				Eventos
 			</h2>
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 				{events?.map((event) => (
 					<Card
 						key={event.id}
@@ -34,7 +34,7 @@ export function HomeEvents({ events }: HomeEventsProps) {
 								fill
 								priority
 								className="object-cover"
-								// data-ai-hint={event['data-ai-hint'] || 'surfing competition'}
+							// data-ai-hint={event['data-ai-hint'] || 'surfing competition'}
 							/>
 						</CardHeader>
 						<CardContent className="p-4 flex-1">
@@ -47,10 +47,10 @@ export function HomeEvents({ events }: HomeEventsProps) {
 							<p className="text-sm text-muted-foreground text-wrap">
 								{event.data
 									? new Date(event.data).toLocaleDateString("pt-BR", {
-											year: "numeric",
-											month: "long",
-											day: "numeric",
-										})
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									})
 									: "-"}
 							</p>
 						</CardContent>

@@ -41,14 +41,23 @@ const formSchema = z.object({
 export type UseAtletaForm = z.infer<typeof formSchema>;
 
 export function useAtletaPage({ atleta }: { atleta?: Atleta }) {
+	// console.log("atleta => ", JSON.stringify(atleta, null, 4))
 	const { refreshAtletas } = useData();
 	const [isEditing, setIsEditing] = useState(false);
-	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+	const [previewUrl, setPreviewUrl] = useState<string | null>(atleta?.profileUrl || null);
 	const [socialLinksList, setSocialLinksList] = useState<string[]>(
 		atleta?.socialLinks || [],
 	);
 	const [socialInput, setSocialInput] = useState("");
 	const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+	// Image upload state
+	const [uploadingImage, setUploadingImage] = useState(false);
+	const [uploadProgress, setUploadProgress] = useState(0);
+	const [uploadError, setUploadError] = useState<string | null>(null);
+	const [galleryImages, setGalleryImages] = useState<string[]>(atleta?.fotos || []);
+	const [uploadingGallery, setUploadingGallery] = useState(false);
+	const [galleryUploadProgress, setGalleryUploadProgress] = useState<{ [key: string]: number }>({});
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -100,7 +109,207 @@ export function useAtletaPage({ atleta }: { atleta?: Atleta }) {
 		}
 	}
 
+	// Handle file upload to cloud storage
+	// async function handleFileUpload(file: File) {
+	// 	try {
+	// 		setUploadingImage(true);
+	// 		setUploadError(null);
+	// 		setUploadProgress(0);
+
+	// 		// Validate file before upload
+	// 		const fileValidation = validateFile(file);
+	// 		if (!fileValidation.valid) {
+	// 			throw new Error(fileValidation.error);
+	// 		}
+
+	// 		// Validate image dimensions
+	// 		const dimensionValidation = await validateImageDimensions(file);
+	// 		if (!dimensionValidation.valid) {
+	// 			throw new Error(dimensionValidation.error);
+	// 		}
+
+	// 		// Create preview URL
+	// 		const reader = new FileReader();
+	// 		reader.onload = (e) => {
+	// 			if (typeof e.target?.result === 'string') {
+	// 				setPreviewUrl(e.target.result);
+	// 			}
+	// 		};
+	// 		reader.readAsDataURL(file);
+
+	// 		// Simulate progress for better UX
+	// 		setUploadProgress(10);
+
+	// 		// Upload directly to Cloudinary via uploadService
+	// 		const result = await uploadService.uploadImage(file, 'profile');
+
+	// 		setUploadProgress(100);
+
+	// 		// Update form with new URL
+	// 		form.setValue('profileUrl', result.publicUrl);
+	// 		setPreviewUrl(result.publicUrl);
+
+	// 		setUploadingImage(false);
+	// 		return result;
+	// 	} catch (error) {
+	// 		setUploadingImage(false);
+	// 		setUploadError(error instanceof Error ? error.message : 'Upload failed');
+	// 		throw error;
+	// 	}
+	// }
+
+	// Handle gallery image uploads
+	// async function handleGalleryUpload(files: File[]) {
+	// 	try {
+	// 		setUploadingGallery(true);
+	// 		setUploadError(null);
+
+	// 		const uploadPromises = files.map(async (file, index) => {
+	// 			const fileId = `file-${index}-${Date.now()}`;
+
+	// 			// Track progress for each file
+	// 			setGalleryUploadProgress(prev => ({ ...prev, [fileId]: 0 }));
+
+	// 			try {
+	// 				// Validate each file before upload
+	// 				const fileValidation = validateFile(file);
+	// 				if (!fileValidation.valid) {
+	// 					console.error(`File validation failed for ${file.name}:`, fileValidation.error);
+	// 					setGalleryUploadProgress(prev => ({ ...prev, [fileId]: -1 }));
+	// 					return null;
+	// 				}
+
+	// 				// Validate image dimensions
+	// 				const dimensionValidation = await validateImageDimensions(file);
+	// 				if (!dimensionValidation.valid) {
+	// 					console.error(`Dimension validation failed for ${file.name}:`, dimensionValidation.error);
+	// 					setGalleryUploadProgress(prev => ({ ...prev, [fileId]: -1 }));
+	// 					return null;
+	// 				}
+
+	// 				setGalleryUploadProgress(prev => ({ ...prev, [fileId]: 25 }));
+
+	// 				// Upload directly to Cloudinary via uploadService
+	// 				const result = await uploadService.uploadImage(file, 'gallery');
+
+	// 				setGalleryUploadProgress(prev => ({ ...prev, [fileId]: 100 }));
+	// 				return result.publicUrl;
+	// 			} catch (error) {
+	// 				console.error(`Failed to upload ${file.name}:`, error);
+	// 				setGalleryUploadProgress(prev => ({ ...prev, [fileId]: -1 })); // -1 indicates error
+	// 				return null;
+	// 			}
+	// 		});
+
+	// 		const uploadedUrls = await Promise.all(uploadPromises);
+	// 		const successfulUploads = uploadedUrls.filter(url => url !== null) as string[];
+
+	// 		// Update gallery images
+	// 		const newGalleryImages = [...galleryImages, ...successfulUploads];
+	// 		setGalleryImages(newGalleryImages);
+	// 		form.setValue('fotos', JSON.stringify(newGalleryImages));
+
+	// 		setUploadingGallery(false);
+	// 		setGalleryUploadProgress({});
+
+	// 		return successfulUploads;
+	// 	} catch (error) {
+	// 		setUploadingGallery(false);
+	// 		setUploadError(error instanceof Error ? error.message : 'Gallery upload failed');
+	// 		setGalleryUploadProgress({});
+	// 		throw error;
+	// 	}
+	// }
+
+	// Remove image from gallery
+	function handleRemoveGalleryImage(index: number) {
+		const newGalleryImages = galleryImages.filter((_, i) => i !== index);
+		setGalleryImages(newGalleryImages);
+		form.setValue('fotos', JSON.stringify(newGalleryImages));
+	}
+
+	// Handle Cloudinary upload widget result
+	function handleCloudinaryUpload(result: any) {
+		if (result.event === 'success') {
+			const uploadedUrl = result.info.secure_url;
+			const publicId = result.info.public_id;
+
+			// Check if it's a profile image upload based on folder
+			if (publicId.includes('profile')) {
+				// Update profile image
+				form.setValue('profileUrl', uploadedUrl);
+				// console.log('Profile image updated =>', uploadedUrl)
+				setPreviewUrl(uploadedUrl);
+			} else if (publicId.includes('gallery')) {
+				// Add to gallery
+				const newGalleryImages = [...galleryImages, uploadedUrl];
+				setGalleryImages(newGalleryImages);
+				form.setValue('fotos', JSON.stringify(newGalleryImages));
+			}
+
+			// console.log('Upload successful:', {
+			// 	url: uploadedUrl,
+			// 	publicId: publicId,
+			// 	width: result.info.width,
+			// 	height: result.info.height,
+			// 	format: result.info.format
+			// });
+		}
+	}
+
+	const handleMultipleFileUpload = async (files: FileList) => {
+		const uploadPromises = Array.from(files).map((file) => {
+			return new Promise<string>((resolve, reject) => {
+				const formData = new FormData();
+				formData.append('file', file);
+				formData.append('upload_preset', 'circuito-bb-lagos-gallery'); // Replace with your upload preset
+
+				fetch(`https://api.cloudinary.com/v1_1/dp2qljyxs/upload`, {
+					method: 'POST',
+					body: formData,
+				})
+					.then((response) => response.json())
+					.then((result) => {
+						if (result.secure_url) {
+							resolve(result.secure_url);
+						} else {
+							reject(new Error('Upload failed'));
+						}
+					})
+					.catch((error) => {
+						reject(error);
+					});
+			});
+		});
+
+		try {
+			const uploadedUrls = await Promise.all(uploadPromises);
+			setGalleryImages((prevImages) => {
+				const newImages = [...prevImages, ...uploadedUrls];
+				form.setValue('fotos', JSON.stringify(newImages));
+				return newImages;
+			});
+		} catch (error) {
+			console.error('Error uploading files:', error);
+		}
+	};
+
+	// Delete image from cloud storage
+	// async function handleDeleteImage(publicId: string): Promise<boolean> {
+	// 	try {
+	// 		const success = await uploadService.deleteImage(publicId);
+	// 		if (!success) {
+	// 			console.error('Failed to delete image from cloud storage');
+	// 		}
+	// 		return success;
+	// 	} catch (error) {
+	// 		console.error('Error deleting image:', error);
+	// 		return false;
+	// 	}
+	// }
+
 	async function onSubmit(values: z.infer<typeof formSchema>) {
+		setIsEditing(true)
 		try {
 			// Parse JSON fields safely
 			let parsedSocialLinks: string[] = [];
@@ -166,13 +375,17 @@ export function useAtletaPage({ atleta }: { atleta?: Atleta }) {
 				resultados: parsedResultados,
 				estatisticas,
 			};
+
+			// console.log('updateData => ', updateData)
 			const updatedAtleta = await updateAtleta(atleta?.id || "", updateData);
-			console.log("updatedAtleta => ", updatedAtleta);
-			refreshAtletas();
-			setIsEditing(false);
+
+			// console.log("updatedAtleta => ", updatedAtleta);
+			await refreshAtletas();
 		} catch (error) {
 			console.error("Failed to update athlete:", error);
 			alert("Failed to update athlete.");
+		} finally {
+			setIsEditing(false);
 		}
 	}
 
@@ -190,5 +403,14 @@ export function useAtletaPage({ atleta }: { atleta?: Atleta }) {
 		socialInput,
 		socialLinksList,
 		editingIndex,
+		handleCloudinaryUpload,
+		handleMultipleFileUpload,
+		uploadingImage,
+		uploadProgress,
+		uploadError,
+		handleRemoveGalleryImage,
+		galleryImages,
+		uploadingGallery,
+		galleryUploadProgress,
 	};
 }
