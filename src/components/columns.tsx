@@ -1,9 +1,9 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import { CheckCircle } from "lucide-react";
-import Image from "next/image";
+import { CheckCircle, User } from "lucide-react";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AtletaResult } from "@/context/data-context";
 import { slugify } from "@/lib/utils";
 import type { Atleta } from "../../db/schema";
@@ -30,13 +30,15 @@ export const columns: ColumnDef<Atleta>[] = [
 				className="text-left cursor-pointer"
 			>
 				<div className="flex items-center gap-2">
-					<Image
-						src={row.original.profileUrl || "https://placehold.co/400x400/png"}
-						alt={row.original.nome}
-						className="w-7 h-7 rounded-full"
-						width={28}
-						height={28}
-					/>
+					<Avatar className="h-7 w-7">
+						<AvatarImage
+							src={row.original.profileUrl || undefined}
+							alt={row.original.nome}
+						/>
+						<AvatarFallback>
+							<User className="h-3 w-3" />
+						</AvatarFallback>
+					</Avatar>
 					{row.getValue("nome")}{" "}
 					{row.original.estado && ` (${row.original.estado})`}
 					{row.original.isAffiliated === "true" && (

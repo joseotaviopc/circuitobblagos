@@ -1,6 +1,7 @@
-import { BarChart, CheckCircle, ImageIcon, VideoIcon } from "lucide-react";
+import { BarChart, CheckCircle, ImageIcon, VideoIcon, User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -46,16 +47,22 @@ export function DisplayAtleta({
             <header className="relative">
                 <Card className="overflow-hidden">
                     <div className="flex flex-col md:flex-row">
-                        <div className="md:w-1/3 relative w-full aspect-square md:aspect-auto">
-                            <Image
-                                src={atleta.profileUrl || "https://placehold.co/400x400/png"}
-                                alt={atleta.nome}
-                                width={400}
-                                height={400}
-                                className="object-cover w-full h-full"
-                                priority
-                                data-ai-hint="atleta portrait"
-                            />
+                        <div className="md:w-1/3 relative w-full aspect-square md:aspect-auto flex items-center justify-center">
+                            {atleta.profileUrl ? (
+                                <Image
+                                    src={atleta.profileUrl}
+                                    alt={atleta.nome}
+                                    width={400}
+                                    height={400}
+                                    className="object-cover w-full h-full"
+                                    priority
+                                    data-ai-hint="atleta portrait"
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-muted flex items-center justify-center">
+                                    <User className="h-24 w-24 md:h-32 md:w-32 text-muted-foreground" />
+                                </div>
+                            )}
                         </div>
                         <div className="md:w-2/3 p-6 md:p-8 flex flex-col justify-center gap-4">
                             <h1 className="text-4xl lg:text-5xl font-extrabold font-headline mt-1">

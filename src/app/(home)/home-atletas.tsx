@@ -1,7 +1,8 @@
-import { ArrowRight, CheckCircle, ChevronRight, Trophy } from "lucide-react";
+import { ArrowRight, CheckCircle, ChevronRight, Trophy, User } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AtletaResult, useData } from "@/context/data-context";
 import type { Atleta } from "../../../db/schema";
 
@@ -82,16 +83,27 @@ export function HomeAtletas({ atletas: propAthletes }: HomeAtletasProps) {
 										href={`/rankings?category=${category}`}
 										className="flex items-center gap-4"
 									>
-										<div className="flex items-center gap-2">
-											<p className="font-semibold text-base text-nowrap">
-												{leader.nome}
-												{leader.isAffiliated === "true" && (
-													<CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />
-												)}
-											</p>
-											<p className="text-sm text-muted-foreground text-nowrap">
-												{leader.totalPoints.toLocaleString()} pts
-											</p>
+										<div className="flex items-center gap-3">
+											<Avatar className="h-8 w-8">
+												<AvatarImage
+													src={leader.profileUrl || undefined}
+													alt={leader.nome}
+												/>
+												<AvatarFallback>
+													<User className="h-4 w-4" />
+												</AvatarFallback>
+											</Avatar>
+											<div className="flex items-center gap-2">
+												<p className="font-semibold text-base text-nowrap">
+													{leader.nome}
+													{leader.isAffiliated === "true" && (
+														<CheckCircle className="ml-1 h-4 w-4 text-green-500 inline-block" />
+													)}
+												</p>
+												<p className="text-sm text-muted-foreground text-nowrap">
+													{leader.totalPoints.toLocaleString()} pts
+												</p>
+											</div>
 										</div>
 										<ChevronRight className="h-5 w-5 text-muted-foreground" />
 									</Link>

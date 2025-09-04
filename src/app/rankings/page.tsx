@@ -1,9 +1,9 @@
 "use client";
-import { CheckCircle } from "lucide-react";
-import Image from "next/image";
+import { CheckCircle, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -172,18 +172,16 @@ function RankingsContent() {
 													href={`/atletas/${athlete!.nome.toLowerCase().replace(/ /g, "-")}`}
 													className="flex items-center gap-2 md:gap-4 group"
 												>
-													<div className="relative h-10 w-10 md:h-12 md:w-12 rounded-full overflow-hidden flex-shrink-0">
-														<Image
-															src={
-																athlete!.profileUrl ||
-																"https://placehold.co/400x400/png"
-															}
+													<Avatar className="h-10 w-10 md:h-12 md:w-12 flex-shrink-0">
+														<AvatarImage
+															src={athlete!.profileUrl || undefined} 
 															alt={athlete!.nome}
-															fill
-															className="object-cover group-hover:scale-110 transition-transform duration-300"
-															data-ai-hint="portrait athlete"
+															className="group-hover:scale-110 transition-transform duration-300"
 														/>
-													</div>
+														<AvatarFallback>
+															<User className="h-4 w-4 md:h-5 md:w-5" />
+														</AvatarFallback>
+													</Avatar>
 
 													<span className="font-medium group-hover:text-primary transition-colors text-sm md:text-base">
 														{athlete!.nome}{" "}
