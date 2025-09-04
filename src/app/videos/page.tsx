@@ -1,11 +1,20 @@
-import { PlayCircle } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { media } from "@/lib/data";
+import { VideoCard } from "./video-card";
 
-export default function VideosPage() {
-	const videos = media.filter((m) => m.type === "video");
+export default async function VideosPage() {
+	const apiKey = process.env.YOUTUBE_API_KEY;
+	const channelId = "UCeYjiIso6WdWbU_MAy_zDcQ";
+
+	const res = await fetch(
+		`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=12`,
+		{ cache: "no-store" }
+	);
+
+	if (!res.ok) {
+		throw new Error("Erro ao buscar vídeos do YouTube");
+	}
+
+	const data = await res.json();
+	const videos = data.items || [];
 
 	return (
 		<div className="space-y-8">
@@ -17,32 +26,18 @@ export default function VideosPage() {
 					Assista aos melhores momentos em vídeo dos eventos recentes.
 				</p>
 			</header>
-
-			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{videos.map((item) => (
-					<Card key={item.id} className="group overflow-hidden">
-						<CardHeader className="p-0">
-							<div className="aspect-video relative">
-								<Image
-									src={item.thumbnail}
-									alt={item.title}
-									fill
-									className="object-cover group-hover:scale-105 transition-transform duration-300"
-									data-ai-hint="surfing video"
-								/>
-								<div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-									<PlayCircle className="h-12 w-12 md:h-16 md:w-16 text-white/70 group-hover:text-white transition-colors" />
-								</div>
-							</div>
-						</CardHeader>
-						<CardContent className="p-4">
-							<h2 className="font-bold font-headline truncate">{item.title}</h2>
-							<p className="text-sm text-muted-foreground truncate">
-								{item.event}
-							</p>
-						</CardContent>
-					</Card>
-				))}
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+				{videos
+					.filter((v: any) => v.id.kind === "youtube#video") // ignora playlists/shorts
+					.map((video: any) => (
+						<div key={video.id.videoId} className="flex flex-col">
+							<VideoCard
+								videoId={video.id.videoId}
+								title={video.snippet.title}
+							/>
+							<p className="mt-2 text-sm font-medium">{video.snippet.title}</p>
+						</div>
+					))}
 			</div>
 		</div>
 	);
