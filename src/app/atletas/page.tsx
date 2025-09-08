@@ -3,22 +3,12 @@
 import { columns } from "@/components/columns";
 import { DataTable } from "@/components/data-table";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import {
-	Table,
-	TableBody,
-	TableCaption,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
 import { useData } from "@/context/data-context";
 
 export default function Atletas() {
 	const { atletas, loadingData } = useData();
 
-	const atletasOrdenados = atletas.sort((a, b) => a.nome.localeCompare(b.nome));
-	// console.log('atletas', atletas);
+    const atletasOrdenados = atletas.sort((a, b) => a.nome.localeCompare(b.nome));
 
 	if (loadingData) {
 		return <LoadingSpinner />;

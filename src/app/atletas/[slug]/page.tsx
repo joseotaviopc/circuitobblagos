@@ -19,7 +19,6 @@ export default function AthleteProfilePage() {
 
 	const atleta = atletas.find((atleta) => slugify(atleta.nome) === slug);
 
-	// console.log("atleta => ", JSON.stringify(atleta, null, 4))
 	const userEmail = user?.primaryEmailAddress?.emailAddress;
 	const canEdit = Boolean(
 		isSignedIn && userEmail && atleta?.email === userEmail,
@@ -55,7 +54,6 @@ export default function AthleteProfilePage() {
 			"image/*": [],
 		},
 		onDrop: async (acceptedFiles) => {
-			console.log("acceptedFiles[0] => ", acceptedFiles[0]);
 			if (acceptedFiles[0]) {
 				try {
 					// Upload to cloud storage
