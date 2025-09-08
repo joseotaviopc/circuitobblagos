@@ -1,11 +1,10 @@
-import { GalleryHorizontal } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { media } from "@/lib/data";
+"use client"
+import InstagramGrid from "@/components/instagram-grid";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import useInstagram from "@/hooks/useInstagram";
 
 export default function FotosPage() {
-	const photos = media.filter((m) => m.type === "photo");
+  const { instagramData, loadingInstagram } = useInstagram({ onlyImage: true })
 
 	return (
 		<div className="space-y-8">
@@ -17,30 +16,9 @@ export default function FotosPage() {
 					Acompanhe toda a ação com galerias de fotos dos eventos recentes.
 				</p>
 			</header>
-
-			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{photos.map((item) => (
-					<Card key={item.id} className="group overflow-hidden">
-						<CardHeader className="p-0">
-							<div className="aspect-video relative">
-								<Image
-									src={item.thumbnail}
-									alt={item.title}
-									fill
-									className="object-cover group-hover:scale-105 transition-transform duration-300"
-									data-ai-hint="surfing photo"
-								/>
-							</div>
-						</CardHeader>
-						<CardContent className="p-4">
-							<h2 className="font-bold font-headline truncate">{item.title}</h2>
-							<p className="text-sm text-muted-foreground truncate">
-								{item.event}
-							</p>
-						</CardContent>
-					</Card>
-				))}
-			</div>
+			{loadingInstagram && <div className="w-full py-10 justify-center"><LoadingSpinner /></div>}
+			{instagramData && !loadingInstagram && <InstagramGrid instagramData={instagramData} />}
+			{!instagramData && !loadingInstagram && <div className="w-full py-10 justify-center"><p>Não há dados para exibir</p></div>}
 		</div>
 	);
 }

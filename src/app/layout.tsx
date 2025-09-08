@@ -6,6 +6,7 @@ import { AppLayoutWithSidebarProvider } from "@/components/layout/app-shell";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/context/auth-context";
 import { DataProvider } from "@/context/data-context";
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -79,6 +80,7 @@ export default function RootLayout({
 						</AuthProvider>
 					</DataProvider>
 					<Toaster />
+					<Analytics />
 				</body>
 			</html>
 		</ClerkProvider>
