@@ -14,7 +14,7 @@ body {
 		--card-foreground: rgb(38, 44, 55);
 		--popover: rgb(217, 206, 168);
 		--popover-foreground: rgb(38, 44, 55);
-		--primary: rgb(242, 21, 97);
+		--primary: 340 89% 52%;
 		--primary-foreground: rgb(250, 250, 250);
 		--secondary: rgb(235, 229, 200);
 		--secondary-foreground: rgb(34, 38, 48);
@@ -26,7 +26,7 @@ body {
 		--destructive-foreground: rgb(250, 250, 250);
 		--border: rgb(202, 191, 143);
 		--input: rgb(202, 191, 143);
-		--ring: rgb(242, 21, 97);
+		--ring: 340 89% 52%;
 		--chart-1: rgb(242, 153, 77);
 		--chart-2: rgb(67, 159, 104);
 		--chart-3: rgb(54, 77, 92);
@@ -35,12 +35,12 @@ body {
 		--radius: 0.5rem;
 		--sidebar-background: rgb(217, 206, 168);
 		--sidebar-foreground: rgb(38, 44, 55);
-		--sidebar-primary: rgb(242, 21, 97);
+		--sidebar-primary: 340 89% 52%;
 		--sidebar-primary-foreground: rgb(250, 250, 250);
 		--sidebar-accent: rgb(235, 229, 200);
 		--sidebar-accent-foreground: rgb(34, 38, 48);
 		--sidebar-border: rgb(210, 197, 130);
-		--sidebar-ring: rgb(242, 21, 97);
+		--sidebar-ring: 340 89% 52%;
 	}
 	.dark {
 		--background: rgb(228, 220, 186);
@@ -49,7 +49,7 @@ body {
 		--card-foreground: rgb(38, 44, 55);
 		--popover: rgb(217, 206, 168);
 		--popover-foreground: rgb(38, 44, 55);
-		--primary: rgb(242, 21, 97);
+		--primary: 340 89% 52%;
 		--primary-foreground: rgb(250, 250, 250);
 		--secondary: rgb(235, 229, 200);
 		--secondary-foreground: rgb(34, 38, 48);
@@ -61,7 +61,7 @@ body {
 		--destructive-foreground: rgb(250, 250, 250);
 		--border: rgb(202, 191, 143);
 		--input: rgb(202, 191, 143);
-		--ring: rgb(242, 21, 97);
+		--ring: 340 89% 52%;
 		--chart-1: rgb(242, 153, 77);
 		--chart-2: rgb(67, 159, 104);
 		--chart-3: rgb(54, 77, 92);
@@ -69,12 +69,12 @@ body {
 		--chart-5: rgb(250, 186, 86);
 		--sidebar-background: rgb(217, 206, 168);
 		--sidebar-foreground: rgb(38, 44, 55);
-		--sidebar-primary: rgb(242, 21, 97);
+		--sidebar-primary: 340 89% 52%;
 		--sidebar-primary-foreground: rgb(250, 250, 250);
 		--sidebar-accent: rgb(235, 229, 200);
 		--sidebar-accent-foreground: rgb(34, 38, 48);
 		--sidebar-border: rgb(210, 197, 130);
-		--sidebar-ring: rgb(242, 21, 97);
+		--sidebar-ring: 340 89% 52%;
 	}
 }
 

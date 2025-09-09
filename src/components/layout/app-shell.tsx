@@ -1,9 +1,11 @@
 "use client";
 import { SignInButton, UserButton, useAuth, useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 import {
 	BarChart,
 	BookOpen,
 	Calendar,
+	ChevronUp,
 	Image as ImageIcon,
 	Mail,
 	Megaphone,
@@ -29,6 +31,7 @@ import {
 import { useData } from "@/context/data-context";
 import { slugify } from "@/lib/utils";
 import { Logo } from "../icons/logo";
+import { Button } from "../ui/button";
 import { DropdownMenu } from "../ui/dropdown-menu";
 import { LoadingSpinner } from "../ui/loading-spinner";
 import { useSidebar } from "../ui/sidebar";
@@ -63,6 +66,31 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 	const { user } = useUser();
 	const { setOpenMobile, state, isMobile } = useSidebar();
 	const { loadingData, atletas } = useData();
+	const [showScrollToTop, setShowScrollToTop] = useState(false);
+
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	};
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+			const windowHeight = window.innerHeight;
+			const documentHeight = document.documentElement.scrollHeight;
+
+			const threshold = documentHeight - windowHeight - 100;
+			setShowScrollToTop(scrollTop > threshold);
+		};
+
+		window.addEventListener('scroll', handleScroll);
+
+		handleScroll();
+
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, []);
 
 	const menuItems = [
 		{ href: "/eventos", label: "Calendário", icon: Calendar },
@@ -158,7 +186,20 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 						<SignInButton>Entrar</SignInButton>
 					)}
 				</header>
-				<main className="p-4 md:p-6 lg:p-8 pt-20">{children}</main>
+				<main className={`p-4 md:p-6 lg:p-8 ${isMobile ? 'pt-10' : 'pt-20'} pb-20 relative`}>
+					{children}
+					<Button
+						onClick={scrollToTop}
+						className={`fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 shadow-lg hover:shadow-xl transition-all duration-600 bg-primary hover:bg-primary/80 text-white ${showScrollToTop
+							? 'opacity-100 translate-y-0 pointer-events-auto'
+							: 'opacity-0 translate-y-2 pointer-events-none'
+							}`}
+						size="icon"
+						aria-label="Scroll to top"
+					>
+						<ChevronUp className="w-5 h-5" />
+					</Button>
+				</main>
 			</SidebarInset>
 		</>
 	);

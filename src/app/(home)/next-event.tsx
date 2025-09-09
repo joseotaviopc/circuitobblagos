@@ -3,12 +3,35 @@ import { useData } from "@/context/data-context";
 export function NextEvent() {
   const { events } = useData();
 
+  const getDaysUntilEvent = (eventDate: string) => {
+    const now = new Date();
+    const event = new Date(eventDate);
+
+    const nowSP = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+    const eventSP = new Date(event.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+
+    const diffInMs = eventSP.getTime() - nowSP.getTime();
+
+    return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+  };
+
   const nextEvent = events
     ? events
-        .filter((event) => event.data && new Date(event.data) > new Date())
+      .filter((event) => {
+        if (!event.data) return false;
+        const now = new Date();
+        const eventDate = new Date(event.data);
+        const nowSP = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+        const eventSP = new Date(eventDate.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+        return eventSP > nowSP;
+      })
         .sort((a, b) => {
           if (b.data && a.data) {
-            return new Date(a.data).getTime() - new Date(b.data).getTime();
+            const aDate = new Date(a.data);
+            const bDate = new Date(b.data);
+            const aSP = new Date(aDate.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+            const bSP = new Date(bDate.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+            return aSP.getTime() - bSP.getTime();
           }
           return 0;
         })[0]
@@ -37,10 +60,7 @@ export function NextEvent() {
         {nextEvent.data && (
           <h2 className="absolute inset-0 flex items-end justify-center text-2xl md:text-4xl font-medium tracking-tight font-headline text-white leading-tight  p-4">
             Faltam{" "}
-            {Math.ceil(
-              (new Date(nextEvent?.data).getTime() - new Date().getTime()) /
-                (1000 * 60 * 60 * 24),
-            )}{" "}
+            {getDaysUntilEvent(nextEvent.data)}{" "}
             dias!
           </h2>
         )}

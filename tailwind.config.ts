@@ -26,7 +26,7 @@ export default {
           foreground: 'var(--popover-foreground)',
         },
         primary: {
-          DEFAULT: 'var(--primary)',
+          DEFAULT: 'hsl(var(--primary))',
           foreground: 'var(--primary-foreground)',
         },
         secondary: {
@@ -47,7 +47,7 @@ export default {
         },
         border: 'var(--border)',
         input: 'var(--input)',
-        ring: 'var(--ring)',
+        ring: 'hsl(var(--ring))',
         chart: {
           '1': 'var(--chart-1)',
           '2': 'var(--chart-2)',
@@ -58,12 +58,12 @@ export default {
         sidebar: {
           DEFAULT: 'var(--sidebar-background)',
           foreground: 'var(--sidebar-foreground)',
-          primary: 'var(--sidebar-primary)',
+          primary: 'hsl(var(--sidebar-primary))',
           'primary-foreground': 'var(--sidebar-primary-foreground)',
           accent: 'var(--sidebar-accent)',
           'accent-foreground': 'var(--sidebar-accent-foreground)',
           border: 'var(--sidebar-border)',
-          ring: 'var(--sidebar-ring)',
+          ring: 'hsl(var(--sidebar-ring))',
         },
       },
       borderRadius: {
