@@ -1,6 +1,5 @@
 "use client";
 import { GalleryHorizontal } from "lucide-react";
-import { useEffect, useState } from "react";
 import {
 	Carousel,
 	CarouselContent,
@@ -9,40 +8,12 @@ import {
 	CarouselPrevious,
 } from "@/components/ui/carousel";
 import { VideoCard } from "@/app/videos/video-card";
-
-interface YouTubeVideo {
-	id: {
-		videoId: string;
-		kind: string;
-	};
-	snippet: {
-		title: string;
-	};
-}
+import { useYouTube } from "@/context/youtube-context";
 
 export function HomeMedias() {
-	const [videos, setVideos] = useState<YouTubeVideo[]>([]);
-	const [loading, setLoading] = useState(true);
+	const { videos, loadingVideos } = useYouTube();
 
-	useEffect(() => {
-		async function fetchVideos() {
-			try {
-				const response = await fetch("/api/youtube-videos?maxResults=6");
-				if (response.ok) {
-					const data = await response.json();
-					setVideos(data.videos || []);
-				}
-			} catch (error) {
-				console.error("Erro ao buscar vídeos:", error);
-			} finally {
-				setLoading(false);
-			}
-		}
-
-		fetchVideos();
-	}, []);
-
-	if (loading) {
+	if (loadingVideos) {
 		return (
 			<section className="space-y-6">
 				<h2 className="text-2xl md:text-3xl font-bold font-headline flex items-center gap-2">
@@ -67,7 +38,7 @@ export function HomeMedias() {
 			{videos.length > 0 ? (
 				<Carousel opts={{ align: "start" }} className="w-full">
 					<CarouselContent>
-						{videos.map((video) => (
+						{videos.slice(0, 6).map((video) => (
 							<CarouselItem
 								key={video.id.videoId}
 								className="basis-full md:basis-1/2 lg:basis-1/3"

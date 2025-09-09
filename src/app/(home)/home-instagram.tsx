@@ -1,11 +1,11 @@
 "use client";
 import { Instagram } from "lucide-react";
-import useInstagram from "@/hooks/useInstagram";
+import { useInstagram } from "@/context/instagram-context";
 import InstagramGrid from "@/components/instagram-grid";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export function HomeInstagram() {
-  const { instagramData, loadingInstagram } = useInstagram({})
+  const { instagramData, loadingInstagram } = useInstagram();
 
   return (
     <section className="space-y-6">

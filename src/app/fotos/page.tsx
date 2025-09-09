@@ -1,10 +1,10 @@
 "use client"
 import InstagramGrid from "@/components/instagram-grid";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import useInstagram from "@/hooks/useInstagram";
+import { useInstagramImages } from "@/context/instagram-context";
 
 export default function FotosPage() {
-  const { instagramData, loadingInstagram } = useInstagram({ onlyImage: true })
+	const { instagramData, loadingInstagram } = useInstagramImages();
 
 	return (
 		<div className="space-y-8">

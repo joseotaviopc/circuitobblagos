@@ -6,6 +6,8 @@ import { AppLayoutWithSidebarProvider } from "@/components/layout/app-shell";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/context/auth-context";
 import { DataProvider } from "@/context/data-context";
+import { InstagramProvider } from "@/context/instagram-context";
+import { YouTubeProvider } from "@/context/youtube-context";
 import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
@@ -73,11 +75,15 @@ export default function RootLayout({
 					className={`antialiased ${inter.className} ${spaceGrotesk.className}`}
 				>
 					<DataProvider>
-						<AuthProvider>
-							<AppLayoutWithSidebarProvider>
-								{children}
-							</AppLayoutWithSidebarProvider>
-						</AuthProvider>
+						<InstagramProvider>
+							<YouTubeProvider>
+								<AuthProvider>
+									<AppLayoutWithSidebarProvider>
+										{children}
+									</AppLayoutWithSidebarProvider>
+								</AuthProvider>
+							</YouTubeProvider>
+						</InstagramProvider>
 					</DataProvider>
 					<Toaster />
 					<Analytics />
