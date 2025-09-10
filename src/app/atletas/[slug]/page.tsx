@@ -38,6 +38,7 @@ export default function AthleteProfilePage() {
 		socialLinksList,
 		editingIndex,
 		handleCloudinaryUpload,
+		handleProfileImageUpload,
 		handleMultipleFileUpload,
 		uploadingImage,
 		uploadProgress,
@@ -113,6 +114,7 @@ export default function AthleteProfilePage() {
 					getInputProps={getInputProps}
 					isDragActive={isDragActive}
 					handleCloudinaryUpload={handleCloudinaryUpload}
+					handleProfileImageUpload={handleProfileImageUpload}
 					handleMultipleFileUpload={handleMultipleFileUpload}
 					uploadingImage={uploadingImage}
 					uploadProgress={uploadProgress}

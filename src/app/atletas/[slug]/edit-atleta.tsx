@@ -1,6 +1,5 @@
 import { ImageIcon, Trash, Upload } from "lucide-react";
 import Image from "next/image";
-import { CldUploadWidget } from "next-cloudinary";
 import { useId } from "react";
 import type { DropzoneInputProps, DropzoneRootProps } from "react-dropzone";
 import type { UseFormReturn } from "react-hook-form";
@@ -33,6 +32,7 @@ interface EditAtletaProps {
     getInputProps: <T extends DropzoneInputProps>(props?: T | undefined) => T;
     isDragActive: boolean;
     handleCloudinaryUpload: (result: any) => void;
+    handleProfileImageUpload: (file: File) => Promise<string>;
     handleMultipleFileUpload: (files: FileList) => Promise<void>;
     uploadingImage: boolean;
     uploadProgress: number;
@@ -55,6 +55,7 @@ export function EditAtleta({
     socialLinksList,
     previewUrl,
     handleCloudinaryUpload,
+    handleProfileImageUpload,
     handleMultipleFileUpload,
     uploadingImage,
     uploadError,
@@ -63,6 +64,7 @@ export function EditAtleta({
     uploadingGallery,
 }: EditAtletaProps) {
     const galleryUploadId = useId();
+    const profileUploadId = useId();
     return (
         <div className="container mx-auto py-10">
             <h1 className="text-4xl font-extrabold font-headline tracking-tight lg:text-5xl mb-8">
@@ -222,45 +224,40 @@ export function EditAtleta({
                                 </div>
                             )}
 
-                            {/* Cloudinary Upload Widget for Profile */}
-                            <CldUploadWidget
-                                uploadPreset="circuito-bb-lagos-profile"
-                                onSuccess={handleCloudinaryUpload}
-                                options={{
-                                    folder: "circuito-bb-lagos/profile",
-                                    maxFiles: 1,
-                                    resourceType: "image",
-                                    maxFileSize: 5000000, // 5MB
-                                    cropping: true,
-                                    croppingAspectRatio: 1, // Square aspect ratio
-                                    croppingDefaultSelectionRatio: 1,
-                                    croppingShowDimensions: true,
-                                    clientAllowedFormats: ["jpg", "jpeg", "png", "webp"],
+                            {/* Simple File Input for Profile */}
+                            <input
+                                type="file"
+                                id={profileUploadId}
+                                className="hidden"
+                                accept="image/jpeg,image/jpg,image/png,image/webp"
+                                onChange={(e) => {
+                                    if (e.target.files && e.target.files[0]) {
+                                        handleProfileImageUpload(e.target.files[0]);
+                                    }
                                 }}
+                            />
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={() =>
+                                    document.getElementById(profileUploadId)?.click()
+                                }
+                                disabled={uploadingImage}
+                                className="w-fit"
                             >
-                                {({ open, isLoading }) => (
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() => open()}
-                                        disabled={isLoading || uploadingImage}
-                                        className="w-fit"
-                                    >
-                                        {isLoading || uploadingImage ? (
-                                            <>
-                                                <LoadingSpinner className="mr-2 h-4 w-4" />
-                                                Enviando...
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Upload className="mr-2 h-4 w-4" />
-                                                {previewUrl ? "Alterar Foto" : "Upload Foto"}
-                                            </>
-                                        )}
-                                    </Button>
+                                {uploadingImage ? (
+                                    <>
+                                        <LoadingSpinner className="mr-2 h-4 w-4" />
+                                        Enviando...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Upload className="mr-2 h-4 w-4" />
+                                        {previewUrl ? "Alterar Foto" : "Upload Foto"}
+                                    </>
                                 )}
-                            </CldUploadWidget>
+                            </Button>
                         </div>
                     </div>
 

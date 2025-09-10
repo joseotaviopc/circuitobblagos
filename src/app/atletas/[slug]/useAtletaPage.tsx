@@ -257,6 +257,56 @@ export function useAtletaPage({ atleta }: { atleta?: Atleta }) {
 		}
 	}
 
+	// Handle single profile image upload
+	const handleProfileImageUpload = async (file: File) => {
+		try {
+			setUploadingImage(true);
+			setUploadError(null);
+			setUploadProgress(0);
+
+			// Create preview URL immediately
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				if (typeof e.target?.result === 'string') {
+					setPreviewUrl(e.target.result);
+				}
+			};
+			reader.readAsDataURL(file);
+
+			setUploadProgress(25);
+
+			// Upload to Cloudinary
+			const formData = new FormData();
+			formData.append('file', file);
+			formData.append('upload_preset', 'circuito-bb-lagos-profile');
+
+			const response = await fetch(`https://api.cloudinary.com/v1_1/dp2qljyxs/upload`, {
+				method: 'POST',
+				body: formData,
+			});
+
+			if (!response.ok) {
+				throw new Error('Upload failed');
+			}
+
+			const result = await response.json();
+
+			if (result.secure_url) {
+				setUploadProgress(100);
+				form.setValue('profileUrl', result.secure_url);
+				setPreviewUrl(result.secure_url);
+				setUploadingImage(false);
+				return result.secure_url;
+			} else {
+				throw new Error('No URL returned from upload');
+			}
+		} catch (error) {
+			setUploadingImage(false);
+			setUploadError(error instanceof Error ? error.message : 'Upload failed');
+			throw error;
+		}
+	};
+
 	const handleMultipleFileUpload = async (files: FileList) => {
 		const uploadPromises = Array.from(files).map((file) => {
 			return new Promise<string>((resolve, reject) => {
@@ -404,6 +454,7 @@ export function useAtletaPage({ atleta }: { atleta?: Atleta }) {
 		socialLinksList,
 		editingIndex,
 		handleCloudinaryUpload,
+		handleProfileImageUpload,
 		handleMultipleFileUpload,
 		uploadingImage,
 		uploadProgress,
