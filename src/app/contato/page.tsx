@@ -1,11 +1,77 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+"use client";
+
+import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { createContactMessage } from "../actions";
+
+const contactFormSchema = z.object({
+	name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
+	email: z.string().email("Email inválido"),
+	message: z.string().min(10, "Mensagem deve ter pelo menos 10 caracteres"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export default function ContatoPage() {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [submitStatus, setSubmitStatus] = useState<{
+		type: "success" | "error" | null;
+		message: string;
+	}>({ type: null, message: "" });
+
+	const form = useForm<ContactFormData>({
+		resolver: zodResolver(contactFormSchema),
+		defaultValues: {
+			name: "",
+			email: "",
+			message: "",
+		},
+	});
+
+	const onSubmit = async (data: ContactFormData) => {
+		setIsSubmitting(true);
+		setSubmitStatus({ type: null, message: "" });
+
+		try {
+			const result = await createContactMessage(data);
+
+			if (result.success) {
+				setSubmitStatus({
+					type: "success",
+					message: "Mensagem enviada com sucesso! Entraremos em contato em breve.",
+				});
+				form.reset();
+			} else {
+				setSubmitStatus({
+					type: "error",
+					message: result.error || "Erro ao enviar mensagem. Tente novamente.",
+				});
+			}
+		} catch (error) {
+			setSubmitStatus({
+				type: "error",
+				message: "Erro inesperado. Tente novamente mais tarde.",
+			});
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
 	return (
 		<div className="space-y-8">
 			<header>
@@ -22,25 +88,87 @@ export default function ContatoPage() {
 					<CardHeader>
 						<CardTitle>Envie uma Mensagem</CardTitle>
 					</CardHeader>
-					<CardContent className="space-y-4">
-						<div className="space-y-2">
-							<Label htmlFor="name">Nome</Label>
-							<Input id="name" placeholder="Seu nome completo" />
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="email">Email</Label>
-							<Input id="email" type="email" placeholder="seu@email.com" />
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="message">Mensagem</Label>
-							<Textarea
-								id="message"
-								placeholder="Escreva sua mensagem aqui..."
-							/>
-						</div>
-						<Button className="w-full" disabled>
-							Enviar Mensagem
-						</Button>
+					<CardContent>
+						<Form {...form}>
+							<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+								<FormField
+									control={form.control}
+									name="name"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Nome</FormLabel>
+											<FormControl>
+												<Input placeholder="Seu nome completo" {...field} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="email"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Email</FormLabel>
+											<FormControl>
+												<Input
+													type="email"
+													placeholder="seu@email.com"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="message"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Mensagem</FormLabel>
+											<FormControl>
+												<Textarea
+													placeholder="Escreva sua mensagem aqui..."
+													rows={6}
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+
+								{submitStatus.type && (
+									<div
+										className={`p-3 rounded-md text-sm ${submitStatus.type === "success"
+											? "bg-green-50 text-green-700 border border-green-200"
+											: "bg-red-50 text-red-700 border border-red-200"
+											}`}
+									>
+										{submitStatus.message}
+									</div>
+								)}
+
+								<Button
+									type="submit"
+									className="w-full"
+									disabled={isSubmitting}
+								>
+									{isSubmitting ? (
+										<>
+											<LoadingSpinner className="mr-2 h-4 w-4" />
+											Enviando...
+										</>
+									) : (
+										<>
+											<Send className="mr-2 h-4 w-4" />
+											Enviar Mensagem
+										</>
+									)}
+								</Button>
+							</form>
+						</Form>
 					</CardContent>
 				</Card>
 				<Card>
