@@ -30,6 +30,14 @@ export const eventos = sqliteTable("eventos", {
   resultados: text("resultados", { mode: 'json' }).$type<{ categoria: string, atletaId: string, atleta: string, posicao: number, pontos: number }[]>(),
 });
 
+export const messagesContact = sqliteTable("messages_contact", {
+  id: text("id").notNull().primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  message: text("message").notNull(),
+});
+
 export type Event = typeof eventos.$inferSelect;
 export type Result = typeof eventos.$inferSelect.resultados;
 export type Atleta = typeof atletas.$inferSelect;
+export type MessageContact = typeof messagesContact.$inferSelect;
