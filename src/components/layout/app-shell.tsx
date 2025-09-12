@@ -30,6 +30,7 @@ import { DropdownMenu } from "../ui/dropdown-menu";
 import { LoadingSpinner } from "../ui/loading-spinner";
 import { useSidebar } from "../ui/sidebar";
 import { LogoMobile } from "../icons/logo-mobile";
+import { FloatingFeedbackButton } from "../ui/floating-feedback-button";
 
 export function AppLayoutWithSidebarProvider({
 	children,
@@ -169,7 +170,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 					{children}
 					<Button
 						onClick={scrollToTop}
-						className={`fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary hover:bg-primary/80 text-white ${showScrollToTop
+						className={`fixed bottom-20 right-6 z-50 rounded-full w-10 h-10 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary hover:bg-primary/80 text-white ${showScrollToTop
 							? 'opacity-100 translate-y-0 pointer-events-auto'
 							: 'opacity-0 translate-y-2 pointer-events-none'
 							}`}
@@ -178,6 +179,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 					>
 						<ChevronUp className="w-5 h-5" />
 					</Button>
+					<FloatingFeedbackButton />
 				</main>
 			</div>
 		</div>

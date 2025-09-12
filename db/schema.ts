@@ -37,7 +37,18 @@ export const messagesContact = sqliteTable("messages_contact", {
   message: text("message").notNull(),
 });
 
+export const feedback = sqliteTable("feedback", {
+  id: text("id").notNull().primaryKey(),
+  category: text("category").notNull(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  message: text("message").notNull(),
+  createdAt: text("created_at").notNull(),
+  status: text("status").notNull().default("pending"), // pending, reviewed, resolved
+});
+
 export type Event = typeof eventos.$inferSelect;
 export type Result = typeof eventos.$inferSelect.resultados;
 export type Atleta = typeof atletas.$inferSelect;
 export type MessageContact = typeof messagesContact.$inferSelect;
+export type Feedback = typeof feedback.$inferSelect;

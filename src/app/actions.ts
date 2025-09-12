@@ -2,7 +2,7 @@
 
 import { eq } from "drizzle-orm";
 import { db } from "../../db";
-import { type Atleta, atletas, type Event, eventos, type MessageContact, messagesContact } from "../../db/schema";
+import { type Atleta, atletas, type Event, eventos, type MessageContact, messagesContact, type Feedback, feedback } from "../../db/schema";
 
 export async function getEvents(): Promise<Event[]> {
 	try {
@@ -64,5 +64,33 @@ export async function createContactMessage(data: {
 	} catch (error) {
 		console.error("Error creating contact message:", error);
 		return { success: false, error: "Failed to send message" };
+	}
+}
+
+export async function createFeedback(data: {
+	category: string;
+	name: string;
+	email: string;
+	message: string;
+}) {
+	try {
+		const id = crypto.randomUUID();
+		const newFeedback = await db
+			.insert(feedback)
+			.values({
+				id,
+				category: data.category,
+				name: data.name,
+				email: data.email,
+				message: data.message,
+				createdAt: new Date().toISOString(),
+				status: "pending",
+			})
+			.returning();
+
+		return { success: true, feedback: newFeedback[0] };
+	} catch (error) {
+		console.error("Error creating feedback:", error);
+		return { success: false, error: "Failed to send feedback" };
 	}
 }
