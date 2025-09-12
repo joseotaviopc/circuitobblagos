@@ -7,6 +7,7 @@ import { HomeEvents } from "./(home)/home-events";
 import { HomeInstagram } from "./(home)/home-instagram";
 import { HomeMedias } from "./(home)/home-medias";
 import { NextEvent } from "./(home)/next-event";
+import { EventBanner } from "@/components/ui/event-banner";
 
 export default function Home() {
   const { events } = useData();
@@ -23,6 +24,7 @@ export default function Home() {
 
   return (
     <>
+      <EventBanner />
       <NextEvent />
       <div
         className={`space-y-12 px-4 mx-auto ${isMobile ? "w-full" : state === "expanded" ? "w-[min(calc(100%-14.5rem),72rem)]" : "max-w-6xl"}`}
